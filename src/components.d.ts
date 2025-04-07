@@ -5,57 +5,64 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { SgcButtonColor, SgcButtonJustify, SgcButtonVariant } from "./components/sgc-button/sgc-button";
+import { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
+export { SgcButtonColor, SgcButtonJustify, SgcButtonVariant } from "./components/sgc-button/sgc-button";
+export { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
 export namespace Components {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
+    interface SgcButton {
+        "color": SgcButtonColor;
+        "isActive": boolean;
+        "isDisabled": boolean;
+        "justify": SgcButtonJustify;
+        "variant": SgcButtonVariant;
+    }
+    interface SgcIcon {
+        "name": SgcIconKey;
+        "size": SgcIconSize;
     }
 }
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLSgcButtonElement extends Components.SgcButton, HTMLStencilElement {
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    var HTMLSgcButtonElement: {
+        prototype: HTMLSgcButtonElement;
+        new (): HTMLSgcButtonElement;
+    };
+    interface HTMLSgcIconElement extends Components.SgcIcon, HTMLStencilElement {
+    }
+    var HTMLSgcIconElement: {
+        prototype: HTMLSgcIconElement;
+        new (): HTMLSgcIconElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "sgc-button": HTMLSgcButtonElement;
+        "sgc-icon": HTMLSgcIconElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
+    interface SgcButton {
+        "color"?: SgcButtonColor;
+        "isActive"?: boolean;
+        "isDisabled"?: boolean;
+        "justify"?: SgcButtonJustify;
+        "variant"?: SgcButtonVariant;
+    }
+    interface SgcIcon {
+        "name"?: SgcIconKey;
+        "size"?: SgcIconSize;
     }
     interface IntrinsicElements {
-        "my-component": MyComponent;
+        "sgc-button": SgcButton;
+        "sgc-icon": SgcIcon;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "sgc-button": LocalJSX.SgcButton & JSXBase.HTMLAttributes<HTMLSgcButtonElement>;
+            "sgc-icon": LocalJSX.SgcIcon & JSXBase.HTMLAttributes<HTMLSgcIconElement>;
         }
     }
 }
