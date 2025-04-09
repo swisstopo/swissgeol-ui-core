@@ -1,6 +1,13 @@
 {
   "name": "swissgeol-core",
+  "workspaces": [
+    ".",
+    "packages/angular"
+  ],
   "version": "0.0.1",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "description": "Stencil Component Starter",
   "scripts": {
     "build": "stencil build",
@@ -22,16 +29,26 @@
   "exports": {
     ".": {
       "import": "./dist/swissgeol-core/swissgeol-core.esm.js",
-      "require": "./dist/swissgeol-core/swissgeol-core.cjs.js"
-    },
-    "./my-component": {
-      "import": "./dist/components/my-component.js",
-      "types": "./dist/components/my-component.d.ts"
+      "require": "./dist/swissgeol-core/swissgeol-core.cjs.js",
+      "types": "./dist/types/index.d.ts"
     },
     "./loader": {
       "import": "./loader/index.js",
       "require": "./loader/index.cjs",
       "types": "./loader/index.d.ts"
+    },
+    "./components": {
+      "import": "./dist/swissgeol-core/swissgeol-core.esm.js",
+      "require": "./dist/swissgeol-core/swissgeol-core.cjs.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./components/sgc-button.js": {
+      "import": "./dist/components/sgc-button.js",
+      "types": "./dist/components/sgc-button.d.ts"
+    },
+    "./components/sgc-icon.js": {
+      "import": "./dist/components/sgc-icon.js",
+      "types": "./dist/components/sgc-icon.d.ts"
     }
   },
   "repository": {
@@ -49,6 +66,7 @@
     "@stencil/core": "^4.29.2",
     "@stencil/eslint-plugin": "^1.0.0",
     "@stencil/playwright": "^0.2.1",
+    "@stencil/angular-output-target": "0.0.1-dev.11742481103.1f47dcf9",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.5",
     "eslint": "^9.24.0",
