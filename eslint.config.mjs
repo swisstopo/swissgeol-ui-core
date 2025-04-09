@@ -13,8 +13,22 @@ const compat = new FlatCompat({
   recommendedConfig: js.configs.recommended,
 });
 
+const jsFileExtensions = ['.ts', '.tsx', '.js', '.jsx'];
+const sourcePaths = [
+  'src/',
+  'packages/angular/projects/swissgeol-core-angular',
+  'packages/angular-client/src',
+].flatMap((root) => jsFileExtensions.map((ext) => `${root}/**/*${ext}`));
+
 const sharedConfig = {
-  ignores: ['node_modules/**', 'dist/**', 'www/**', 'loader/**', '.stencil/**'],
+  ignores: [
+    'www/**',
+    'loader/**',
+    '.stencil/**',
+    '**/node_modules/**',
+    '**/dist/**',
+    '**/.angular/**',
+  ],
   languageOptions: {
     globals: globals.browser,
     ecmaVersion: 2018,
@@ -111,7 +125,7 @@ export default [
   })),
   ...baseConfigs.map((config) => ({
     ...config,
-    files: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.js', 'src/**/*.jsx'],
+    files: [...sourcePaths],
     ignores: [...sharedConfig.ignores, 'src/test/**'],
     languageOptions: {
       ...config.languageOptions,
@@ -228,13 +242,7 @@ export default [
   })),
   {
     ...sharedConfig,
-    files: [
-      'src/**/*.ts',
-      'src/**/*.tsx',
-      'src/**/*.js',
-      'src/**/*.jsx',
-      'stencil.config.ts',
-    ],
+    files: [...sourcePaths, 'stencil.config.ts'],
   },
   {
     ...sharedConfig,

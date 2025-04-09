@@ -1,0 +1,35 @@
+{
+  "name": "swissgeol-core-angular",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "npm run build:prepare && ng build && npm run build:share",
+    "build:prepare": "node fix-generated-components.js",
+    "build:share": "node share-build.js",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "19.2.2",
+    "@angular/compiler-cli": "19.2.2",
+    "@angular/cli": "19.2.2",
+    "@angular/common": "19.2.2",
+    "@angular/core": "19.2.2",
+    "@angular/forms": "19.2.2",
+    "ng-packagr": "19.2.1"
+  },
+  "peerDependencies": {
+    "@angular/common": "19.2.2",
+    "@angular/core": "19.2.2",
+    "@angular/forms": "19.2.2",
+    "@angular/router": "19.2.2",
+    "rxjs": "~7.8.0",
+    "swissgeol-core": "*",
+    "zone.js": "~0.15.0"
+  }
+}
