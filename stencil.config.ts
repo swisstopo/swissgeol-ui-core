@@ -1,10 +1,8 @@
 import { Config } from '@stencil/core';
-import { inlineSvg } from 'stencil-inline-svg';
 
 export const config: Config = {
   namespace: 'swissgeol-core',
   globalStyle: 'src/global/app.css',
-  plugins: [inlineSvg()],
   outputTargets: [
     {
       type: 'dist',
@@ -25,10 +23,11 @@ export const config: Config = {
     {
       type: 'www',
       serviceWorker: null, // disable service workers
-      copy: [{ src: 'assets', dest: 'assets' }],
+      copy: [
+        { src: 'assets', dest: 'assets' },
+        { src: '**/test/*.html' },
+        { src: '**/test/*.css' },
+      ],
     },
   ],
-  testing: {
-    browserHeadless: 'shell',
-  },
 };

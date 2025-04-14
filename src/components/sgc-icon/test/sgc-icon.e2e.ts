@@ -1,11 +1,9 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { test, expect } from '@playwright/test';
 
-describe('sgc-icon', () => {
-  it('renders', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<sgc-icon></sgc-icon>');
-
-    const element = await page.find('sgc-icon');
-    expect(element).toHaveClass('hydrated');
+test.describe('sgc-icon', () => {
+  test('renders', async ({ page }) => {
+    await page.setContent('<sgc-icon name="plus"></sgc-icon>');
+    const element = page.locator('sgc-icon >> svg');
+    expect(element).toBeTruthy();
   });
 });

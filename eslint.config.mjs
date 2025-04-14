@@ -111,7 +111,7 @@ export default [
   })),
   ...baseConfigs.map((config) => ({
     ...config,
-    files: ['src/**/*.ts', 'src/**/*.js'],
+    files: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.js', 'src/**/*.jsx'],
     ignores: [...sharedConfig.ignores, 'src/test/**'],
     languageOptions: {
       ...config.languageOptions,
@@ -213,7 +213,12 @@ export default [
   })),
   ...baseConfigs.map((config) => ({
     ...config,
-    files: ['src/test/**/*.ts', 'src/test/**/*.js'],
+    files: [
+      'src/test/**/*.ts',
+      'src/test/**/*.tsx',
+      'src/test/**/*.js',
+      'src/test/**/*.jsx',
+    ],
     languageOptions: {
       ...config.languageOptions,
       globals: {
@@ -223,11 +228,22 @@ export default [
   })),
   {
     ...sharedConfig,
-    files: ['src/**/*.ts', 'src/**/*.js', 'stencil.config.ts'],
+    files: [
+      'src/**/*.ts',
+      'src/**/*.tsx',
+      'src/**/*.js',
+      'src/**/*.jsx',
+      'stencil.config.ts',
+    ],
   },
   {
     ...sharedConfig,
-    files: ['src/test/**/*.ts', 'src/test/**/*.js'],
+    files: [
+      'src/test/**/*.ts',
+      'src/test/**/*.tsx',
+      'src/test/**/*.js',
+      'src/test/**/*.jsx',
+    ],
     languageOptions: {
       ...sharedConfig.languageOptions,
       parserOptions: {

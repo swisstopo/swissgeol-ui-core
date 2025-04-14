@@ -1,7 +1,7 @@
 {
   "overrides": [
     {
-      "files": ["*.js", "*.ts", "*.mjs", "*.cjs"],
+      "files": ["*.js", "*.jsx", "*.ts", "*.tsx", "*.mjs", "*.cjs"],
       "options": {
         "singleQuote": true
       }
