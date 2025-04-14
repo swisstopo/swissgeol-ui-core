@@ -1,8 +1,8 @@
-import { newSpecPage } from '@stencil/core/testing';
-import { SgcIcon } from '../sgc-icon';
+import { newSpecPage } from "@stencil/core/testing";
+import { SgcIcon } from "../sgc-icon";
 
-describe('sgc-icon', () => {
-  it('renders', async () => {
+describe("sgc-icon", () => {
+  it("renders", async () => {
     const page = await newSpecPage({
       components: [SgcIcon],
       html: `<sgc-icon></sgc-icon>`,

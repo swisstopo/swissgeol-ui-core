@@ -1,18 +1,18 @@
-import { Component, h, Host, Prop } from '@stencil/core';
-import styles from './sgc-icon.css';
-import plus from './icons/plus.svg';
+import { Component, h, Host, Prop } from "@stencil/core";
+import styles from "./sgc-icon.css";
+import plus from "./icons/plus.svg";
 
 @Component({
-  tag: 'sgc-icon',
+  tag: "sgc-icon",
   shadow: true,
   styles,
 })
 export class SgcIcon {
   @Prop()
-  name: SgcIconKey
+  name: SgcIconKey;
 
   @Prop({ reflect: true })
-  size: SgcIconSize = 'normal'
+  size: SgcIconSize = "normal";
 
   render() {
     return (
@@ -25,8 +25,8 @@ export class SgcIcon {
 
 const icons = {
   plus,
-}
+};
 
-export type SgcIconKey = keyof typeof icons
+export type SgcIconKey = keyof typeof icons;
 
-export type SgcIconSize = 'normal' | 'large'
+export type SgcIconSize = "normal" | "large";

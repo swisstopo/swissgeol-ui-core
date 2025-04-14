@@ -1,7 +1,9 @@
-@import '../assets/fonts/Inter/Inter.css';
-@import '../theme/index.css';
+@import "../assets/fonts/Inter/Inter.css";
+@import "../theme/index.css";
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 

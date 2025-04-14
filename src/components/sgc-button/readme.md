@@ -1,9 +1,6 @@
 # sgc-button
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Shadow Parts
 
@@ -11,7 +8,6 @@
 | ---------- | ----------- |
 | `"button"` |             |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

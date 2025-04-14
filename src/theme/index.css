@@ -40,7 +40,6 @@
   --sgc-color-bg--error: #d8232a;
 }
 
-
 /* ### Typography ### */
 /* The typographies are defined here: https://www.figma.com/design/cEiOoOazAQZqpRY92ZhBeO/swissgeol?node-id=5100-4775&t=YqTWCnEDrxPCrmpx-0. */
 /* These need to be manually defined, as Figma does not offer an export feature for these. */
@@ -61,55 +60,64 @@
   --sgc-font-family: "Inter";
   --sgc-font-family--fallback: sans-serif;
 
-  --sgc-typo-h1--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-h1--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-h1--weight: 400;
   --sgc-typo-h1--size: 48px;
   --sgc-typo-h1--line-height: 60px;
   --sgc-typo-h1--letter-spacing: -0.5px;
 
-  --sgc-typo-h2--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-h2--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-h2--weight: 400;
   --sgc-typo-h2--size: 40px;
   --sgc-typo-h2--line-height: 48px;
   --sgc-typo-h2--letter-spacing: -0.5px;
 
-  --sgc-typo-h3--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-h3--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-h3--weight: 400;
   --sgc-typo-h3--size: 32px;
   --sgc-typo-h3--line-height: 44px;
   --sgc-typo-h3--letter-spacing: 0.18px;
 
-  --sgc-typo-h4--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-h4--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-h4--weight: 400;
   --sgc-typo-h4--size: 28px;
   --sgc-typo-h4--line-height: 36px;
   --sgc-typo-h4--letter-spacing: 0.1px;
 
-  --sgc-typo-h5--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-h5--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-h5--weight: 500;
   --sgc-typo-h5--size: 20px;
   --sgc-typo-h5--line-height: 28px;
   --sgc-typo-h5--letter-spacing: 0.2px;
 
-  --sgc-typo-h6--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-h6--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-h6--weight: 500;
   --sgc-typo-h6--size: 18px;
   --sgc-typo-h6--line-height: 24px;
   --sgc-typo-h6--letter-spacing: 0.2px;
 
-  --sgc-typo-title--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-title--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-title--weight: 300;
   --sgc-typo-title--size: 26px;
   --sgc-typo-title--line-height: 34px;
   --sgc-typo-title--letter-spacing: 0;
 
-  --sgc-typo-subtitle-1--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-subtitle-1--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-subtitle-1--weight: 400;
   --sgc-typo-subtitle-1--size: 16px;
   --sgc-typo-subtitle-1--line-height: 24px;
   --sgc-typo-subtitle-1--letter-spacing: 0.0015em;
 
-  --sgc-typo-subtitle-2--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-subtitle-2--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-subtitle-2--weight: 500;
   --sgc-typo-subtitle-2--size: 14px;
   --sgc-typo-subtitle-2--line-height: 20px;
@@ -129,55 +137,64 @@
   --sgc-typo-modal-title-2--line-height: 24.2px;
   --sgc-typo-modal-title-2--letter-spacing: 0.001em;
 
-  --sgc-typo-button--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-button--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-button--weight: 500;
   --sgc-typo-button--size: 14px;
   --sgc-typo-button--line-height: 20px;
   --sgc-typo-button--letter-spacing: 0.015em;
 
-  --sgc-typo-caption--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-caption--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-caption--weight: 400;
   --sgc-typo-caption--size: 12px;
   --sgc-typo-caption--line-height: 14px;
   --sgc-typo-caption--letter-spacing: 0.004em;
 
-  --sgc-typo-overline--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-overline--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-overline--weight: 500;
   --sgc-typo-overline--size: 12px;
   --sgc-typo-overline--line-height: 16px;
   --sgc-typo-overline--letter-spacing: 0.0125em;
 
-  --sgc-typo-table-header--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-table-header--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-table-header--weight: 500;
   --sgc-typo-table-header--size: 16px;
   --sgc-typo-table-header--line-height: 24px;
   --sgc-typo-table-header--letter-spacing: 0.0015em;
 
-  --sgc-typo-footer--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-footer--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-footer--weight: 400;
   --sgc-typo-footer--size: 12px;
   --sgc-typo-footer--line-height: 20px;
   --sgc-typo-footer--letter-spacing: 0.0025em;
 
-  --sgc-typo-body-1--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-body-1--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-body-1--weight: 400;
   --sgc-typo-body-1--size: 16px;
   --sgc-typo-body-1--line-height: 24px;
   --sgc-typo-body-1--letter-spacing: 0.005em;
 
-  --sgc-typo-body-1-bold--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-body-1-bold--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-body-1-bold--weight: 500;
   --sgc-typo-body-1-bold--size: 16px;
   --sgc-typo-body-1-bold--line-height: 24px;
   --sgc-typo-body-1-bold--letter-spacing: 0.001em;
 
-  --sgc-typo-body-2--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-body-2--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-body-2--weight: 400;
   --sgc-typo-body-2--size: 14px;
   --sgc-typo-body-2--line-height: 20px;
   --sgc-typo-body-2--letter-spacing: 0.0025em;
 
-  --sgc-typo-body-2-bold--family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-body-2-bold--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
   --sgc-typo-body-2-bold--weight: 500;
   --sgc-typo-body-2-bold--size: 14px;
   --sgc-typo-body-2-bold--line-height: 20px;

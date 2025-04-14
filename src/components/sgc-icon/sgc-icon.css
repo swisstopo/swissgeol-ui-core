@@ -7,11 +7,11 @@
   height: var(--size);
 }
 
-:host([size='normal']) {
+:host([size="normal"]) {
   --size: 20px;
 }
 
-:host([size='large']) {
+:host([size="large"]) {
   --size: 24px;
 }
 

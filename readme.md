@@ -67,7 +67,11 @@ For example, given your Stencil project namespace is called `my-design-system`, 
 To avoid unpkg.com redirects to the actual file, you can also directly import:
 https://unpkg.com/foobar-design-system@0.0.1/dist/foobar-design-system/foobar-design-system.esm.js
 -->
-<my-component first="Stencil" middle="'Don't call me a framework'" last="JS"></my-component>
+<my-component
+  first="Stencil"
+  middle="'Don't call me a framework'"
+  last="JS"
+></my-component>
 ```
 
 This will only load the necessary scripts needed to render `<my-component />`. Once more components of this package are used, they will automatically be loaded lazily.
@@ -75,7 +79,7 @@ This will only load the necessary scripts needed to render `<my-component />`. O
 You can also import the script as part of your `node_modules` in your applications entry file:
 
 ```tsx
-import 'foobar-design-system/dist/foobar-design-system/foobar-design-system.esm.js';
+import "foobar-design-system/dist/foobar-design-system/foobar-design-system.esm.js";
 ```
 
 Check out this [Live Demo](https://stackblitz.com/edit/vitejs-vite-y6v26a?file=src%2Fmain.tsx).
@@ -89,7 +93,7 @@ To export Stencil components as standalone components make sure you have the [`d
 For example, given you'd like to use `<my-component />` as part of a React component, you can import the component directly via:
 
 ```tsx
-import 'foobar-design-system/my-component';
+import "foobar-design-system/my-component";
 
 function App() {
   return (

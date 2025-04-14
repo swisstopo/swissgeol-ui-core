@@ -30,7 +30,7 @@ button {
   cursor: var(--button-cursor, pointer);
   width: 100%;
 
-  ${applyTransition('fade')};
+  /*${applyTransition('fade')};*/
   transition-property: color, background-color, border-color;
 
   color: var(--button-text);
@@ -45,7 +45,7 @@ button {
   }
 
   &:focus {
-    ${applyEffect('focus')};
+    /*${applyEffect('focus')};*/
   }
 
   &:active {
@@ -75,17 +75,17 @@ button {
 }
 
 /** large */
-:host([variant='large']) button {
+:host([variant="large"]) button {
   padding: 11px 15px;
 }
 
-:host([variant='large']) ::slotted(ngm-core-icon) {
+:host([variant="large"]) ::slotted(ngm-core-icon) {
   width: 24px;
   height: 24px;
 }
 
 /* primary */
-:host([color='primary']) {
+:host([color="primary"]) {
   --button-text: var(--sgc-color-text--invert);
   --button-bg: var(--sgc-color-primary);
   --button-border: var(--sgc-color-primary);
@@ -108,7 +108,7 @@ button {
 }
 
 /* secondary */
-:host([color='secondary']) {
+:host([color="secondary"]) {
   --button-text: var(--sgc-color-primary);
   --button-bg: var(--sgc-color-secondary);
   --button-border: var(--sgc-color-primary);
@@ -131,7 +131,7 @@ button {
 }
 
 /* tertiary */
-:host([color='tertiary']) {
+:host([color="tertiary"]) {
   --button-text: var(--sgc-color-primary);
   --button-bg: var(--sgc-color-bg--white);
   --button-border: var(--sgc-color-bg--white);
@@ -159,30 +159,30 @@ button {
 }
 
 /* icon shape */
-:host([variant='icon']) button,
-:host([variant='icon-round']) button {
+:host([variant="icon"]) button,
+:host([variant="icon-round"]) button {
   padding: var(--button-padding-v);
 }
 
-:host([variant='icon-round']) button {
+:host([variant="icon-round"]) button {
   border-radius: 50%;
 }
 
 /* chip shape */
-:host([variant='chip']) button {
+:host([variant="chip"]) button {
   border-radius: 60px;
   padding-block: 2.5px;
 }
 
 /* justify */
-:host([justify='center']) button {
+:host([justify="center"]) button {
   justify-content: center;
 }
 
-:host([justify='start']) button {
+:host([justify="start"]) button {
   justify-content: flex-start;
 }
 
-:host([justify='end']) button {
+:host([justify="end"]) button {
   justify-content: flex-end;
 }
