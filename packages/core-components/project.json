@@ -1,0 +1,62 @@
+{
+  "root": "packages/core-components",
+  "sourceRoot": "packages/core-components/src",
+  "projectType": "library",
+  "generators": {
+    "@nxext/stencil:component": {
+      "style": "css"
+    }
+  },
+  "tags": [],
+  "targets": {
+    "test": {
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "projectType": "library",
+        "tsConfig": "packages/core-components/tsconfig.lib.json",
+        "configPath": "packages/core-components/stencil.config.ts",
+        "outputPath": "dist/packages/core-components"
+      }
+    },
+    "build": {
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "projectType": "library",
+        "tsConfig": "packages/core-components/tsconfig.lib.json",
+        "configPath": "packages/core-components/stencil.config.ts",
+        "outputPath": "dist/packages/core-components"
+      },
+      "configurations": {
+        "production": {
+          "dev": false,
+          "prod": true
+        }
+      }
+    },
+    "start": {
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "projectType": "library",
+        "tsConfig": "packages/core-components/tsconfig.lib.json",
+        "configPath": "packages/core-components/stencil.config.ts",
+        "outputPath": "dist/packages/core-components"
+      }
+    },
+    "e2e": {
+      "executor": "@nxext/stencil:e2e",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "projectType": "library",
+        "tsConfig": "packages/core-components/tsconfig.lib.json",
+        "configPath": "packages/core-components/stencil.config.ts",
+        "outputPath": "dist/packages/core-components"
+      }
+    },
+    "lint": {
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": "packages/core-components/**/*.{ts,tsx}"
+      }
+    }
+  }
+}
