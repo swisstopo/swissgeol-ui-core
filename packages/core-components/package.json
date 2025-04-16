@@ -13,6 +13,10 @@
       "import": "./dist/core-components/core-components.esm.js",
       "require": "./dist/core-components/core-components.cjs.js"
     },
+   "./dist/*": {
+     "import": "./dist/*",
+     "types": "./dist/*"
+   },
     "./my-component": {
       "import": "./dist/components/my-component.js",
       "types": "./dist/components/my-component.d.ts"

@@ -1,5 +1,6 @@
 import { Component, Prop, h } from '@stencil/core';
 import { format } from '../../utils/utils';
+import { Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'my-component',
@@ -21,6 +22,8 @@ export class MyComponent {
    * The last name
    */
   @Prop() last: string;
+
+  @Event() todoCompleted: EventEmitter<string>;
 
   private getText(): string {
     return format(this.first, this.middle, this.last);
