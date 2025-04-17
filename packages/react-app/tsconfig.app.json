@@ -28,9 +28,5 @@
     "src/**/*.test.jsx"
   ],
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
-  "references": [
-    {
-      "path": "../core-components-react/tsconfig.lib.json"
-    }
-  ]
+  "references": []
 }

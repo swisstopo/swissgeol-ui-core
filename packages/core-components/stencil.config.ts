@@ -29,6 +29,7 @@ export const config: Config = {
       outputType: 'component',
       directivesProxyFile: '../core-components-angular/src/lib/stencil-generated/components.ts',
       directivesArrayFile: '../core-components-angular/src/lib/stencil-generated/index.ts',
+
     }),
     // dist-custom-elements output target is required for the React output target
     { type: 'dist-custom-elements' },

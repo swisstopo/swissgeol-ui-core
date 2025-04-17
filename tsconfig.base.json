@@ -20,7 +20,7 @@
       "core-components-angular": [
         "./packages/core-components-angular/src/index.ts"
       ],
-      "react-components": ["./packages/react-components/src/index.ts"]
+      "core-components-react": ["./packages/react-components/src/index.ts"]
     }
   }
 }

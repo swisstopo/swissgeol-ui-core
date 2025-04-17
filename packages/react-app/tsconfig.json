@@ -3,9 +3,6 @@
   "include": [],
   "references": [
     {
-      "path": "../core-components-react"
-    },
-    {
       "path": "./tsconfig.app.json"
     }
   ],
