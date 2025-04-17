@@ -16,8 +16,10 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "customConditions": ["development"],
     "paths": {
+      "core-components-angular": [
+        "./packages/core-components-angular/src/index.ts"
+      ],
       "react-components": ["./packages/react-components/src/index.ts"]
     }
   }
