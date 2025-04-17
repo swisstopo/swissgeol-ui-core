@@ -7,4 +7,9 @@
   "files": ["src/main.ts"],
   "include": ["src/**/*.d.ts"],
   "exclude": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts"],
+  "references": [
+    {
+      "path": "../core-components-angular"
+    }
+  ]
 }
