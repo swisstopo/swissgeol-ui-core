@@ -1,5 +1,5 @@
 import { Config } from '@stencil/core';
-import { angularOutputTarget } from '@stencil/angular-output-target'
+import { angularOutputTarget } from '@stencil/angular-output-target';
 
 export const config: Config = {
   namespace: 'swissgeol-core',
@@ -13,20 +13,14 @@ export const config: Config = {
         { src: 'assets', dest: 'assets' },
       ],
     },
-    angularOutputTarget({
-      componentCorePackage: 'swissgeol-core',
-      outputType: 'component',
-      directivesProxyFile: 'packages/angular/projects/swissgeol-core-angular/src/lib/stencil-generated/components.ts',
-      directivesArrayFile: 'packages/angular/projects/swissgeol-core-angular/src/lib/stencil-generated/index.ts',
-    }),
-    // {
-    //   type: 'dist-custom-elements',
-    //   customElementsExportBehavior: 'auto-define-custom-elements',
-    //   externalRuntime: false,
-    // },
-    // {
-    //   type: 'docs-readme',
-    // },
+    {
+      type: 'dist-custom-elements',
+      customElementsExportBehavior: 'auto-define-custom-elements',
+      externalRuntime: false,
+    },
+    {
+      type: 'docs-readme',
+    },
     {
       type: 'www',
       serviceWorker: null, // disable service workers
@@ -36,5 +30,21 @@ export const config: Config = {
         { src: '**/test/*.css' },
       ],
     },
+    angularOutputTarget({
+      componentCorePackage: 'swissgeol-core',
+      outputType: 'component',
+      directivesProxyFile:
+        'packages/angular/projects/swissgeol-core-angular/src/lib/stencil-generated/components.ts',
+      directivesArrayFile:
+        'packages/angular/projects/swissgeol-core-angular/src/lib/stencil-generated/index.ts',
+    }),
+    // {
+    //   type: 'dist-custom-elements',
+    //   customElementsExportBehavior: 'auto-define-custom-elements',
+    //   externalRuntime: false,
+    // },
+    // {
+    //   type: 'docs-readme',
+    // },
   ],
 };

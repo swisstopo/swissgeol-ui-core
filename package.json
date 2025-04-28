@@ -10,7 +10,8 @@
   },
   "description": "Stencil Component Starter",
   "scripts": {
-    "build": "stencil build",
+    "build": "stencil build && npm run build:angular",
+    "build:angular": "npm run build --workspace=packages/angular",
     "start": "stencil build --dev --watch --serve",
     "test": "npm run test:spec && npm run test:e2e",
     "test:spec": "stencil test --spec",

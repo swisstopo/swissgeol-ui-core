@@ -1,23 +1,13 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { defineCustomElements } from 'swissgeol-core/loader';
-import { DIRECTIVES } from './stencil-generated';
+import { NgModule, provideAppInitializer } from '@angular/core'
+import { defineCustomElements } from 'swissgeol-core/loader'
+import { DIRECTIVES } from './stencil-generated'
 
 @NgModule({
   declarations: [...DIRECTIVES],
   exports: [...DIRECTIVES],
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: () => {
-        console.log('hey')
-        defineCustomElements(window)
-      },
-      multi: true,
-    },
-  ]
+    provideAppInitializer(() => defineCustomElements()),
+  ],
 })
 export class SwissgeolCoreModule {
-  constructor() {
-    console.log('Im a module 22')
-  }
 }

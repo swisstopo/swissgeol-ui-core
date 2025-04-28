@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "npm run build:prepare && ng build",
+    "build:prepare": "node fix-generated-components.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

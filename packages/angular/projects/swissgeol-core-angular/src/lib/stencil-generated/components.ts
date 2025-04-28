@@ -11,12 +11,12 @@ import { Components } from 'swissgeol-core';
   inputs: ['color', 'isActive', 'isDisabled', 'justify', 'variant']
 })
 @Component({
+  standalone: false,
   selector: 'sgc-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'isActive', 'isDisabled', 'justify', 'variant'],
-  standalone: false,
 })
 export class SgcButton {
   protected el: HTMLSgcButtonElement;
@@ -34,12 +34,12 @@ export declare interface SgcButton extends Components.SgcButton {}
   inputs: ['name', 'size']
 })
 @Component({
+  standalone: false,
   selector: 'sgc-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['name', 'size'],
-  standalone: false
 })
 export class SgcIcon {
   protected el: HTMLSgcIconElement;
