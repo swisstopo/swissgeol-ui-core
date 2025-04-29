@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 const fs = require('fs');
 
 const filePath =
@@ -7,4 +9,4 @@ const replaceString = '@Component({\n  standalone: false,';
 
 let content = fs.readFileSync(filePath, 'utf8');
 content = content.split(searchString).join(replaceString);
-fs.writeFileSync(filePath, content, 'utf8');
+fs.writeFileSync(filePath, '/* eslint-disable */\n' + content, 'utf8');
