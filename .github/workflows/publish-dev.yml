@@ -103,9 +103,9 @@ jobs:
           key: "${{ runner.os }}-node_modules-${{ env.NODE_VERSION }}-${{ hashFiles('./package-lock.json') }}"
       - name: Write package version
         run: |
-          npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version"
-          cd packages/angular && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version" && cd ../..
-          cd packages/react   && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version" && cd ../..
+          npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version
+          cd packages/angular && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version && cd ../..
+          cd packages/react   && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version && cd ../..
       - name: Build
         run: npm run build
       - name: Publish
@@ -129,9 +129,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Write package version
         run: |
-          npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version"
-          cd packages/angular && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version" && cd ../..
-          cd packages/react   && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version" && cd ../..
+          npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version
+          cd packages/angular && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version && cd ../..
+          cd packages/react   && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version && cd ../..
       - name: Set up Git user
         run: |
           git config user.name "github-actions[bot]"
