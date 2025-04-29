@@ -1,9 +1,9 @@
 import { compareBaseVersions, isSameVersion, stringifyVersion } from "./version.utils.mjs";
 
 const packages = {
-  core: 'ghcr.io/@swisstopo/swissgeol-ui-core',
-  angular: 'ghcr.io/@swisstopo/swissgeol-ui-core-angular',
-  react: 'ghcr.io/@swisstopo/swissgeol-ui-core-react',
+  core: 'ghcr.io/swisstopo/swissgeol-ui-core',
+  angular: 'ghcr.io/swisstopo/swissgeol-ui-core-angular',
+  react: 'ghcr.io/swisstopo/swissgeol-ui-core-react',
 };
 
 const packageType = 'npm'
