@@ -69,10 +69,10 @@
     "@eslint/css": "^0.6.0",
     "@eslint/js": "^9.24.0",
     "@eslint/markdown": "^6.3.0",
+    "@stencil/angular-output-target": "0.0.1-dev.11742481103.1f47dcf9",
     "@stencil/core": "^4.29.2",
     "@stencil/eslint-plugin": "^1.0.0",
     "@stencil/playwright": "^0.2.1",
-    "@stencil/angular-output-target": "0.0.1-dev.11742481103.1f47dcf9",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.5",
     "eslint": "^9.24.0",
@@ -86,5 +86,8 @@
     "puppeteer": "^24.3.0",
     "typescript-eslint": "^8.29.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@stencil/react-output-target": "^1.0.2"
+  }
 }
