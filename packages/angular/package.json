@@ -5,8 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "npm run build:prepare && ng build && npm run build:share",
-    "build:prepare": "node fix-generated-components.js",
-    "build:share": "node share-build.js",
+    "build:prepare": "tsx scripts/prepare-build.ts",
+    "build:share": "tsx scripts/share-build.ts",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
