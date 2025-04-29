@@ -167,12 +167,12 @@ export const removePackageVersions = async (versions) => {
   const { getOctokit } = await import("./octokit.mjs");
   const octokit = await getOctokit();
 
-  for (const package of Object.values(packages)) {
-    const { owner, name } = getPackageInfo(package);
+  for (const packageName of Object.values(packages)) {
+    const { owner, name } = getPackageInfo(packageName);
     for (const version of versions) {
       let packageId = null;
       await loadVersions({
-        package,
+        package: packageName,
         receive: (currentVersion, _tags, currentPackageId) => {
           if (isSameVersion(version, currentVersion)) {
             packageId = currentPackageId;
@@ -181,7 +181,7 @@ export const removePackageVersions = async (versions) => {
         abort: () => packageId !== null,
       });
       if (packageId === null) {
-        console.warn(`Package ${package}:${stringifyVersion(version)} not found, skipping deletion.`);
+        console.warn(`Package ${packageName}:${stringifyVersion(version)} not found, skipping deletion.`);
         continue;
       }
       await octokit.rest.packages.deletePackageVersionForOrg({
