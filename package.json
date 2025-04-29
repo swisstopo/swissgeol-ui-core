@@ -1,5 +1,9 @@
 {
-  "name": "swissgeol-core",
+  "name": "@swisstopo/swissgeol-ui-core",
+  "version": "0.0.1",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "workspaces": [
     ".",
     "packages/angular",
@@ -7,11 +11,7 @@
     "packages/react",
     "packages/react-client"
   ],
-  "version": "0.0.1",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
-  "description": "Stencil Component Starter",
+  "description": "swissgeol UI Core Library",
   "scripts": {
     "build": "stencil build && npm run build:angular && npm run build:react",
     "build:angular": "npm run build --workspace=packages/angular",
@@ -30,16 +30,16 @@
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/swissgeol-core/swissgeol-core.esm.js",
+  "unpkg": "dist/swissgeol-ui-core/swissgeol-ui-core.esm.js",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/swissgeol-core/swissgeol-core.esm.js",
-      "require": "./dist/swissgeol-core/swissgeol-core.cjs.js"
+      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.esm.js",
+      "require": "./dist/swissgeol-ui-core/swissgeol-ui-core.cjs.js"
     },
     "./styles.css": {
-      "import": "./dist/swissgeol-core/swissgeol-core.css",
-      "require": "./dist/swissgeol-core/swissgeol-core.css"
+      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.css",
+      "require": "./dist/swissgeol-ui-core/swissgeol-ui-core.css"
     },
     "./loader": {
       "types": "./loader/index.d.ts",
@@ -48,8 +48,8 @@
     },
     "./components": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/swissgeol-core/swissgeol-core.esm.js",
-      "require": "./dist/swissgeol-core/swissgeol-core.cjs.js"
+      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.esm.js",
+      "require": "./dist/swissgeol-ui-core/swissgeol-ui-core.cjs.js"
     },
     "./components/sgc-button.js": {
       "types": "./dist/components/sgc-button.d.ts",

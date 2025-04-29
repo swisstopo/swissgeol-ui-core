@@ -1,6 +1,9 @@
 {
-  "name": "swissgeol-core-react",
+  "name": "@swisstopo/swissgeol-ui-core-react",
   "version": "0.0.1",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -13,7 +16,6 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "development": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
@@ -30,7 +32,7 @@
     "vitest": "^3.1.2",
     "@vitejs/plugin-react": "^4.4.1",
     "typescript": "5.8.3",
-    "swissgeol-core": "*"
+    "@swisstopo/swissgeol-ui-core": "*"
   },
   "peerDependencies": {
     "@stencil/react-output-target": "^1.0.2",

@@ -1,10 +1,8 @@
 // Uncomment this line to use CSS modules
 // import styles from './app.module.scss';
 
-import { SgcButton, SgcIcon } from 'swissgeol-core-react';
+import { SgcButton, SgcIcon } from '@swisstopo/swissgeol-ui-core-react';
 import styles from './app.module.scss';
-
-console.log(styles);
 
 export function App() {
   return (

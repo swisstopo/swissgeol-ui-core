@@ -9,8 +9,8 @@ replaceInFile(
   ),
   [
     [
-      'from "swissgeol-core/dist/components/',
-      'from "swissgeol-core/components/',
+      'from "@swisstopo/swissgeol-ui-core/dist/components/',
+      'from "@swisstopo/swissgeol-ui-core/components/',
     ],
   ],
 );
