@@ -3,7 +3,9 @@
   "workspaces": [
     ".",
     "packages/angular",
-    "packages/angular-client"
+    "packages/angular-client",
+    "packages/react",
+    "packages/react-client"
   ],
   "version": "0.0.1",
   "publishConfig": {
@@ -11,8 +13,9 @@
   },
   "description": "Stencil Component Starter",
   "scripts": {
-    "build": "stencil build && npm run build:angular",
+    "build": "stencil build && npm run build:angular && npm run build:react",
     "build:angular": "npm run build --workspace=packages/angular",
+    "build:react": "npm run build --workspace=packages/react",
     "start": "stencil build --dev --watch --serve",
     "test": "npm run test:spec && npm run test:e2e",
     "test:spec": "stencil test --spec",
@@ -75,6 +78,7 @@
     "@stencil/playwright": "^0.2.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.5",
+    "concurrently": "^9.1.2",
     "eslint": "^9.24.0",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.2.6",
@@ -84,6 +88,7 @@
     "jest-cli": "^29.7.0",
     "prettier": "^3.5.3",
     "puppeteer": "^24.3.0",
+    "tsx": "^4.19.4",
     "typescript-eslint": "^8.29.1"
   },
   "license": "MIT",
