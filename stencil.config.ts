@@ -1,5 +1,6 @@
 import { Config } from '@stencil/core';
 import { angularOutputTarget } from '@stencil/angular-output-target';
+import { reactOutputTarget } from '@stencil/react-output-target'
 
 export const config: Config = {
   namespace: 'swissgeol-core',
@@ -38,13 +39,8 @@ export const config: Config = {
       directivesArrayFile:
         'packages/angular/projects/swissgeol-core-angular/src/lib/stencil-generated/index.ts',
     }),
-    // {
-    //   type: 'dist-custom-elements',
-    //   customElementsExportBehavior: 'auto-define-custom-elements',
-    //   externalRuntime: false,
-    // },
-    // {
-    //   type: 'docs-readme',
-    // },
+    reactOutputTarget({
+      outDir: 'packages/react/src/lib/components/stencil-generated/',
+    }),
   ],
 };
