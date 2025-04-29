@@ -111,7 +111,9 @@ const loadVersions = async ({ receive, abort, package: packageName }) => {
     }
     let hasAborted = false;
     for (const entry of data) {
-      const { tags } = entry.metadata.container;
+      const tags = packageType === 'npm'
+        ? [entry.name]
+        : entry.metadata.container.tags
       const versions = [];
       const otherTags = new Set();
       for (const tag of tags) {
