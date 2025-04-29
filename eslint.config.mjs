@@ -16,9 +16,19 @@ const compat = new FlatCompat({
 const jsFileExtensions = ['.ts', '.tsx', '.js', '.jsx'];
 const sourcePaths = [
   'src/',
+  'scripts/',
   'packages/angular/projects/swissgeol-core-angular',
   'packages/angular-client/src',
+  'packages/react/src',
+  'packages/react/scripts',
+  'packages/react-client/src',
 ].flatMap((root) => jsFileExtensions.map((ext) => `${root}/**/*${ext}`));
+
+const tsFiles = [
+  'stencil.config.ts',
+  'packages/react/vite.config.ts',
+  'packages/react-client/vite.config.ts',
+];
 
 const sharedConfig = {
   ignores: [
@@ -242,7 +252,7 @@ export default [
   })),
   {
     ...sharedConfig,
-    files: [...sourcePaths, 'stencil.config.ts'],
+    files: [...sourcePaths, ...tsFiles],
   },
   {
     ...sharedConfig,

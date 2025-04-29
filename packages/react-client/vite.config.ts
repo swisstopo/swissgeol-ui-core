@@ -22,9 +22,9 @@ export default defineConfig(() => ({
         {
           src: 'node_modules/swissgeol-core/assets/*',
           dest: 'assets',
-        }
-      ]
-    })
+        },
+      ],
+    }),
   ],
   build: {
     outDir: './dist',

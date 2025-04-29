@@ -4,8 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "vite serve",
-    "postinstall": "cd ../react && npm run build:share"
+    "start": "vite serve"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.26.3",

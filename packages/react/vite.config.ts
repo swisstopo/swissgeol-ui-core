@@ -10,13 +10,13 @@ export default defineConfig(() => ({
     react(),
     dts({
       entryRoot: 'src',
-      tsconfigPath: path.join(__dirname, 'tsconfig.lib.json'),
+      tsconfigPath: path.join(__dirname, 'tsconfig.json'),
     }),
   ],
   // Configuration for building your library.
   // See: https://vitejs.dev/guide/build.html#library-mode
   build: {
-    outDir: './dist',
+    outDir: path.join(__dirname, 'dist'),
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
@@ -25,7 +25,7 @@ export default defineConfig(() => ({
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: 'src/index.ts',
-      name: '@stencil-library/core-components-react',
+      name: 'swissgeol-core-react',
       fileName: 'index',
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.
