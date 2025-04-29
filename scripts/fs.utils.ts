@@ -16,4 +16,4 @@ export const copyRecursive = (src: string, dest: string): void => {
       fs.copyFileSync(srcPath, destPath);
     }
   }
-}
+};

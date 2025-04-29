@@ -1,6 +1,6 @@
 import { Config } from '@stencil/core';
 import { angularOutputTarget } from '@stencil/angular-output-target';
-import { reactOutputTarget } from '@stencil/react-output-target'
+import { reactOutputTarget } from '@stencil/react-output-target';
 
 export const config: Config = {
   namespace: 'swissgeol-core',

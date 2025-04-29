@@ -2,7 +2,7 @@
 // import styles from './app.module.scss';
 
 import { SgcButton, SgcIcon } from 'swissgeol-core-react';
-import styles from './app.module.scss'
+import styles from './app.module.scss';
 
 console.log(styles);
 
@@ -11,8 +11,14 @@ export function App() {
     <div className={styles.wrapper}>
       <div className={styles.buttons}>
         <SgcButton color="primary"> Primary</SgcButton>
-        <SgcButton color="primary" isDisabled> Disabled</SgcButton>
-        <SgcButton color="primary" isActive> Active</SgcButton>
+        <SgcButton color="primary" isDisabled>
+          {' '}
+          Disabled
+        </SgcButton>
+        <SgcButton color="primary" isActive>
+          {' '}
+          Active
+        </SgcButton>
         <SgcButton color="primary">
           <SgcIcon name="plus"></SgcIcon>
           Primary
@@ -57,8 +63,14 @@ export function App() {
         </SgcButton>
 
         <SgcButton color="secondary"> Secondary</SgcButton>
-        <SgcButton color="secondary" isDisabled> Disabled</SgcButton>
-        <SgcButton color="secondary" isActive> Active</SgcButton>
+        <SgcButton color="secondary" isDisabled>
+          {' '}
+          Disabled
+        </SgcButton>
+        <SgcButton color="secondary" isActive>
+          {' '}
+          Active
+        </SgcButton>
         <SgcButton color="secondary">
           <SgcIcon name="plus"></SgcIcon>
           Secondary
@@ -103,8 +115,14 @@ export function App() {
         </SgcButton>
 
         <SgcButton color="tertiary"> Tertiary</SgcButton>
-        <SgcButton color="tertiary" isDisabled> Disabled</SgcButton>
-        <SgcButton color="tertiary" isActive> Active</SgcButton>
+        <SgcButton color="tertiary" isDisabled>
+          {' '}
+          Disabled
+        </SgcButton>
+        <SgcButton color="tertiary" isActive>
+          {' '}
+          Active
+        </SgcButton>
         <SgcButton color="tertiary">
           <SgcIcon name="plus"></SgcIcon>
           Tertiary
