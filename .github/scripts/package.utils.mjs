@@ -150,8 +150,7 @@ const fetchPackagePage = async (owner, name, page) => {
     const response = await octokit.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
       package_type: packageType,
       package_name: name,
-      // TODO change this to `org: owner`
-      username: owner,
+      org: owner,
       page,
       per_page: 100,
     });
@@ -188,8 +187,7 @@ export const removePackageVersions = async (versions) => {
       await octokit.rest.packages.deletePackageVersionForOrg({
         package_type: packageType,
         package_name: name,
-        // TODO change this to `org: owner`
-        username: owner,
+        org: owner,
         package_version_id: packageId,
       });
     }
