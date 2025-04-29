@@ -13,6 +13,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
+  "files": [
+    "package.json",
+    "dist"
+  ],
   "private": true,
   "dependencies": {
     "zone.js": "~0.15.0"

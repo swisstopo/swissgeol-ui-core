@@ -65,6 +65,7 @@
     "url": "https://github.com/stenciljs/component-starter.git"
   },
   "files": [
+    "package.json",
     "dist/",
     "loader/"
   ],

@@ -1,0 +1,156 @@
+name: Publish DEV
+
+on:
+  push:
+    branches:
+      - "develop"
+
+      # TODO remove this
+      - "feature/setup-angular"
+
+# Run all publish workflow in sequence to ensure consistent version numbers.
+concurrency:
+  group: "publish"
+
+permissions: write-all
+
+env:
+  NODE_VERSION: "22.5.1"
+
+jobs:
+  determine-version:
+    if: github.actor != 'github-actions[bot]'
+    name: "determine version"
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.find-version.outputs.result }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install @octokit/rest
+      - name: Find version
+        id: find-version
+        uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          result-encoding: string
+          script: |
+            const { findSourceAndTargetBranches } = await import('${{ github.workspace }}/.github/scripts/branch.utils.mjs');
+            const { findBaseVersionForDev } = await import('${{ github.workspace }}/.github/scripts/package.utils.mjs');
+            const {
+              incrementDevVersion,
+              stringifyVersion,
+            } = await import('${{ github.workspace }}/.github/scripts/version.utils.mjs');
+
+            const prevVersion = await findBaseVersionForDev();
+            const [source, target] = await findSourceAndTargetBranches(context);
+            const nextVersion = incrementDevVersion(prevVersion, source);
+
+            return stringifyVersion(nextVersion);
+
+  install:
+    name: "install"
+    needs:
+      - determine-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://npm.pkg.github.com/'
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: "${{ runner.os }}-npm-${{ env.NODE_VERSION }}-${{ hashFiles('./package-lock.json') }}"
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ./node_modules
+          key: "${{ runner.os }}-node_modules-${{ env.NODE_VERSION }}-${{ hashFiles('./package-lock.json') }}"
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+      - name: Install node dependencies
+        run: npm ci
+
+  build-and-publish:
+    name: "build and publish"
+    needs:
+      - install
+      - determine-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://npm.pkg.github.com/'
+      - name: Restore cached node modules
+        uses: actions/cache/restore@v4
+        with:
+          path: ./node_modules
+          key: "${{ runner.os }}-node_modules-${{ env.NODE_VERSION }}-${{ hashFiles('./package-lock.json') }}"
+      - name: Write package version
+        run: |
+          npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version"
+          cd packages/angular && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version" && cd ../..
+          cd packages/react   && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version" && cd ../..
+      - name: Build
+        run: npm run build
+      - name: Publish
+        run: |
+          npm publish
+          cd packages/angular && npm publish && cd ../..
+          cd packages/react   && npm publish && cd ../..
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  push-version:
+    name: "push version"
+    needs:
+      - build-and-publish
+      - determine-version
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.push.outputs.sha }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Write package version
+        run: |
+          npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version"
+          cd packages/angular && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version" && cd ../..
+          cd packages/react   && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version" && cd ../..
+      - name: Set up Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Push
+        run: |
+          git add .
+          git commit -m "Update version to ${{ needs.determine-version.outputs.version }}"
+          git push
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  tag-commit:
+    name: "tag commit"
+    needs:
+      - push-version
+      - build-and-publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: tag edge
+        uses: ./.github/actions/tag-commit
+        with:
+          TAG_NAME: edge
+          SHA: ${{ needs.push-version.outputs.sha }}
