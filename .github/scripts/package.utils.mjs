@@ -100,6 +100,7 @@ const loadVersions = async ({ receive, abort, package: packageName }) => {
   const { parseVersion } = await import("./version.utils.mjs");
 
   const { owner, name } = getPackageInfo(packageName ?? packages.core);
+  console.log(getPackageInfo(packageName ?? packages.core));
 
   let page = FIRST_UNCACHED_VERSION_PAGE;
   while (true) {
