@@ -3,7 +3,7 @@ import { angularOutputTarget } from '@stencil/angular-output-target';
 import { reactOutputTarget } from '@stencil/react-output-target';
 
 export const config: Config = {
-  namespace: 'swissgeol-core',
+  namespace: 'swissgeol-ui-core',
   globalStyle: 'src/global/app.css',
   outputTargets: [
     {
@@ -32,7 +32,7 @@ export const config: Config = {
       ],
     },
     angularOutputTarget({
-      componentCorePackage: 'swissgeol-core',
+      componentCorePackage: '@swisstopo/swissgeol-ui-core',
       outputType: 'component',
       directivesProxyFile:
         'packages/angular/projects/swissgeol-core-angular/src/lib/stencil-generated/components.ts',

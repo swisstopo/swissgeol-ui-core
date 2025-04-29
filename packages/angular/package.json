@@ -1,6 +1,9 @@
 {
-  "name": "swissgeol-core-angular",
-  "version": "0.0.0",
+  "name": "@swisstopo/swissgeol-ui-core-angular",
+  "version": "0.0.1",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -29,7 +32,7 @@
     "@angular/forms": "19.2.2",
     "@angular/router": "19.2.2",
     "rxjs": "~7.8.0",
-    "swissgeol-core": "*",
+    "@swisstopo/swissgeol-ui-core": "*",
     "zone.js": "~0.15.0"
   }
 }
