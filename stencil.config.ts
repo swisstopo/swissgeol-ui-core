@@ -10,8 +10,8 @@ export const config: Config = {
       type: 'dist',
       esmLoaderPath: '../loader',
       copy: [
-        { src: 'theme', dest: 'theme' },
         { src: 'assets', dest: 'assets' },
+        { src: 'theme', dest: 'theme' },
       ],
     },
     {
