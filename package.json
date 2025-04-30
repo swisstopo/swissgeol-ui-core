@@ -4,6 +4,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
+  "description": "swissgeol UI Core Library",
   "workspaces": [
     ".",
     "packages/angular",
@@ -11,7 +12,6 @@
     "packages/react",
     "packages/react-client"
   ],
-  "description": "swissgeol UI Core Library",
   "scripts": {
     "build": "stencil build && npm run build:angular && npm run build:react",
     "build:angular": "npm run build --workspace=packages/angular",
