@@ -1,12 +1,13 @@
-import { compareBaseVersions, isSameVersion, stringifyVersion } from "./version.utils.mjs";
+import { getOctokit } from './octokit.mjs';
+import {
+  compareBaseVersions,
+  isSameVersion,
+  parseVersion,
+  stringifyVersion,
+} from './version.utils.mjs';
+import { packages, packageType } from './package.config.mjs';
 
-const packages = {
-  core: 'ghcr.io/swisstopo/swissgeol-ui-core',
-  angular: 'ghcr.io/swisstopo/swissgeol-ui-core-angular',
-  react: 'ghcr.io/swisstopo/swissgeol-ui-core-react',
-};
-
-const packageType = 'npm'
+const defaultPackage = Object.values(packages)[0];
 
 /**
  * Attempts to parse the latest version from the published packages that a new `dev` version should be based on.
@@ -18,33 +19,43 @@ const packageType = 'npm'
  * @returns {Promise<object|null>} The latest dev version, or `null`.
  */
 export const findBaseVersionForDev = () =>
-  findLatestVersionByPredicate((version) => version.preRelease === null || version.preRelease.tag === "dev");
+  findLatestVersionByPredicate(
+    (version) =>
+      version.preRelease === null || version.preRelease.tag === 'dev',
+  );
 
 /**
  * Attempts to parse the latest dev version from the published packages.
  * @returns {Promise<object|null>} The latest dev version, or `null`.
  */
-export const findLatestDevVersion = () => findLatestVersionByPredicate((version) => version.preRelease?.tag === "dev");
+export const findLatestDevVersion = () =>
+  findLatestVersionByPredicate((version) => version.preRelease?.tag === 'dev');
 
 /**
  * Attempts to parse the latest release candidate version from the published packages.
  * @returns {Promise<object|null>} The latest rc version, or `null`.
  */
-export const findLatestRcVersion = () => findLatestVersionByPredicate((version) => version.preRelease?.tag === "rc");
+export const findLatestRcVersion = () =>
+  findLatestVersionByPredicate((version) => version.preRelease?.tag === 'rc');
 
 /**
  * Attempts to parse the latest hotfix version from the published packages.
  * @returns {Promise<object|null>} The latest hotfix version, or `null`.
  */
 export const findLatestHotfixVersion = () =>
-  findLatestVersionByPredicate((version) => version.preRelease?.tag === "hotfix");
+  findLatestVersionByPredicate(
+    (version) => version.preRelease?.tag === 'hotfix',
+  );
 
 /**
  * Attempts to parse the latest hotfix version from the published packages.
  * @returns {Promise<object|null>} The latest hotfix version, or `null`.
  */
 export const findLatestReleasableVersion = () =>
-  findLatestVersionByPredicate((version) => version.preRelease?.tag === "hotfix" || version.preRelease?.tag === "rc");
+  findLatestVersionByPredicate(
+    (version) =>
+      version.preRelease?.tag === 'hotfix' || version.preRelease?.tag === 'rc',
+  );
 
 /**
  * Attempts to parse the latest release version from the published packages.
@@ -60,8 +71,9 @@ export const findOutdatedVersions = async (latestVersion) => {
       if (version.preRelease === null) {
         return;
       }
-      const hasReleaseTag = tags.has("edge") || tags.has("release-candidate") || tags.has("latest");
-      if (!hasReleaseTag && compareBaseVersions(latestVersion, version) > 0) {
+      const hasReleaseTag =
+        tags.has('edge') || tags.has('release-candidate') || tags.has('latest');
+      if (!hasReleaseTag && compareBaseVersions(latestVersion, version) >= 0) {
         outdatedVersions.push(version);
       }
     },
@@ -84,36 +96,39 @@ export const findLatestVersionByPredicate = async (test) => {
 };
 
 const CACHED_VERSIONS = [];
-let FIRST_UNCACHED_VERSION_PAGE = 0;
+let FIRST_UNCACHED_VERSION_PAGE = 1;
 
 const loadVersions = async ({ receive, abort, package: packageName }) => {
-  for (const [version, tags, packageId] of CACHED_VERSIONS) {
-    receive(version, tags, packageId);
-    if (abort()) {
+  const isCacheable =
+    packageName === undefined || packageName === defaultPackage;
+
+  if (isCacheable) {
+    for (const [version, tags, packageId] of CACHED_VERSIONS) {
+      receive(version, tags, packageId);
+      if (abort()) {
+        return;
+      }
+    }
+    if (FIRST_UNCACHED_VERSION_PAGE === -1) {
       return;
     }
   }
-  if (FIRST_UNCACHED_VERSION_PAGE === -1) {
-    return;
-  }
 
-  const { parseVersion } = await import("./version.utils.mjs");
+  const { owner, name } = getPackageInfo(packageName ?? defaultPackage);
 
-  const { owner, name } = getPackageInfo(packageName ?? packages.core);
-  console.log(getPackageInfo(packageName ?? packages.core));
-
-  let page = FIRST_UNCACHED_VERSION_PAGE;
+  let page = isCacheable ? FIRST_UNCACHED_VERSION_PAGE : 1;
   while (true) {
     const data = await fetchPackagePage(owner, name, page);
     if (data.length === 0) {
-      FIRST_UNCACHED_VERSION_PAGE = -1;
+      if (isCacheable) {
+        FIRST_UNCACHED_VERSION_PAGE = -1;
+      }
       return;
     }
     let hasAborted = false;
     for (const entry of data) {
-      const tags = packageType === 'npm'
-        ? [entry.name]
-        : entry.metadata.container.tags
+      const tags =
+        packageType === 'npm' ? [entry.name] : entry.metadata.container.tags;
       const versions = [];
       const otherTags = new Set();
       for (const tag of tags) {
@@ -125,7 +140,9 @@ const loadVersions = async ({ receive, abort, package: packageName }) => {
         }
       }
       for (const version of versions) {
-        CACHED_VERSIONS.push([version, otherTags, entry.id]);
+        if (isCacheable) {
+          CACHED_VERSIONS.push([version, otherTags, entry.id]);
+        }
         if (!hasAborted) {
           receive(version, otherTags, entry.id);
           hasAborted = abort();
@@ -133,7 +150,9 @@ const loadVersions = async ({ receive, abort, package: packageName }) => {
       }
     }
     page += 1;
-    FIRST_UNCACHED_VERSION_PAGE = page;
+    if (isCacheable) {
+      FIRST_UNCACHED_VERSION_PAGE = page;
+    }
     if (hasAborted) {
       return;
     }
@@ -141,21 +160,21 @@ const loadVersions = async ({ receive, abort, package: packageName }) => {
 };
 
 const getPackageInfo = (url) => {
-  const [host, owner, name] = url.split("/");
+  const [host, owner, name] = url.split('/');
   return { host, owner, name };
 };
 
 const fetchPackagePage = async (owner, name, page) => {
-  const { getOctokit } = await import("./octokit.mjs");
-  const octokit = await getOctokit();
+  const octokit = getOctokit();
   try {
-    const response = await octokit.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
-      package_type: packageType,
-      package_name: name,
-      org: owner,
-      page,
-      per_page: 100,
-    });
+    const response =
+      await octokit.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+        package_type: packageType,
+        package_name: name,
+        org: owner,
+        page,
+        per_page: 100,
+      });
     return response.data;
   } catch (e) {
     if (e.status === 404) {
@@ -166,8 +185,7 @@ const fetchPackagePage = async (owner, name, page) => {
 };
 
 export const removePackageVersions = async (versions) => {
-  const { getOctokit } = await import("./octokit.mjs");
-  const octokit = await getOctokit();
+  const octokit = getOctokit();
 
   for (const packageName of Object.values(packages)) {
     const { owner, name } = getPackageInfo(packageName);
@@ -183,7 +201,9 @@ export const removePackageVersions = async (versions) => {
         abort: () => packageId !== null,
       });
       if (packageId === null) {
-        console.warn(`Package ${packageName}:${stringifyVersion(version)} not found, skipping deletion.`);
+        console.warn(
+          `Package ${packageName}:${stringifyVersion(version)} not found, skipping deletion.`,
+        );
         continue;
       }
       await octokit.rest.packages.deletePackageVersionForOrg({

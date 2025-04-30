@@ -1,8 +1,9 @@
+import { Octokit } from '@octokit/rest';
+
 let octokit = null;
 
-export const getOctokit = async () => {
+export const getOctokit = () => {
   if (octokit === null) {
-    const { Octokit } = await import("@octokit/rest");
     octokit = new Octokit({
       auth: process.env.GITHUB_TOKEN,
     });

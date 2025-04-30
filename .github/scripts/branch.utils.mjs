@@ -1,3 +1,5 @@
+import { getOctokit } from './octokit.mjs';
+
 /**
  * Determines the source and target branches of a workflow.
  *
@@ -11,11 +13,10 @@
  * @returns {Promise<[string|null, string]>} The source and target branch names.
  */
 export const findSourceAndTargetBranches = async (context) => {
-  const { getOctokit } = await import("./octokit.mjs");
-  const octokit = await getOctokit();
+  const octokit = getOctokit();
 
   // The branch on which the current workflow is running.
-  const targetBranch = context.payload.ref.replace("refs/heads/", "");
+  const targetBranch = context.payload.ref.replace('refs/heads/', '');
 
   // Fetch the five PRs targeting the current branch that have most recently been closed.
   // We use this to determine the source branch, as there is no built-in way to see
@@ -27,16 +28,18 @@ export const findSourceAndTargetBranches = async (context) => {
   const pullRequests = await octokit.rest.pulls.list({
     owner: context.repo.owner,
     repo: context.repo.repo,
-    state: "closed",
+    state: 'closed',
     base: targetBranch,
-    sort: "updated",
-    direction: "desc",
+    sort: 'updated',
+    direction: 'desc',
     per_page: 5,
   });
 
   // Find the PR that has initiated the push resulting in the current state of the branch.
   // We do this by checking if the PR's merge commit is the same as our branch head.
-  const mergedPullRequest = pullRequests.data.find((pr) => pr.merge_commit_sha === context.payload.after);
+  const mergedPullRequest = pullRequests.data.find(
+    (pr) => pr.merge_commit_sha === context.payload.after,
+  );
 
   // If we haven't found a matching pull request, we assume that this is a "naked" push,
   // without an associated source branch.
@@ -44,6 +47,6 @@ export const findSourceAndTargetBranches = async (context) => {
     return [null, targetBranch];
   }
 
-  const sourceBranch = mergedPullRequest.head.ref.replace("refs/heads/", "");
+  const sourceBranch = mergedPullRequest.head.ref.replace('refs/heads/', '');
   return [sourceBranch, targetBranch];
 };
