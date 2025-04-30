@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.find-version.outputs.result }}
+      tag: ${{ steps.find-tag.outputs.result }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -58,6 +59,20 @@ jobs:
                 const devVersion = await findLatestDevVersion()
                 return stringifyVersion({ ...devVersion, preRelease: null });
               }
+            }
+      - name: "Find tag"
+        id: find-tag
+        uses: actions/github-script@v7
+        with:
+          result-encoding: string
+          script: |
+            switch ('${{ github.ref_name }}') {
+              case 'next':
+                return 'next';
+              case 'develop':
+                return 'edge';
+              default:
+                return 'latest';
             }
 
   install:
@@ -102,9 +117,9 @@ jobs:
         run: npm run build
       - name: Publish
         run: |
-          npm publish
-          cd packages/angular && npm publish && cd ../..
-          cd packages/react   && npm publish && cd ../..
+          npm publish --tag ${{ needs.determine-version.outputs.tag }}
+          cd packages/angular && npm publish --tag ${{ needs.determine-version.outputs.tag }} && cd ../..
+          cd packages/react   && npm publish --tag ${{ needs.determine-version.outputs.tag }} && cd ../..
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -117,19 +132,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Determine tag
-        run: |
-          if [ "${{ github.ref_name }}" = "next" ]; then
-            echo "TAG=next" >> $GITHUB_ENV
-          elif [ "${{ github.ref_name }}" = "develop" ]; then
-            echo "TAG=edge" >> $GITHUB_ENV
-          else
-            echo "TAG=latest" >> $GITHUB_ENV
-          fi
       - name: tag commit
         uses: ./.github/actions/tag-commit
         with:
-          TAG_NAME: ${{ env.TAG }}
+          TAG_NAME: ${{ needs.determine-version.outputs.tag }}
           SHA: ${{ github.sha }}
       - name: tag commit with version
         if: ${{ env.TAG == 'latest' }}
