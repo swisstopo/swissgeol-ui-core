@@ -128,4 +128,4 @@ jobs:
         uses: ./.github/actions/tag-commit
         with:
           TAG_NAME: edge
-          SHA: ${{ needs.push-version.outputs.sha }}
+          SHA: ${{ github.sha }}
