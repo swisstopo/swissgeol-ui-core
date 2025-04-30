@@ -130,7 +130,7 @@ jobs:
           TAG_NAME: ${{ env.TAG }}
           SHA: ${{ github.sha }}
       - name: tag commit with version
-        if: ${{ env.TAG == "latest" }}
+        if: ${{ env.TAG == 'latest' }}
         uses: ./.github/actions/tag-commit
         with:
           TAG_NAME: ${{ needs.determine-version.outputs.version }}
