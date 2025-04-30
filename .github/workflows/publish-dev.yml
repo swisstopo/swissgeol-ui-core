@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - "develop"
+      - "next"
 
       # TODO remove this
       - "feature/setup-angular"
@@ -16,10 +17,10 @@ permissions: write-all
 
 env:
   NODE_VERSION: "22.5.1"
+  TAG: ${{ github.ref_name == 'next' && 'next' || 'latest' }}
 
 jobs:
   determine-version:
-    if: github.actor != 'github-actions[bot]'
     name: "determine version"
     runs-on: ubuntu-latest
     outputs:
@@ -40,13 +41,15 @@ jobs:
             const { findSourceAndTargetBranches } = await import('${{ github.workspace }}/.github/scripts/branch.utils.mjs');
             const { findBaseVersionForDev } = await import('${{ github.workspace }}/.github/scripts/package.utils.mjs');
             const {
-              incrementDevVersion,
+              determineNextDevVersion,
+              determineNextNextVersion,
               stringifyVersion,
             } = await import('${{ github.workspace }}/.github/scripts/version.utils.mjs');
 
-            const prevVersion = await findBaseVersionForDev();
             const [source, target] = await findSourceAndTargetBranches(context);
-            const nextVersion = incrementDevVersion(prevVersion, source);
+            const nextVersion = source === 'next'
+              ? await determineNextNextVersion()
+              : await determineNextDevVersion(source);
 
             return stringifyVersion(nextVersion);
 
@@ -124,8 +127,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: tag edge
+      - name: tag commit
         uses: ./.github/actions/tag-commit
         with:
-          TAG_NAME: edge
+          TAG_NAME: ${{ env.TAG }}
           SHA: ${{ github.sha }}

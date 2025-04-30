@@ -48,6 +48,13 @@ export const findLatestHotfixVersion = () =>
   );
 
 /**
+ * Attempts to parse the latest next version from the published packages.
+ * @returns {Promise<object|null>} The latest next version, or `null`.
+ */
+export const findLatestNextVersion = () =>
+  findLatestVersionByPredicate((version) => version.preRelease?.tag === 'next');
+
+/**
  * Attempts to parse the latest hotfix version from the published packages.
  * @returns {Promise<object|null>} The latest hotfix version, or `null`.
  */
