@@ -1,0 +1,47 @@
+{
+  "name": "@swisstopo/swissgeol-ui-core-react",
+  "version": "0.0.0",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "npm run build:prepare && vite build && npm run build:share",
+    "build:prepare": "tsx scripts/prepare-build.ts",
+    "build:share": "tsx scripts/share-build.ts"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "package.json",
+    "dist"
+  ],
+  "devDependencies": {
+    "@babel/preset-react": "^7.26.3",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "vite": "^6.3.3",
+    "vite-plugin-dts": "^4.5.3",
+    "vitest": "^3.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "typescript": "5.8.3",
+    "@swisstopo/swissgeol-ui-core": "*"
+  },
+  "peerDependencies": {
+    "@stencil/react-output-target": "^1.0.2",
+    "swissgeol-core": "*",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}

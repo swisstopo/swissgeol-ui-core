@@ -1,0 +1,41 @@
+{
+  "name": "@swisstopo/swissgeol-ui-core-angular",
+  "version": "0.0.0",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "npm run build:prepare && ng build && npm run build:share",
+    "build:prepare": "tsx scripts/prepare-build.ts",
+    "build:share": "tsx scripts/share-build.ts",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "files": [
+    "package.json",
+    "dist"
+  ],
+  "dependencies": {
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "19.2.2",
+    "@angular/compiler-cli": "19.2.2",
+    "@angular/cli": "19.2.2",
+    "@angular/common": "19.2.2",
+    "@angular/core": "19.2.2",
+    "@angular/forms": "19.2.2",
+    "ng-packagr": "19.2.1"
+  },
+  "peerDependencies": {
+    "@angular/common": "19.2.2",
+    "@angular/core": "19.2.2",
+    "@angular/forms": "19.2.2",
+    "@angular/router": "19.2.2",
+    "rxjs": "~7.8.0",
+    "@swisstopo/swissgeol-ui-core": "*",
+    "zone.js": "~0.15.0"
+  }
+}
