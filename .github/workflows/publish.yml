@@ -44,7 +44,7 @@ jobs:
               stringifyVersion,
             } = await import('${{ github.workspace }}/.github/scripts/version.utils.mjs');
 
-            switch (source) {
+            switch ('${{ github.ref_name }}') {
               case 'next': {
                 return stringifyVersion(await determineNextNextVersion());
               }
