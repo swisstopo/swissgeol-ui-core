@@ -1,0 +1,145 @@
+name: Code Quality
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - "**"
+      - "!main"
+
+env:
+  NODE_VERSION: "22.5.1"
+
+jobs:
+  dependency-review:
+    name: "Dependency Review"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Review Dependencies
+        uses: actions/dependency-review-action@v4
+        with:
+          # Disable scorecard output for now, as the output may get too large otherwise,
+          # causing the action to fail.
+          show-openssf-scorecard: false
+
+  install:
+    name: "Install"
+    runs-on: ubuntu-latest
+    needs:
+      - dependency-review
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Cache node dependencies
+        uses: ./.github/actions/node-cache
+      - name: Cache playwright
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/.cache/ms-playwright
+          key: "${{ runner.os }}-playwright-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}"
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+      - name: Install node dependencies
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+  typecheck:
+    name: "Typecheck"
+    runs-on: ubuntu-latest
+    needs:
+      - install
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Restore cached node dependencies
+        uses: ./.github/actions/node-cache-restore
+      - name: Run typecheck
+        run: npm run typecheck
+
+  test-spec:
+    name: "Test Spec"
+    runs-on: ubuntu-latest
+    needs:
+      - typecheck
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Restore cached node dependencies
+        uses: ./.github/actions/node-cache-restore
+      - name: Run tests
+        run: npm run test:spec
+
+  test-e2e:
+    name: "Test E2E"
+    runs-on: ubuntu-latest
+    needs:
+      - typecheck
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Restore cached node dependencies
+        uses: ./.github/actions/node-cache-restore
+      - name: Restore cached playwright
+        uses: actions/cache/restore@v4
+        with:
+          path: /home/runner/.cache/ms-playwright
+          key: "${{ runner.os }}-playwright-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}"
+      - name: Run tests
+        run: npm run test:e2e
+
+  lint:
+    name: "Lint"
+    runs-on: ubuntu-latest
+    needs:
+      - install
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Restore cached node dependencies
+        uses: ./.github/actions/node-cache-restore
+      - name: Run lint
+        run: npm run lint
+
+  build:
+    name: "Build"
+    runs-on: ubuntu-latest
+    needs:
+      - install
+      - typecheck
+      - test-spec
+      - test-e2e
+      - lint
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Restore cached node dependencies
+        uses: ./.github/actions/node-cache-restore
+      - name: Build
+        run: npm run build
