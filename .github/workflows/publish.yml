@@ -1,0 +1,137 @@
+name: Publish DEV
+
+on:
+  push:
+    branches:
+      - "main"
+      - "develop"
+      - "next"
+
+# Run all publish workflow in sequence to ensure consistent version numbers.
+concurrency:
+  group: "publish"
+
+permissions: write-all
+
+env:
+  NODE_VERSION: "22.5.1"
+
+jobs:
+  determine-version:
+    name: "determine version"
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.find-version.outputs.result }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install @octokit/rest
+      - name: Find version
+        id: find-version
+        uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          result-encoding: string
+          script: |
+            const { findSourceAndTargetBranches } = await import('${{ github.workspace }}/.github/scripts/branch.utils.mjs');
+            const { findBaseVersionForDev } = await import('${{ github.workspace }}/.github/scripts/package.utils.mjs');
+            const {
+              findLatestDevVersion,
+              determineNextDevVersion,
+              determineNextNextVersion,
+              stringifyVersion,
+            } = await import('${{ github.workspace }}/.github/scripts/version.utils.mjs');
+
+            switch (source) {
+              case 'next': {
+                return stringifyVersion(await determineNextNextVersion());
+              }
+              case 'develop': {
+                const [source, target] = await findSourceAndTargetBranches(context);
+                return stringifyVersion(await determineNextDevVersion(source));
+              }
+              default: {
+                const devVersion = await findLatestDevVersion()
+                return stringifyVersion({ ...devVersion, preRelease: null });
+              }
+            }
+
+  install:
+    name: "install"
+    needs:
+      - determine-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: "https://npm.pkg.github.com/"
+      - name: Cache node dependencies
+        uses: ./.github/actions/node-cache
+      - name: Install node dependencies
+        run: npm ci
+
+  build-and-publish:
+    name: "build and publish"
+    needs:
+      - install
+      - determine-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: "https://npm.pkg.github.com/"
+      - name: Restore cached node dependencies
+        uses: ./.github/actions/node-cache-restore
+      - name: Write package version
+        run: |
+          npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version
+          cd packages/angular && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version && cd ../..
+          cd packages/react   && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version && cd ../..
+      - name: Build
+        run: npm run build
+      - name: Publish
+        run: |
+          npm publish
+          cd packages/angular && npm publish && cd ../..
+          cd packages/react   && npm publish && cd ../..
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  tag-commit:
+    name: "tag commit"
+    needs:
+      - build-and-publish
+      - determine-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Determine tag
+        run: |
+          if [ "${{ github.ref_name }}" = "next" ]; then
+            echo "VERSION_TAG=next" >> $GITHUB_ENV
+          elif [ "${{ github.ref_name }}" = "develop" ]; then
+            echo "VERSION_TAG=edge" >> $GITHUB_ENV
+          else
+            echo "VERSION_TAG=latest" >> $GITHUB_ENV
+          fi
+      - name: tag commit
+        uses: ./.github/actions/tag-commit
+        with:
+          TAG_NAME: ${{ env.TAG }}
+          SHA: ${{ github.sha }}
+      - name: tag commit with version
+        if: ${{ env.TAG == "latest" }}
+        uses: ./.github/actions/tag-commit
+        with:
+          TAG_NAME: ${{ needs.determine-version.outputs.version }}
+          SHA: ${{ github.sha }}

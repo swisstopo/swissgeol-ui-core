@@ -36,28 +36,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-      - name: Cache npm
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: "${{ runner.os }}-npm-${{ env.NODE_VERSION }}-${{ hashFiles('./package-lock.json') }}"
-          restore-keys: |
-            ${{ runner.os }}-npm-
-      - name: Cache node modules
-        uses: actions/cache@v4
-        with:
-          path: ./node_modules
-          key: "${{ runner.os }}-node_modules-${{ env.NODE_VERSION }}-${{ hashFiles('./package-lock.json') }}"
-          restore-keys: |
-            ${{ runner.os }}-node_modules-
+      - name: Cache node dependencies
+        uses: ./.github/actions/node-cache
       - name: Cache playwright
         uses: actions/cache@v4
         with:
           path: /home/runner/.cache/ms-playwright
-          key: "${{ runner.os }}-playwright-${{ env.NODE_VERSION }}-${{ hashFiles('./package-lock.json') }}"
+          key: "${{ runner.os }}-playwright-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}"
           restore-keys: |
             ${{ runner.os }}-playwright-
       - name: Install node dependencies
@@ -77,11 +62,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Restore cached node modules
-        uses: actions/cache/restore@v4
-        with:
-          path: ./node_modules
-          key: "${{ runner.os }}-node_modules-${{ env.NODE_VERSION }}-${{ hashFiles('./package-lock.json') }}"
+      - name: Restore cached node dependencies
+        uses: ./.github/actions/node-cache-restore
       - name: Run typecheck
         run: npm run typecheck
 
@@ -97,11 +79,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Restore cached node modules
-        uses: actions/cache/restore@v4
-        with:
-          path: ./node_modules
-          key: "${{ runner.os }}-node_modules-${{ env.NODE_VERSION }}-${{ hashFiles('./package-lock.json') }}"
+      - name: Restore cached node dependencies
+        uses: ./.github/actions/node-cache-restore
       - name: Run tests
         run: npm run test:spec
 
@@ -117,16 +96,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Restore cached node modules
-        uses: actions/cache/restore@v4
-        with:
-          path: ./node_modules
-          key: "${{ runner.os }}-node_modules-${{ env.NODE_VERSION }}-${{ hashFiles('./package-lock.json') }}"
+      - name: Restore cached node dependencies
+        uses: ./.github/actions/node-cache-restore
       - name: Restore cached playwright
         uses: actions/cache/restore@v4
         with:
           path: /home/runner/.cache/ms-playwright
-          key: "${{ runner.os }}-playwright-${{ env.NODE_VERSION }}-${{ hashFiles('./package-lock.json') }}"
+          key: "${{ runner.os }}-playwright-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}"
       - name: Run tests
         run: npm run test:e2e
 
@@ -142,11 +118,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Restore cached node modules
-        uses: actions/cache/restore@v4
-        with:
-          path: ./node_modules
-          key: "${{ runner.os }}-node_modules-${{ env.NODE_VERSION }}-${{ hashFiles('./package-lock.json') }}"
+      - name: Restore cached node dependencies
+        uses: ./.github/actions/node-cache-restore
       - name: Run lint
         run: npm run lint
 
@@ -166,10 +139,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Restore cached node modules
-        uses: actions/cache/restore@v4
-        with:
-          path: ./node_modules
-          key: "${{ runner.os }}-node_modules-${{ env.NODE_VERSION }}-${{ hashFiles('./package-lock.json') }}"
+      - name: Restore cached node dependencies
+        uses: ./.github/actions/node-cache-restore
       - name: Build
         run: npm run build

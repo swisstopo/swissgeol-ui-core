@@ -1,6 +1,6 @@
 {
   "name": "@swisstopo/swissgeol-ui-core-react",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
@@ -21,6 +21,10 @@
       "default": "./dist/index.js"
     }
   },
+  "files": [
+    "package.json",
+    "dist"
+  ],
   "devDependencies": {
     "@babel/preset-react": "^7.26.3",
     "@types/react": "^19.1.2",

@@ -8,7 +8,10 @@ const clientDir = resolveInProject('packages/angular-client');
 // Copy core package into `angular-client`.
 linkCore(clientDir);
 
-const targetDir = path.join(clientDir, 'node_modules/@swisstopo/swissgeol-ui-core-angular')
+const targetDir = path.join(
+  clientDir,
+  'node_modules/@swisstopo/swissgeol-ui-core-angular',
+);
 fs.rmSync(targetDir, { recursive: true, force: true });
 
 copyRecursive(
