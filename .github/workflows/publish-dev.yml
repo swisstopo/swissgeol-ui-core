@@ -116,38 +116,9 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  push-version:
-    name: "push version"
-    needs:
-      - build-and-publish
-      - determine-version
-    runs-on: ubuntu-latest
-    outputs:
-      sha: ${{ steps.push.outputs.sha }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Write package version
-        run: |
-          npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version
-          cd packages/angular && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version && cd ../..
-          cd packages/react   && npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version && cd ../..
-      - name: Set up Git user
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      - name: Push
-        id: push
-        run: |
-          git add .
-          git commit -m "Update version to ${{ needs.determine-version.outputs.version }}"
-          git push
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-
   tag-commit:
     name: "tag commit"
     needs:
-      - push-version
       - build-and-publish
     runs-on: ubuntu-latest
     steps:
@@ -157,4 +128,4 @@ jobs:
         uses: ./.github/actions/tag-commit
         with:
           TAG_NAME: edge
-          SHA: ${{ needs.push-version.outputs.sha }}
+          SHA: ${{ github.sha }}

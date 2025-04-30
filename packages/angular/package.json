@@ -1,6 +1,6 @@
 {
   "name": "@swisstopo/swissgeol-ui-core-angular",
-  "version": "1.0.0-dev1",
+  "version": "0.0.0",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
@@ -17,7 +17,6 @@
     "package.json",
     "dist"
   ],
-  "private": true,
   "dependencies": {
     "zone.js": "~0.15.0"
   },
