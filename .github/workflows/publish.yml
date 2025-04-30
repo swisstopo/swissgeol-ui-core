@@ -36,9 +36,11 @@ jobs:
           result-encoding: string
           script: |
             const { findSourceAndTargetBranches } = await import('${{ github.workspace }}/.github/scripts/branch.utils.mjs');
-            const { findBaseVersionForDev } = await import('${{ github.workspace }}/.github/scripts/package.utils.mjs');
             const {
+              findBaseVersionForDev,
               findLatestDevVersion,
+            } = await import('${{ github.workspace }}/.github/scripts/package.utils.mjs');
+            const {
               determineNextDevVersion,
               determineNextNextVersion,
               stringifyVersion,
@@ -135,3 +137,30 @@ jobs:
         with:
           TAG_NAME: ${{ needs.determine-version.outputs.version }}
           SHA: ${{ github.sha }}
+
+  cleanup:
+    name: "cleanup"
+    if: ${{ github.ref_name == 'main' }}
+    needs:
+      - determine-version
+      - tag-commit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup node
+        run: |
+          npm install @octokit/rest
+      - name: Remove outdated versions
+        uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CURRENT_VERSION: ${{ needs.determine-version.outputs.version }}
+        with:
+          script: |
+            const { findOutdatedVersions, removePackageVersions } = await import('${{ github.workspace }}/.github/scripts/package.utils.mjs');
+            const { parseVersion, stringifyVersion } = await import('${{ github.workspace }}/.github/scripts/version.utils.mjs');
+
+            const version = parseVersion(process.env.CURRENT_VERSION);
+            const outdatedVersions = await findOutdatedVersions(version);
+            await removePackageVersions(outdatedVersions);
