@@ -1,4 +1,4 @@
-name: Publish DEV
+name: Publish
 
 on:
   push:
@@ -118,11 +118,11 @@ jobs:
       - name: Determine tag
         run: |
           if [ "${{ github.ref_name }}" = "next" ]; then
-            echo "VERSION_TAG=next" >> $GITHUB_ENV
+            echo "TAG=next" >> $GITHUB_ENV
           elif [ "${{ github.ref_name }}" = "develop" ]; then
-            echo "VERSION_TAG=edge" >> $GITHUB_ENV
+            echo "TAG=edge" >> $GITHUB_ENV
           else
-            echo "VERSION_TAG=latest" >> $GITHUB_ENV
+            echo "TAG=latest" >> $GITHUB_ENV
           fi
       - name: tag commit
         uses: ./.github/actions/tag-commit
