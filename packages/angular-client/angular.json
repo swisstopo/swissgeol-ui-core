@@ -25,7 +25,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "node_modules/swissgeol-core/assets/fonts",
+                "input": "node_modules/@swisstopo/swissgeol-ui-core/dist/swissgeol-ui-core/assets/fonts",
                 "output": "/assets/fonts"
               }
             ],
