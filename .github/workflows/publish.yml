@@ -118,7 +118,7 @@ jobs:
       - name: Publish
         run: |
           npm publish --tag ${{ needs.determine-version.outputs.tag }}
-          cd packages/angular && npm publish --tag ${{ needs.determine-version.outputs.tag }} && cd ../..
+          cd packages/angular/dist/swissgeol-core-angular && npm publish --tag ${{ needs.determine-version.outputs.tag }} && cd ../../../..
           cd packages/react   && npm publish --tag ${{ needs.determine-version.outputs.tag }} && cd ../..
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
