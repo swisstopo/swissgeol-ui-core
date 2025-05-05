@@ -1,5 +1,5 @@
 import { NgModule, provideAppInitializer } from '@angular/core';
-import { defineCustomElements } from 'swissgeol-core/loader';
+import { defineCustomElements } from '@swisstopo/swissgeol-ui-core/loader';
 import { DIRECTIVES } from './stencil-generated';
 
 @NgModule({
