@@ -22,8 +22,23 @@ export namespace Components {
         "size": SgcIconSize;
     }
 }
+export interface SgcButtonCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcButtonElement;
+}
 declare global {
+    interface HTMLSgcButtonElementEventMap {
+        "button-click": MouseEvent;
+    }
     interface HTMLSgcButtonElement extends Components.SgcButton, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcButtonElementEventMap>(type: K, listener: (this: HTMLSgcButtonElement, ev: SgcButtonCustomEvent<HTMLSgcButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcButtonElementEventMap>(type: K, listener: (this: HTMLSgcButtonElement, ev: SgcButtonCustomEvent<HTMLSgcButtonElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLSgcButtonElement: {
         prototype: HTMLSgcButtonElement;
@@ -46,6 +61,7 @@ declare namespace LocalJSX {
         "isActive"?: boolean;
         "isDisabled"?: boolean;
         "justify"?: SgcButtonJustify;
+        "onButton-click"?: (event: SgcButtonCustomEvent<MouseEvent>) => void;
         "variant"?: SgcButtonVariant;
     }
     interface SgcIcon {
