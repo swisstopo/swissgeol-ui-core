@@ -38,6 +38,7 @@ const sharedConfig = {
     '**/node_modules/**',
     '**/dist/**',
     '**/.angular/**',
+    '**/stencil-generated/**',
   ],
   languageOptions: {
     globals: globals.browser,

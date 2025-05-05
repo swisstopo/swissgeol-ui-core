@@ -14,6 +14,13 @@
 | `variant`    | `variant`  |             | `"chip" \| "icon" \| "icon-round" \| "large" \| "normal"` | `'normal'`  |
 
 
+## Events
+
+| Event          | Description | Type                      |
+| -------------- | ----------- | ------------------------- |
+| `button-click` |             | `CustomEvent<MouseEvent>` |
+
+
 ## Shadow Parts
 
 | Part       | Description |

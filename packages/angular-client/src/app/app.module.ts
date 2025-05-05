@@ -1,4 +1,3 @@
-
 import '@swisstopo/swissgeol-ui-core/styles.css';
 
 import { AppComponent } from './app.component';
@@ -6,7 +5,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { SwissgeolCoreModule } from '@swisstopo/swissgeol-ui-core-angular';
-
 
 @NgModule({
   declarations: [AppComponent],

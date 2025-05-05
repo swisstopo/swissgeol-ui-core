@@ -16,6 +16,7 @@
   "files": [
     "package.json",
     "public-api.d.ts",
+    "index.d.ts",
     "fesm2022",
     "lib"
   ],
