@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.assignee {
+  font-family: var(--sgc-typo-body-2--family);
+  font-weight: var(--sgc-typo-body-2--weight);
+  font-size: var(--sgc-typo-body-2--size);
+  line-height: var(--sgc-typo-body-2--line-height);
+  letter-spacing: var(--sgc-typo-body-2--letter-spacing);
+
+  margin-bottom: 12px;
+}

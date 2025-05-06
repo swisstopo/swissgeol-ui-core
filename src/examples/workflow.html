@@ -1,0 +1,111 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Stencil Component Starter</title>
+
+    <script type="module" src="/build/swissgeol-ui-core.esm.js"></script>
+    <script nomodule src="/build/swissgeol-ui-core.js"></script>
+
+    <link rel="stylesheet" href="/build/swissgeol-ui-core.css" />
+  </head>
+  <body></body>
+  <script>
+    const userA = {
+      id: "24",
+      firstName: "Hans",
+      lastName: "Muster",
+    };
+    const userB = {
+      id: "42",
+      firstName: "Frederik",
+      lastName: "Eisenhauer",
+    };
+    const userC = {
+      id: "132444",
+      firstName: "Sigfrieda",
+      lastName: "Mauermeister",
+    };
+
+    const workflow = document.createElement("sgc-workflow");
+    workflow.isReadOnly = false;
+    workflow.workflow = {
+      id: 1234,
+      hasRequestedChanges: false,
+      changes: [
+        {
+          createdAt: { year: 2024, month: 8, day: 6 },
+          fromStatus: "Draft",
+          toStatus: "InReview",
+          comment: null,
+          creator: userA,
+          fromAssignee: userA,
+          toAssignee: userB,
+        },
+        {
+          createdAt: { year: 2024, month: 11, day: 24 },
+          fromStatus: "InReview",
+          toStatus: "Reviewed",
+          comment: "LGTM",
+          creator: userB,
+          fromAssignee: userB,
+          toAssignee: userC,
+        },
+        {
+          createdAt: { year: 2025, month: 1, day: 29 },
+          fromStatus: "Reviewed",
+          toStatus: "Draft",
+          comment: "Geometrien fehlen",
+          creator: null,
+          fromAssignee: userC,
+          toAssignee: userA,
+        },
+      ],
+      review: {
+        general: false,
+        normalFiles: true,
+        legalFiles: true,
+        authors: false,
+        initiators: true,
+        suppliers: false,
+        references: false,
+        geometries: false,
+        legacy: true,
+      },
+      approval: {
+        general: false,
+        normalFiles: false,
+        legalFiles: false,
+        authors: false,
+        initiators: false,
+        suppliers: false,
+        references: false,
+        geometries: false,
+        legacy: false,
+      },
+      status: "Reviewed",
+      assignee: { id: 1, firstName: "Peter", lastName: "Puffer" },
+      creator: null,
+      createdAt: { year: 2025, month: 2, day: 21 },
+      workgroupId: 1,
+    };
+
+    workflow.addEventListener("workflowReviewChange", (event) => {
+      workflow.workflow = {
+        ...workflow.workflow,
+        review: { ...workflow.workflow.review, ...event.detail.changes },
+      };
+    });
+    workflow.addEventListener("workflowApprovalChange", (event) => {
+      workflow.workflow = {
+        ...workflow.workflow,
+        approval: { ...workflow.workflow.approval, ...event.detail.changes },
+      };
+    });
+    document.body.appendChild(workflow);
+  </script>
+</html>

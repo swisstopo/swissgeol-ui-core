@@ -184,7 +184,6 @@ export const determineNextRcVersionBySourceBranch = async (sourceBranch) => {
   }
 
   const hotfixVersion = await findLatestHotfixVersion();
-  console.log({ hotfixVersion });
   if (
     hotfixVersion === null ||
     compareBaseVersions(releaseVersion, hotfixVersion) >= 0

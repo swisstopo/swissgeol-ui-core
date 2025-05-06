@@ -1,0 +1,7 @@
+:host {
+  display: block;
+}
+
+sgc-workflow-step {
+  margin-block: 12px;
+}
