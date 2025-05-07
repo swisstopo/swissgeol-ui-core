@@ -2,7 +2,6 @@
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
 | Property                  | Attribute      | Description | Type       | Default     |
@@ -10,19 +9,17 @@
 | `isReadOnly` _(required)_ | `is-read-only` |             | `boolean`  | `undefined` |
 | `workflow` _(required)_   | `workflow`     |             | `Workflow` | `undefined` |
 
-
 ## Shadow Parts
 
 | Part        | Description |
 | ----------- | ----------- |
 | `"heading"` |             |
 
-
 ## Dependencies
 
 ### Used by
 
- - [sgc-workflow](..)
+- [sgc-workflow](..)
 
 ### Depends on
 
@@ -32,6 +29,7 @@
 - [sgc-icon](../../sgc-icon)
 
 ### Graph
+
 ```mermaid
 graph TD;
   sgc-workflow-steps --> sgc-translate
@@ -44,6 +42,6 @@ graph TD;
   style sgc-workflow-steps fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

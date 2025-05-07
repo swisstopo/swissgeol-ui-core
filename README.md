@@ -5,10 +5,13 @@
 This is the swissgeol UI Core Library. It implements components and behavior shared between web-based [swissgeol](https://www.swissgeol.ch) applications.
 
 ## Development
+
 This library mainly provides [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) built on [Stencil](https://stenciljs.com/).
 In local development, a simple development server is available:
+
 ```bash
 npm run start
 ```
+
 This will expose all HTML files in `src/`.
 This way, we are able to develop and test our components directly inside the library itself.

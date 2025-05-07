@@ -1,9 +1,6 @@
 # sgc-workflow-selection
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -13,7 +10,6 @@
 | `selection` _(required)_  | `selection`    |             | `"approval" \| "review"` | `undefined` |
 | `workflow` _(required)_   | `workflow`     |             | `Workflow`               | `undefined` |
 
-
 ## Events
 
 | Event                    | Description | Type                                                  |
@@ -21,12 +17,11 @@
 | `workflowApprovalChange` |             | `CustomEvent<SgcWorkflowSelectionChangeEventDetails>` |
 | `workflowReviewChange`   |             | `CustomEvent<SgcWorkflowSelectionChangeEventDetails>` |
 
-
 ## Dependencies
 
 ### Used by
 
- - [sgc-workflow](..)
+- [sgc-workflow](..)
 
 ### Depends on
 
@@ -34,6 +29,7 @@
 - [sgc-translate](../../sgc-translate)
 
 ### Graph
+
 ```mermaid
 graph TD;
   sgc-workflow-selection --> sgc-checklist
@@ -43,6 +39,6 @@ graph TD;
   style sgc-workflow-selection fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

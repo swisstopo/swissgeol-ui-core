@@ -2,7 +2,6 @@
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
 | Property                 | Attribute    | Description | Type         | Default     |
@@ -10,13 +9,12 @@
 | `createdAt` _(required)_ | `created-at` |             | `LocalDate`  | `undefined` |
 | `creator` _(required)_   | `creator`    |             | `SimpleUser` | `undefined` |
 
-
 ## Dependencies
 
 ### Used by
 
- - [sgc-workflow-change](../sgc-workflow-change)
- - [sgc-workflow-history](../sgc-workflow-history)
+- [sgc-workflow-change](../sgc-workflow-change)
+- [sgc-workflow-history](../sgc-workflow-history)
 
 ### Depends on
 
@@ -24,6 +22,7 @@
 - [sgc-date](../../sgc-date)
 
 ### Graph
+
 ```mermaid
 graph TD;
   sgc-workflow-change-template --> sgc-translate
@@ -33,6 +32,6 @@ graph TD;
   style sgc-workflow-change-template fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_
