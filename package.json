@@ -4,6 +4,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
+  "type": "module",
   "description": "swissgeol UI Core Library",
   "workspaces": [
     ".",
@@ -13,10 +14,13 @@
     "packages/react-client"
   ],
   "scripts": {
-    "build": "stencil build && npm run build:angular && npm run build:react",
+    "build": "stencil build && npm run build:post && npm run build:angular && npm run build:react",
+    "build:post": "tsx scripts/generate-package-json.ts",
     "build:angular": "npm run build --workspace=packages/angular",
     "build:react": "npm run build --workspace=packages/react",
-    "start": "stencil build --dev --watch --serve",
+    "start": "concurrently \"npm:start:stencil\" \"npm:start:server\"",
+    "start:server": "vite",
+    "start:stencil": "stencil build --dev --watch --no-open",
     "test": "npm run test:spec && npm run test:e2e",
     "test:spec": "stencil test --spec",
     "test:e2e": "npx playwright test",
@@ -51,13 +55,73 @@
       "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.esm.js",
       "require": "./dist/swissgeol-ui-core/swissgeol-ui-core.cjs.js"
     },
+    "./components/index.js": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js"
+    },
     "./components/sgc-button.js": {
       "types": "./dist/components/sgc-button.d.ts",
       "import": "./dist/components/sgc-button.js"
     },
+    "./components/sgc-checkbox.js": {
+      "types": "./dist/components/sgc-checkbox.d.ts",
+      "import": "./dist/components/sgc-checkbox.js"
+    },
+    "./components/sgc-checklist.js": {
+      "types": "./dist/components/sgc-checklist.d.ts",
+      "import": "./dist/components/sgc-checklist.js"
+    },
+    "./components/sgc-date.js": {
+      "types": "./dist/components/sgc-date.d.ts",
+      "import": "./dist/components/sgc-date.js"
+    },
     "./components/sgc-icon.js": {
       "types": "./dist/components/sgc-icon.d.ts",
       "import": "./dist/components/sgc-icon.js"
+    },
+    "./components/sgc-tab.js": {
+      "types": "./dist/components/sgc-tab.d.ts",
+      "import": "./dist/components/sgc-tab.js"
+    },
+    "./components/sgc-tabs.js": {
+      "types": "./dist/components/sgc-tabs.d.ts",
+      "import": "./dist/components/sgc-tabs.js"
+    },
+    "./components/sgc-translate.js": {
+      "types": "./dist/components/sgc-translate.d.ts",
+      "import": "./dist/components/sgc-translate.js"
+    },
+    "./components/sgc-workflow-assignee.js": {
+      "types": "./dist/components/sgc-workflow-assignee.d.ts",
+      "import": "./dist/components/sgc-workflow-assignee.js"
+    },
+    "./components/sgc-workflow-change-template.js": {
+      "types": "./dist/components/sgc-workflow-change-template.d.ts",
+      "import": "./dist/components/sgc-workflow-change-template.js"
+    },
+    "./components/sgc-workflow-change.js": {
+      "types": "./dist/components/sgc-workflow-change.d.ts",
+      "import": "./dist/components/sgc-workflow-change.js"
+    },
+    "./components/sgc-workflow-history.js": {
+      "types": "./dist/components/sgc-workflow-history.d.ts",
+      "import": "./dist/components/sgc-workflow-history.js"
+    },
+    "./components/sgc-workflow-publication.js": {
+      "types": "./dist/components/sgc-workflow-publication.d.ts",
+      "import": "./dist/components/sgc-workflow-publication.js"
+    },
+    "./components/sgc-workflow-step.js": {
+      "types": "./dist/components/sgc-workflow-step.d.ts",
+      "import": "./dist/components/sgc-workflow-step.js"
+    },
+    "./components/sgc-workflow-steps.js": {
+      "types": "./dist/components/sgc-workflow-steps.d.ts",
+      "import": "./dist/components/sgc-workflow-steps.js"
+    },
+    "./components/sgc-workflow.js": {
+      "types": "./dist/components/sgc-workflow.d.ts",
+      "import": "./dist/components/sgc-workflow.js"
     }
   },
   "repository": {
@@ -74,10 +138,10 @@
     "@eslint/js": "^9.24.0",
     "@eslint/markdown": "^6.3.0",
     "@stencil/angular-output-target": "0.0.1-dev.11742481103.1f47dcf9",
-    "@stencil/react-output-target": "^1.0.2",
     "@stencil/core": "^4.29.2",
     "@stencil/eslint-plugin": "^1.0.0",
     "@stencil/playwright": "^0.2.1",
+    "@stencil/react-output-target": "^1.0.2",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.5",
     "concurrently": "^9.1.2",
@@ -91,7 +155,9 @@
     "prettier": "^3.5.3",
     "puppeteer": "^24.3.0",
     "tsx": "^4.19.4",
-    "typescript-eslint": "^8.29.1"
+    "typescript-eslint": "^8.29.1",
+    "vite": "^6.3.5",
+    "vite-plugin-live-reload": "^3.0.4"
   },
   "license": "MIT"
 }

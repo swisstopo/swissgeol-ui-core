@@ -1,17 +1,3 @@
 @import "../assets/fonts/Inter/Inter.css";
 @import "../theme/index.css";
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-/* ### Root Settings ### */
-:root {
-  font-family: var(--sgc-typo-body-1--family);
-  font-weight: var(--sgc-typo-body-1--weight);
-  font-size: var(--sgc-typo-body-1--size);
-  line-height: var(--sgc-typo-body-1--line-height);
-  letter-spacing: var(--sgc-typo-body-1--letter-spacing);
-}
+@import "./base.css";

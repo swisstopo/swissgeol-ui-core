@@ -6,9 +6,21 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { SgcButtonColor, SgcButtonJustify, SgcButtonVariant } from "./components/sgc-button/sgc-button";
+import { LocalDate } from "./models/base/local-date";
 import { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
+import { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
+import { NamespaceKey } from "./locales/i18n";
+import { Workflow, WorkflowChange, WorkflowStatus } from "./models/workflow.model";
+import { SimpleUser } from "./models/user.model";
+import { SgcWorkflowSelectionChangeEventDetails } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
 export { SgcButtonColor, SgcButtonJustify, SgcButtonVariant } from "./components/sgc-button/sgc-button";
+export { LocalDate } from "./models/base/local-date";
 export { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
+export { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
+export { NamespaceKey } from "./locales/i18n";
+export { Workflow, WorkflowChange, WorkflowStatus } from "./models/workflow.model";
+export { SimpleUser } from "./models/user.model";
+export { SgcWorkflowSelectionChangeEventDetails } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
 export namespace Components {
     interface SgcButton {
         "color": SgcButtonColor;
@@ -17,18 +29,87 @@ export namespace Components {
         "justify": SgcButtonJustify;
         "variant": SgcButtonVariant;
     }
+    interface SgcCheckbox {
+        "isDisabled": boolean;
+        "isIndeterminate": boolean;
+        "value": boolean;
+    }
+    interface SgcChecklist {
+        "isDisabled": boolean;
+        "value": boolean | undefined;
+    }
+    interface SgcDate {
+        "value": LocalDate | Date;
+    }
     interface SgcIcon {
         "name": SgcIconKey;
         "size": SgcIconSize;
+    }
+    interface SgcTab {
+        "isActive": boolean;
+        "panel": HTMLElement | string | null;
+    }
+    interface SgcTabs {
+        "persistence": SgcTabPersistence;
+    }
+    interface SgcTranslate {
+        "ns": NamespaceKey;
+    }
+    interface SgcWorkflow {
+        "isReadOnly": boolean;
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowAssignee {
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowChange {
+        "change": WorkflowChange;
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowChangeTemplate {
+        "createdAt": LocalDate;
+        "creator": SimpleUser | null;
+    }
+    interface SgcWorkflowHistory {
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowPublication {
+        "isReadOnly": boolean;
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowSelection {
+        "isReadOnly": boolean;
+        "selection": 'review' | 'approval';
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowStep {
+        "status": WorkflowStatus;
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowSteps {
+        "isReadOnly": boolean;
+        "workflow": Workflow;
     }
 }
 export interface SgcButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcButtonElement;
 }
+export interface SgcCheckboxCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcCheckboxElement;
+}
+export interface SgcChecklistCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcChecklistElement;
+}
+export interface SgcWorkflowSelectionCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcWorkflowSelectionElement;
+}
 declare global {
     interface HTMLSgcButtonElementEventMap {
-        "button-click": MouseEvent;
+        "buttonClick": MouseEvent;
     }
     interface HTMLSgcButtonElement extends Components.SgcButton, HTMLStencilElement {
         addEventListener<K extends keyof HTMLSgcButtonElementEventMap>(type: K, listener: (this: HTMLSgcButtonElement, ev: SgcButtonCustomEvent<HTMLSgcButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -44,15 +125,154 @@ declare global {
         prototype: HTMLSgcButtonElement;
         new (): HTMLSgcButtonElement;
     };
+    interface HTMLSgcCheckboxElementEventMap {
+        "checkboxChange": boolean;
+    }
+    interface HTMLSgcCheckboxElement extends Components.SgcCheckbox, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcCheckboxElementEventMap>(type: K, listener: (this: HTMLSgcCheckboxElement, ev: SgcCheckboxCustomEvent<HTMLSgcCheckboxElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcCheckboxElementEventMap>(type: K, listener: (this: HTMLSgcCheckboxElement, ev: SgcCheckboxCustomEvent<HTMLSgcCheckboxElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcCheckboxElement: {
+        prototype: HTMLSgcCheckboxElement;
+        new (): HTMLSgcCheckboxElement;
+    };
+    interface HTMLSgcChecklistElementEventMap {
+        "checklistChange": boolean;
+    }
+    interface HTMLSgcChecklistElement extends Components.SgcChecklist, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcChecklistElementEventMap>(type: K, listener: (this: HTMLSgcChecklistElement, ev: SgcChecklistCustomEvent<HTMLSgcChecklistElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcChecklistElementEventMap>(type: K, listener: (this: HTMLSgcChecklistElement, ev: SgcChecklistCustomEvent<HTMLSgcChecklistElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcChecklistElement: {
+        prototype: HTMLSgcChecklistElement;
+        new (): HTMLSgcChecklistElement;
+    };
+    interface HTMLSgcDateElement extends Components.SgcDate, HTMLStencilElement {
+    }
+    var HTMLSgcDateElement: {
+        prototype: HTMLSgcDateElement;
+        new (): HTMLSgcDateElement;
+    };
     interface HTMLSgcIconElement extends Components.SgcIcon, HTMLStencilElement {
     }
     var HTMLSgcIconElement: {
         prototype: HTMLSgcIconElement;
         new (): HTMLSgcIconElement;
     };
+    interface HTMLSgcTabElement extends Components.SgcTab, HTMLStencilElement {
+    }
+    var HTMLSgcTabElement: {
+        prototype: HTMLSgcTabElement;
+        new (): HTMLSgcTabElement;
+    };
+    interface HTMLSgcTabsElement extends Components.SgcTabs, HTMLStencilElement {
+    }
+    var HTMLSgcTabsElement: {
+        prototype: HTMLSgcTabsElement;
+        new (): HTMLSgcTabsElement;
+    };
+    interface HTMLSgcTranslateElement extends Components.SgcTranslate, HTMLStencilElement {
+    }
+    var HTMLSgcTranslateElement: {
+        prototype: HTMLSgcTranslateElement;
+        new (): HTMLSgcTranslateElement;
+    };
+    interface HTMLSgcWorkflowElement extends Components.SgcWorkflow, HTMLStencilElement {
+    }
+    var HTMLSgcWorkflowElement: {
+        prototype: HTMLSgcWorkflowElement;
+        new (): HTMLSgcWorkflowElement;
+    };
+    interface HTMLSgcWorkflowAssigneeElement extends Components.SgcWorkflowAssignee, HTMLStencilElement {
+    }
+    var HTMLSgcWorkflowAssigneeElement: {
+        prototype: HTMLSgcWorkflowAssigneeElement;
+        new (): HTMLSgcWorkflowAssigneeElement;
+    };
+    interface HTMLSgcWorkflowChangeElement extends Components.SgcWorkflowChange, HTMLStencilElement {
+    }
+    var HTMLSgcWorkflowChangeElement: {
+        prototype: HTMLSgcWorkflowChangeElement;
+        new (): HTMLSgcWorkflowChangeElement;
+    };
+    interface HTMLSgcWorkflowChangeTemplateElement extends Components.SgcWorkflowChangeTemplate, HTMLStencilElement {
+    }
+    var HTMLSgcWorkflowChangeTemplateElement: {
+        prototype: HTMLSgcWorkflowChangeTemplateElement;
+        new (): HTMLSgcWorkflowChangeTemplateElement;
+    };
+    interface HTMLSgcWorkflowHistoryElement extends Components.SgcWorkflowHistory, HTMLStencilElement {
+    }
+    var HTMLSgcWorkflowHistoryElement: {
+        prototype: HTMLSgcWorkflowHistoryElement;
+        new (): HTMLSgcWorkflowHistoryElement;
+    };
+    interface HTMLSgcWorkflowPublicationElement extends Components.SgcWorkflowPublication, HTMLStencilElement {
+    }
+    var HTMLSgcWorkflowPublicationElement: {
+        prototype: HTMLSgcWorkflowPublicationElement;
+        new (): HTMLSgcWorkflowPublicationElement;
+    };
+    interface HTMLSgcWorkflowSelectionElementEventMap {
+        "workflowReviewChange": SgcWorkflowSelectionChangeEventDetails;
+        "workflowApprovalChange": SgcWorkflowSelectionChangeEventDetails;
+    }
+    interface HTMLSgcWorkflowSelectionElement extends Components.SgcWorkflowSelection, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcWorkflowSelectionElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowSelectionElement, ev: SgcWorkflowSelectionCustomEvent<HTMLSgcWorkflowSelectionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcWorkflowSelectionElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowSelectionElement, ev: SgcWorkflowSelectionCustomEvent<HTMLSgcWorkflowSelectionElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcWorkflowSelectionElement: {
+        prototype: HTMLSgcWorkflowSelectionElement;
+        new (): HTMLSgcWorkflowSelectionElement;
+    };
+    interface HTMLSgcWorkflowStepElement extends Components.SgcWorkflowStep, HTMLStencilElement {
+    }
+    var HTMLSgcWorkflowStepElement: {
+        prototype: HTMLSgcWorkflowStepElement;
+        new (): HTMLSgcWorkflowStepElement;
+    };
+    interface HTMLSgcWorkflowStepsElement extends Components.SgcWorkflowSteps, HTMLStencilElement {
+    }
+    var HTMLSgcWorkflowStepsElement: {
+        prototype: HTMLSgcWorkflowStepsElement;
+        new (): HTMLSgcWorkflowStepsElement;
+    };
     interface HTMLElementTagNameMap {
         "sgc-button": HTMLSgcButtonElement;
+        "sgc-checkbox": HTMLSgcCheckboxElement;
+        "sgc-checklist": HTMLSgcChecklistElement;
+        "sgc-date": HTMLSgcDateElement;
         "sgc-icon": HTMLSgcIconElement;
+        "sgc-tab": HTMLSgcTabElement;
+        "sgc-tabs": HTMLSgcTabsElement;
+        "sgc-translate": HTMLSgcTranslateElement;
+        "sgc-workflow": HTMLSgcWorkflowElement;
+        "sgc-workflow-assignee": HTMLSgcWorkflowAssigneeElement;
+        "sgc-workflow-change": HTMLSgcWorkflowChangeElement;
+        "sgc-workflow-change-template": HTMLSgcWorkflowChangeTemplateElement;
+        "sgc-workflow-history": HTMLSgcWorkflowHistoryElement;
+        "sgc-workflow-publication": HTMLSgcWorkflowPublicationElement;
+        "sgc-workflow-selection": HTMLSgcWorkflowSelectionElement;
+        "sgc-workflow-step": HTMLSgcWorkflowStepElement;
+        "sgc-workflow-steps": HTMLSgcWorkflowStepsElement;
     }
 }
 declare namespace LocalJSX {
@@ -61,16 +281,92 @@ declare namespace LocalJSX {
         "isActive"?: boolean;
         "isDisabled"?: boolean;
         "justify"?: SgcButtonJustify;
-        "onButton-click"?: (event: SgcButtonCustomEvent<MouseEvent>) => void;
+        "onButtonClick"?: (event: SgcButtonCustomEvent<MouseEvent>) => void;
         "variant"?: SgcButtonVariant;
+    }
+    interface SgcCheckbox {
+        "isDisabled"?: boolean;
+        "isIndeterminate"?: boolean;
+        "onCheckboxChange"?: (event: SgcCheckboxCustomEvent<boolean>) => void;
+        "value": boolean;
+    }
+    interface SgcChecklist {
+        "isDisabled"?: boolean;
+        "onChecklistChange"?: (event: SgcChecklistCustomEvent<boolean>) => void;
+        "value"?: boolean | undefined;
+    }
+    interface SgcDate {
+        "value"?: LocalDate | Date;
     }
     interface SgcIcon {
         "name"?: SgcIconKey;
         "size"?: SgcIconSize;
     }
+    interface SgcTab {
+        "isActive"?: boolean;
+        "panel"?: HTMLElement | string | null;
+    }
+    interface SgcTabs {
+        "persistence"?: SgcTabPersistence;
+    }
+    interface SgcTranslate {
+        "ns": NamespaceKey;
+    }
+    interface SgcWorkflow {
+        "isReadOnly": boolean;
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowAssignee {
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowChange {
+        "change": WorkflowChange;
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowChangeTemplate {
+        "createdAt": LocalDate;
+        "creator": SimpleUser | null;
+    }
+    interface SgcWorkflowHistory {
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowPublication {
+        "isReadOnly": boolean;
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowSelection {
+        "isReadOnly": boolean;
+        "onWorkflowApprovalChange"?: (event: SgcWorkflowSelectionCustomEvent<SgcWorkflowSelectionChangeEventDetails>) => void;
+        "onWorkflowReviewChange"?: (event: SgcWorkflowSelectionCustomEvent<SgcWorkflowSelectionChangeEventDetails>) => void;
+        "selection": 'review' | 'approval';
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowStep {
+        "status": WorkflowStatus;
+        "workflow": Workflow;
+    }
+    interface SgcWorkflowSteps {
+        "isReadOnly": boolean;
+        "workflow": Workflow;
+    }
     interface IntrinsicElements {
         "sgc-button": SgcButton;
+        "sgc-checkbox": SgcCheckbox;
+        "sgc-checklist": SgcChecklist;
+        "sgc-date": SgcDate;
         "sgc-icon": SgcIcon;
+        "sgc-tab": SgcTab;
+        "sgc-tabs": SgcTabs;
+        "sgc-translate": SgcTranslate;
+        "sgc-workflow": SgcWorkflow;
+        "sgc-workflow-assignee": SgcWorkflowAssignee;
+        "sgc-workflow-change": SgcWorkflowChange;
+        "sgc-workflow-change-template": SgcWorkflowChangeTemplate;
+        "sgc-workflow-history": SgcWorkflowHistory;
+        "sgc-workflow-publication": SgcWorkflowPublication;
+        "sgc-workflow-selection": SgcWorkflowSelection;
+        "sgc-workflow-step": SgcWorkflowStep;
+        "sgc-workflow-steps": SgcWorkflowSteps;
     }
 }
 export { LocalJSX as JSX };
@@ -78,7 +374,22 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "sgc-button": LocalJSX.SgcButton & JSXBase.HTMLAttributes<HTMLSgcButtonElement>;
+            "sgc-checkbox": LocalJSX.SgcCheckbox & JSXBase.HTMLAttributes<HTMLSgcCheckboxElement>;
+            "sgc-checklist": LocalJSX.SgcChecklist & JSXBase.HTMLAttributes<HTMLSgcChecklistElement>;
+            "sgc-date": LocalJSX.SgcDate & JSXBase.HTMLAttributes<HTMLSgcDateElement>;
             "sgc-icon": LocalJSX.SgcIcon & JSXBase.HTMLAttributes<HTMLSgcIconElement>;
+            "sgc-tab": LocalJSX.SgcTab & JSXBase.HTMLAttributes<HTMLSgcTabElement>;
+            "sgc-tabs": LocalJSX.SgcTabs & JSXBase.HTMLAttributes<HTMLSgcTabsElement>;
+            "sgc-translate": LocalJSX.SgcTranslate & JSXBase.HTMLAttributes<HTMLSgcTranslateElement>;
+            "sgc-workflow": LocalJSX.SgcWorkflow & JSXBase.HTMLAttributes<HTMLSgcWorkflowElement>;
+            "sgc-workflow-assignee": LocalJSX.SgcWorkflowAssignee & JSXBase.HTMLAttributes<HTMLSgcWorkflowAssigneeElement>;
+            "sgc-workflow-change": LocalJSX.SgcWorkflowChange & JSXBase.HTMLAttributes<HTMLSgcWorkflowChangeElement>;
+            "sgc-workflow-change-template": LocalJSX.SgcWorkflowChangeTemplate & JSXBase.HTMLAttributes<HTMLSgcWorkflowChangeTemplateElement>;
+            "sgc-workflow-history": LocalJSX.SgcWorkflowHistory & JSXBase.HTMLAttributes<HTMLSgcWorkflowHistoryElement>;
+            "sgc-workflow-publication": LocalJSX.SgcWorkflowPublication & JSXBase.HTMLAttributes<HTMLSgcWorkflowPublicationElement>;
+            "sgc-workflow-selection": LocalJSX.SgcWorkflowSelection & JSXBase.HTMLAttributes<HTMLSgcWorkflowSelectionElement>;
+            "sgc-workflow-step": LocalJSX.SgcWorkflowStep & JSXBase.HTMLAttributes<HTMLSgcWorkflowStepElement>;
+            "sgc-workflow-steps": LocalJSX.SgcWorkflowSteps & JSXBase.HTMLAttributes<HTMLSgcWorkflowStepsElement>;
         }
     }
 }

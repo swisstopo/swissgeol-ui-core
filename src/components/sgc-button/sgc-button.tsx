@@ -30,7 +30,7 @@ export class SgcButton {
   @Prop({ reflect: true, attribute: 'active' })
   isActive = false;
 
-  @Event({ eventName: 'button-click' })
+  @Event({ eventName: 'buttonClick', composed: true })
   clickEvent!: EventEmitter<MouseEvent>;
 
   @Listen('click')

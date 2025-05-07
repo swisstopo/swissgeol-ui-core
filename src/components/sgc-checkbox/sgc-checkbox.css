@@ -1,0 +1,51 @@
+@import "../../global/base.css";
+
+:host {
+  --sgc-color-checkbox--active: var(--sgc-color-primary--active);
+  --sgc-color-checkbox--inactive: var(--sgc-color-primary);
+  --sgc-color-checkbox--background: var(--sgc-color-bg--white);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 20px;
+  height: 20px;
+  border-radius: 1px;
+  background-color: var(--sgc-color-checkbox--background);
+  border: 2px solid var(--sgc-color-checkbox--inactive);
+  cursor: pointer;
+
+  transition: ease-out 250ms;
+  transition-property: background-color, border-color;
+}
+
+:host(.is-checked) {
+  background-color: var(--sgc-color-checkbox--active);
+  border-color: var(--sgc-color-checkbox--active);
+}
+
+:host([disabled]) {
+  cursor: not-allowed;
+
+  --sgc-color-checkbox--active: var(--sgc-color-text--disabled);
+  --sgc-color-checkbox--inactive: var(--sgc-color-text--disabled);
+  --sgc-color-checkbox--background: var(--sgc-color-secondary--50);
+}
+
+/* icons */
+svg {
+  position: absolute;
+  opacity: 0;
+  color: var(--sgc-color-checkbox--background);
+
+  transition: ease-out 250ms;
+  transition-property: opacity;
+}
+
+:host(.is-checked:not(.is-indeterminate)) svg.is-checkmark {
+  opacity: 1;
+}
+:host(.is-checked.is-indeterminate) svg.is-indeterminate {
+  opacity: 1;
+}

@@ -1,6 +1,10 @@
-import path from 'path';
+import * as path from 'path';
 import { copyRecursive } from './fs.utils';
 import * as fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const PROJECT_ROOT_DIR = path.resolve(__dirname, '../');
 

@@ -1,5 +1,16 @@
 /* ## Colors ## */
 :root {
+  --sgc-color-secondary--900: #131b22;
+  --sgc-color-secondary--800: #1c2834;
+  --sgc-color-secondary--700: #263645;
+  --sgc-color-secondary--600: #2f4356;
+  --sgc-color-secondary--500: #46596b;
+  --sgc-color-secondary--400: #596978;
+  --sgc-color-secondary--300: #828e9a;
+  --sgc-color-secondary--200: #acb4bd;
+  --sgc-color-secondary--100: #dfe4e9;
+  --sgc-color-secondary--50: #f0f4f7;
+
   --sgc-color-brand: #607d52;
   --sgc-color-textfield-grey: #f8f9fa;
   --sgc-color-green-disabled: #c6d3da;
@@ -31,12 +42,12 @@
   --sgc-color-tertiary--hovered: #dfe4e9;
 
   --sgc-color-border--default: #dfe4e9;
-  --sgc-color-border--emphasis-high: #acb4bd;
+  --sgc-color-border--emphasis-high: var(--sgc-color-secondary--200);
 
   --sgc-color-bg--white: #ffffff;
   --sgc-color-bg--white--hovered: #f8fbfc;
   --sgc-color-bg--grey: #f1f3f5;
-  --sgc-color-bg--disabled: #828e9a;
+  --sgc-color-bg--disabled: var(--sgc-color-secondary--300);
   --sgc-color-bg--error: #d8232a;
 }
 
@@ -179,9 +190,16 @@
   --sgc-typo-body-1--line-height: 24px;
   --sgc-typo-body-1--letter-spacing: 0.005em;
 
+  --sgc-typo-body-1-medium--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-body-1-medium--weight: 500;
+  --sgc-typo-body-1-medium--size: 16px;
+  --sgc-typo-body-1-medium--line-height: 24px;
+  --sgc-typo-body-1-medium--letter-spacing: 0.001em;
+
   --sgc-typo-body-1-bold--family:
     var(--sgc-font-family), var(--sgc-font-family--fallback);
-  --sgc-typo-body-1-bold--weight: 500;
+  --sgc-typo-body-1-bold--weight: 700;
   --sgc-typo-body-1-bold--size: 16px;
   --sgc-typo-body-1-bold--line-height: 24px;
   --sgc-typo-body-1-bold--letter-spacing: 0.001em;
@@ -193,9 +211,16 @@
   --sgc-typo-body-2--line-height: 20px;
   --sgc-typo-body-2--letter-spacing: 0.0025em;
 
+  --sgc-typo-body-2-medium--family:
+    var(--sgc-font-family), var(--sgc-font-family--fallback);
+  --sgc-typo-body-2-medium--weight: 500;
+  --sgc-typo-body-2-medium--size: 14px;
+  --sgc-typo-body-2-medium--line-height: 20px;
+  --sgc-typo-body-2-medium--letter-spacing: 0.0025em;
+
   --sgc-typo-body-2-bold--family:
     var(--sgc-font-family), var(--sgc-font-family--fallback);
-  --sgc-typo-body-2-bold--weight: 500;
+  --sgc-typo-body-2-bold--weight: 700;
   --sgc-typo-body-2-bold--size: 14px;
   --sgc-typo-body-2-bold--line-height: 20px;
   --sgc-typo-body-2-bold--letter-spacing: 0.0025em;
