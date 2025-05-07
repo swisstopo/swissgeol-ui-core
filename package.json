@@ -38,22 +38,18 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.esm.js",
-      "require": "./dist/swissgeol-ui-core/swissgeol-ui-core.cjs.js"
+      "import": "./dist/swissgeol-ui-core/index.esm.js"
     },
     "./styles.css": {
-      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.css",
-      "require": "./dist/swissgeol-ui-core/swissgeol-ui-core.css"
+      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.css"
     },
     "./loader": {
       "types": "./loader/index.d.ts",
-      "import": "./loader/index.js",
-      "require": "./loader/index.cjs"
+      "import": "./loader/index.js"
     },
     "./components": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.esm.js",
-      "require": "./dist/swissgeol-ui-core/swissgeol-ui-core.cjs.js"
+      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.esm.js"
     },
     "./components/index.js": {
       "types": "./dist/components/index.d.ts",
@@ -110,6 +106,10 @@
     "./components/sgc-workflow-publication.js": {
       "types": "./dist/components/sgc-workflow-publication.d.ts",
       "import": "./dist/components/sgc-workflow-publication.js"
+    },
+    "./components/sgc-workflow-selection.js": {
+      "types": "./dist/components/sgc-workflow-selection.d.ts",
+      "import": "./dist/components/sgc-workflow-selection.js"
     },
     "./components/sgc-workflow-step.js": {
       "types": "./dist/components/sgc-workflow-step.d.ts",

@@ -2,18 +2,36 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
-| Property             | Attribute | Description | Type      | Default     |
-| -------------------- | --------- | ----------- | --------- | ----------- |
-| `value` _(required)_ | `value`   |             | `boolean` | `undefined` |
+| Property             | Attribute       | Description | Type      | Default     |
+| -------------------- | --------------- | ----------- | --------- | ----------- |
+| `isDisabled`         | `disabled`      |             | `boolean` | `false`     |
+| `isIndeterminate`    | `indeterminate` |             | `boolean` | `false`     |
+| `value` _(required)_ | `value`         |             | `boolean` | `undefined` |
+
 
 ## Events
 
-| Event             | Description | Type                   |
-| ----------------- | ----------- | ---------------------- |
-| `checkbox-change` |             | `CustomEvent<boolean>` |
+| Event            | Description | Type                   |
+| ---------------- | ----------- | ---------------------- |
+| `checkboxChange` |             | `CustomEvent<boolean>` |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+## Dependencies
+
+### Used by
+
+ - [sgc-checklist](../sgc-checklist)
+
+### Graph
+```mermaid
+graph TD;
+  sgc-checklist --> sgc-checkbox
+  style sgc-checkbox fill:#f9f,stroke:#333,stroke-width:4px
+```
+
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

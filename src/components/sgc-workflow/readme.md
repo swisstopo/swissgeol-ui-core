@@ -2,12 +2,14 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property                  | Attribute      | Description | Type       | Default     |
 | ------------------------- | -------------- | ----------- | ---------- | ----------- |
 | `isReadOnly` _(required)_ | `is-read-only` |             | `boolean`  | `undefined` |
 | `workflow` _(required)_   | `workflow`     |             | `Workflow` | `undefined` |
+
 
 ## Dependencies
 
@@ -19,10 +21,10 @@
 - [sgc-tabs](../sgc-tabs)
 - [sgc-tab](../sgc-tab)
 - [sgc-translate](../sgc-translate)
-- [sgc-workflow-history](../sgc-workflow-history)
+- [sgc-workflow-history](sgc-workflow-history)
+- [sgc-workflow-selection](sgc-workflow-selection)
 
 ### Graph
-
 ```mermaid
 graph TD;
   sgc-workflow --> sgc-workflow-steps
@@ -32,6 +34,7 @@ graph TD;
   sgc-workflow --> sgc-tab
   sgc-workflow --> sgc-translate
   sgc-workflow --> sgc-workflow-history
+  sgc-workflow --> sgc-workflow-selection
   sgc-workflow-steps --> sgc-translate
   sgc-workflow-steps --> sgc-workflow-step
   sgc-workflow-steps --> sgc-button
@@ -50,9 +53,12 @@ graph TD;
   sgc-workflow-change --> sgc-workflow-change-template
   sgc-workflow-change-template --> sgc-translate
   sgc-workflow-change-template --> sgc-date
+  sgc-workflow-selection --> sgc-checklist
+  sgc-workflow-selection --> sgc-translate
+  sgc-checklist --> sgc-checkbox
   style sgc-workflow fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*
