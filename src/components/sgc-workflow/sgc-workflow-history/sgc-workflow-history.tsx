@@ -1,6 +1,6 @@
 import { Component, h, Host, Prop, Watch } from '@stencil/core';
 import {
-  Workflow,
+  GenericWorkflow,
   WorkflowChange,
   WorkflowStatus,
 } from '../../../models/workflow.model';
@@ -14,7 +14,7 @@ import { OnLanguageChange, registerI18n } from '../../../locales/component';
 })
 export class SgcWorkflowHistory implements OnLanguageChange {
   @Prop()
-  workflow!: Workflow;
+  workflow!: GenericWorkflow;
 
   changes!: WorkflowChange[];
 

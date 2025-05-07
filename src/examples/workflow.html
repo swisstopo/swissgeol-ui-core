@@ -31,6 +31,18 @@
       lastName: "Mauermeister",
     };
 
+    const ts = {
+      general: "General",
+      normalFiles: "Normale Dateien",
+      legalFiles: "Rechtliche Einwilligungen",
+      initiators: "Auftraggeber",
+      suppliers: "Einlieferer",
+      authors: "Authoren",
+      references: "Referenzen",
+      geometries: "Geometrien",
+      legacy: "Altdaten",
+    };
+
     const workflow = document.createElement("sgc-workflow");
     workflow.isReadOnly = false;
     workflow.workflow = {
@@ -65,33 +77,52 @@
           toAssignee: userA,
         },
       ],
-      review: {
-        general: false,
-        normalFiles: true,
-        legalFiles: true,
-        authors: false,
-        initiators: true,
-        suppliers: false,
-        references: false,
-        geometries: false,
-        legacy: true,
-      },
-      approval: {
-        general: false,
-        normalFiles: false,
-        legalFiles: false,
-        authors: false,
-        initiators: false,
-        suppliers: false,
-        references: false,
-        geometries: false,
-        legacy: false,
-      },
       status: "Reviewed",
       assignee: { id: 1, firstName: "Peter", lastName: "Puffer" },
       creator: null,
       createdAt: { year: 2025, month: 2, day: 21 },
       workgroupId: 1,
+    };
+
+    const field = (name) => ({
+      field: name,
+      name: () => ts[name],
+    });
+    workflow.selection = [
+      field("general"),
+      {
+        name: () => "Dateien",
+        fields: [field("normalFiles"), field("legalFiles")],
+      },
+      {
+        name: () => "Kontakte",
+        fields: [field("initiators"), field("suppliers"), field("authors")],
+      },
+      field("references"),
+      field("geometries"),
+      field("legacy"),
+    ];
+    workflow.review = {
+      general: false,
+      normalFiles: true,
+      legalFiles: true,
+      authors: false,
+      initiators: true,
+      suppliers: false,
+      references: false,
+      geometries: false,
+      legacy: true,
+    };
+    workflow.approval = {
+      general: false,
+      normalFiles: false,
+      legalFiles: false,
+      authors: false,
+      initiators: false,
+      suppliers: false,
+      references: false,
+      geometries: false,
+      legacy: false,
     };
 
     workflow.addEventListener("workflowReviewChange", (event) => {

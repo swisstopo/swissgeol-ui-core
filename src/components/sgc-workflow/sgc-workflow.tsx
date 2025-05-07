@@ -1,6 +1,14 @@
-import { Component, h, Host, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Host, Prop } from '@stencil/core';
 import styles from './sgc-workflow.css';
-import { Workflow, WorkflowStatus } from '../../models/workflow.model';
+import {
+  GenericWorkflow,
+  GenericWorkflowSelection,
+  WorkflowStatus,
+} from '../../models/workflow.model';
+import {
+  SgcWorkflowSelectionChangeEventDetails,
+  SgcWorkflowSelectionEntry,
+} from './sgc-workflow-selection/sgc-workflow-selection';
 
 @Component({
   tag: 'sgc-workflow',
@@ -9,10 +17,25 @@ import { Workflow, WorkflowStatus } from '../../models/workflow.model';
 })
 export class SgcWorkflow {
   @Prop()
-  workflow!: Workflow;
+  workflow!: GenericWorkflow;
+
+  @Prop()
+  selection!: Array<SgcWorkflowSelectionEntry<string>>;
+
+  @Prop()
+  review!: GenericWorkflowSelection;
+
+  @Prop()
+  approval!: GenericWorkflowSelection;
 
   @Prop()
   isReadOnly!: boolean;
+
+  @Event({ eventName: 'workflowReviewChange', composed: true })
+  reviewChangeEvent: EventEmitter<SgcWorkflowSelectionChangeEventDetails>;
+
+  @Event({ eventName: 'workflowApprovalChange', composed: true })
+  approvalChangeEvent: EventEmitter<SgcWorkflowSelectionChangeEventDetails>;
 
   private get shouldShowAssignee(): boolean {
     return (
@@ -68,15 +91,24 @@ export class SgcWorkflow {
       <div slot="panels" role="tabpanel" id="review">
         <sgc-workflow-selection
           workflow={this.workflow}
-          selection="review"
+          entries={this.selection}
+          selection={this.review}
           isReadOnly={this.isReadOnly}
+          onWorkflowSelectionChange={(event) =>
+            this.reviewChangeEvent.emit(event.detail)
+          }
         ></sgc-workflow-selection>
       </div>
       <div slot="panels" role="tabpanel" id="approval">
         <sgc-workflow-selection
           workflow={this.workflow}
-          selection="approval"
+          entries={this.selection}
+          selection={this.approval}
+          base={this.review}
           isReadOnly={this.isReadOnly}
+          onWorkflowSelectionChange={(event) =>
+            this.approvalChangeEvent.emit(event.detail)
+          }
         ></sgc-workflow-selection>
       </div>
     </sgc-tabs>

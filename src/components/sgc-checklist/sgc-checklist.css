@@ -17,8 +17,8 @@
   border-top-right-radius: 4px;
 }
 
-/* title + checkbox */
-.title,
+/* name + checkbox */
+.name,
 .checkbox {
   flex: 0 0 50%;
   background-color: var(--bg-color--item);
@@ -26,25 +26,25 @@
   border-top: none;
 }
 
-:host([data-level="1"]) > .title,
+:host([data-level="1"]) > .name,
 :host([data-level="1"]) > .checkbox {
   --border-color: var(--bg-color--header);
   font-weight: bold;
   background-color: var(--bg-color--header);
 }
 
-:host([data-level="2"]:first-of-type) > .title,
+:host([data-level="2"]:first-of-type) > .name,
 :host([data-level="2"]:first-of-type) > .checkbox {
   border-top: 2px solid var(--border-color--base);
 }
 
-:host(:not([data-level="1"]).is-disabled) > .title,
+:host(:not([data-level="1"]).is-disabled) > .name,
 :host(:not([data-level="1"]).is-disabled) > .checkbox {
   color: var(--sgc-color-text--disabled);
 }
 
-/* title */
-.title {
+/* name */
+.name {
   display: flex;
   align-items: center;
   padding: 8px 16px;
@@ -76,11 +76,11 @@
 }
 
 :host(:not([data-level="1"]):not([data-level="2"])) {
-  > .title {
+  > .name {
     padding-left: 32px;
   }
 
-  > .title,
+  > .name,
   > .checkbox {
     background-color: var(--sgc-color-bg--white);
   }

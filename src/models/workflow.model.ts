@@ -3,30 +3,20 @@ import { LocalDate } from './base/local-date';
 import { Id } from './base/id';
 import { Workgroup } from './workgroup.model';
 
-export interface Workflow {
+export interface GenericWorkflow {
   id: Id<this>;
   hasRequestedChanges: boolean;
-  changes: WorkflowChange[];
-  review: WorkflowSelection;
-  approval: WorkflowSelection;
   status: WorkflowStatus;
+  changes: WorkflowChange[];
   assignee: SimpleUser | null;
   creator: SimpleUser | null;
   createdAt: LocalDate;
   workgroupId: Id<Workgroup>;
 }
 
-export interface WorkflowSelection {
-  general: boolean;
-  normalFiles: boolean;
-  legalFiles: boolean;
-  authors: boolean;
-  initiators: boolean;
-  suppliers: boolean;
-  references: boolean;
-  geometries: boolean;
-  legacy: boolean;
-}
+export type GenericWorkflowSelection = {
+  [K in string]: boolean;
+};
 
 export interface WorkflowChange {
   comment: string | null;
