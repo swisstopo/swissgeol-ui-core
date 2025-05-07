@@ -3,14 +3,13 @@ import {
   Event,
   EventEmitter,
   h,
-  Host,
   Prop,
   State,
   Watch,
 } from '@stencil/core';
 import {
-  Workflow,
-  WorkflowSelection,
+  GenericWorkflow,
+  GenericWorkflowSelection,
   WorkflowStatus,
 } from '../../../models/workflow.model';
 
@@ -21,64 +20,49 @@ import {
 })
 export class SgcWorkflowSelection {
   @Prop()
-  workflow!: Workflow;
+  workflow!: GenericWorkflow;
 
   @Prop()
-  selection!: 'review' | 'approval';
+  entries!: Array<SgcWorkflowSelectionEntry<string>>;
+
+  @Prop()
+  selection!: GenericWorkflowSelection;
+
+  @Prop()
+  base: GenericWorkflowSelection | null = null;
 
   @Prop()
   isReadOnly!: boolean;
 
-  @Event({ eventName: 'workflowReviewChange', composed: true, bubbles: true })
-  reviewChangeEvent: EventEmitter<SgcWorkflowSelectionChangeEventDetails>;
-
-  @Event({ eventName: 'workflowApprovalChange', composed: true, bubbles: true })
-  approvalChangeEvent: EventEmitter<SgcWorkflowSelectionChangeEventDetails>;
+  @Event({ eventName: 'workflowSelectionChange', composed: true })
+  changeEvent: EventEmitter<SgcWorkflowSelectionChangeEventDetails>;
 
   @State()
-  fields!: WorkflowSelection;
-
-  baseFields: WorkflowSelection | null = null;
-
-  private isFullyDisabled = false;
+  fields!: GenericWorkflowSelection;
 
   private timeoutForSubmit: NodeJS.Timeout | null = null;
 
   connectedCallback(): void {
-    this.handleWorkflowChange();
+    this.handleSelectionChange();
   }
 
-  @Watch('workflow')
-  handleWorkflowChange(): void {
-    this.isFullyDisabled = false;
-    this.baseFields = null;
-    this.fields = { ...this.workflow[this.selection] };
-    if (!this.hasCorrectStatus || this.isReadOnly) {
-      this.isFullyDisabled = true;
-    } else if (this.selection === 'approval') {
-      this.configureBaseFields();
-    }
+  @Watch('selection')
+  handleSelectionChange(): void {
+    this.fields = { ...this.selection };
   }
 
-  private configureBaseFields(): void {
-    const { review } = this.workflow;
-    this.baseFields = {} as WorkflowSelection;
-    for (const [key, isReviewed] of Object.entries(review)) {
-      this.baseFields[key] = isReviewed;
-    }
+  private get isFullyDisabled(): boolean {
+    return !this.hasCorrectStatus || this.isReadOnly;
   }
 
   private get hasCorrectStatus(): boolean {
-    switch (this.selection) {
-      case 'review':
-        return this.workflow.status === WorkflowStatus.InReview;
-      case 'approval':
-        return this.workflow.status === WorkflowStatus.Reviewed;
-    }
+    return this.base === null
+      ? this.workflow.status === WorkflowStatus.InReview
+      : this.workflow.status === WorkflowStatus.Reviewed;
   }
 
-  private updateField(field: keyof WorkflowSelection, value: boolean): void {
-    this.fields = { ...this.fields, [field]: value };
+  private updateField(field: string, value: boolean): void {
+    this.selection = { ...this.selection, [field]: value };
     if (this.timeoutForSubmit !== null) {
       clearTimeout(this.timeoutForSubmit);
     }
@@ -87,71 +71,63 @@ export class SgcWorkflowSelection {
 
   private readonly submit = (): void => {
     this.timeoutForSubmit = null;
-    const patch: Partial<WorkflowSelection> = {};
-    for (const [key, value] of Object.entries(this.fields)) {
-      if (value !== this.workflow[this.selection][key]) {
-        patch[key] = value;
+    const patch: Partial<GenericWorkflowSelection> = {};
+    for (const [key, isActive] of Object.entries(this.selection)) {
+      if (isActive !== this.selection[key]) {
+        patch[key] = isActive;
       }
     }
-    const emitter =
-      this.selection === 'review'
-        ? this.reviewChangeEvent
-        : this.approvalChangeEvent;
-    emitter.emit({
-      changes: patch,
-    });
+    this.changeEvent.emit({ changes: patch });
   };
 
   readonly render = () => (
-    <Host>
-      <sgc-checklist>
-        <sgc-translate ns="workflow" slot="title">
-          selection.tabHeading
-        </sgc-translate>
-        <sgc-translate ns="workflow" slot="label">
-          selection.reviewedLabel
-        </sgc-translate>
-        {this.renderItem('general')}
-        <sgc-checklist>
-          <sgc-translate ns="workflow" slot="title">
-            selection.categories.files
-          </sgc-translate>
-          {this.renderItem('normalFiles')}
-          {this.renderItem('legalFiles')}
-        </sgc-checklist>
-        <sgc-checklist>
-          <sgc-translate ns="workflow" slot="title">
-            selection.categories.contacts
-          </sgc-translate>
-          {this.renderItem('initiators')}
-          {this.renderItem('suppliers')}
-          {this.renderItem('authors')}
-        </sgc-checklist>
-        {this.renderItem('references')}
-        {this.renderItem('geometries')}
-        {this.renderItem('legacy')}
-      </sgc-checklist>
-    </Host>
+    <sgc-checklist>
+      <sgc-translate ns="workflow" slot="name">
+        selection.tabHeading
+      </sgc-translate>
+      <sgc-translate ns="workflow" slot="label">
+        {this.base === null
+          ? 'selection.reviewedLabel'
+          : 'selection.publishedLabel'}
+      </sgc-translate>
+      {this.entries.map((entry) =>
+        'fields' in entry ? this.renderGroup(entry) : this.renderField(entry),
+      )}
+    </sgc-checklist>
   );
 
-  private renderItem = (field: keyof WorkflowSelection) => (
-    <sgc-checklist
-      isDisabled={
-        this.isFullyDisabled ||
-        (this.baseFields !== null && !this.baseFields[field])
-      }
-      value={this.fields[field]}
-      onChecklistChange={(event) => this.updateField(field, event.detail)}
-    >
-      <sgc-translate ns="workflow" slot="title">
-        attributes.selection.{field}
-      </sgc-translate>
+  private readonly renderGroup = (group: SgcWorkflowSelectionGroup<string>) => (
+    <sgc-checklist name={group.name()}>
+      {group.fields.map(this.renderField)}
     </sgc-checklist>
+  );
+
+  private readonly renderField = (field: SgcWorkflowSelectionField<string>) => (
+    <sgc-checklist
+      name={field.name(field.field)}
+      value={this.fields[field.field]}
+      isDisabled={
+        this.isFullyDisabled || (this.base !== null && !this.base[field.field])
+      }
+      onChecklistChange={(event) => this.updateField(field.field, event.detail)}
+    ></sgc-checklist>
   );
 }
 
 export interface SgcWorkflowSelectionChangeEventDetails {
-  changes: Partial<WorkflowSelection>;
+  changes: Partial<GenericWorkflowSelection>;
 }
-export type SgcWorkflowSelectionChangeEvent =
-  CustomEvent<SgcWorkflowSelectionChangeEventDetails>;
+
+export type SgcWorkflowSelectionEntry<TField extends string> =
+  | SgcWorkflowSelectionGroup<TField>
+  | SgcWorkflowSelectionField<TField>;
+
+export interface SgcWorkflowSelectionGroup<TField extends string> {
+  name: () => string;
+  fields: Array<SgcWorkflowSelectionField<TField>>;
+}
+
+export interface SgcWorkflowSelectionField<TField extends string> {
+  name: (field: TField) => string;
+  field: TField;
+}

@@ -1,7 +1,7 @@
 import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core';
 import {
   getWorkflowStatusIndex,
-  Workflow,
+  GenericWorkflow,
   WorkflowStatus,
 } from '../../../models/workflow.model';
 import styles from 'sgc-workflow-step.css';
@@ -13,7 +13,7 @@ import styles from 'sgc-workflow-step.css';
 })
 export class SgcWorkflowStep {
   @Prop()
-  workflow!: Workflow;
+  workflow!: GenericWorkflow;
 
   @Prop()
   status!: WorkflowStatus;

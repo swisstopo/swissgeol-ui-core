@@ -90,11 +90,8 @@ export class SgcTabs {
     const { panelId } = tab;
     if (this.persistence === 'hash') {
       const isEmpty = panelId === null || this.tabs[0] === tab;
-      history.replaceState(
-        null,
-        '',
-        isEmpty ? location.pathname + location.search : `#${panelId}`,
-      );
+      const base = `${location.pathname}${location.search}`;
+      history.replaceState(null, '', isEmpty ? base : `${base}#${panelId}`);
     }
     const panel = this.findPanel(tab);
     if (panel !== null) {

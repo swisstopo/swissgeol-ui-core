@@ -18,6 +18,12 @@ export class SgcChecklist {
   @Prop()
   value: boolean | undefined;
 
+  @Prop()
+  name: string | null = null;
+
+  @Prop()
+  label: string | null = null;
+
   @Prop({ mutable: true })
   isDisabled = false;
 
@@ -68,7 +74,7 @@ export class SgcChecklist {
         ? CheckboxState.Checked
         : CheckboxState.Unchecked;
       if (this.state !== newState) {
-        this.setState(newState);
+        setTimeout(() => this.setState(newState));
       }
     }
   }
@@ -212,8 +218,8 @@ export class SgcChecklist {
         }}
         data-level={this.level}
       >
-        <div class="title">
-          <slot name="title"></slot>
+        <div class="name">
+          {this.name === null ? <slot name="name"></slot> : this.name}
         </div>
         <div class="checkbox">
           <sgc-checkbox
@@ -222,7 +228,8 @@ export class SgcChecklist {
             isDisabled={this.isDisabled}
             onCheckboxChange={this.toggle}
           ></sgc-checkbox>
-          <slot name="label"></slot>
+
+          {this.label === null ? <slot name="label"></slot> : this.label}
         </div>
 
         <slot></slot>

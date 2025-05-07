@@ -2,17 +2,6 @@ export default {
   attributes: {
     status: 'Status',
     assignee: 'Zugewiesene Person',
-    selection: {
-      general: 'General',
-      normalFiles: 'Normale Dateien',
-      legalFiles: 'Rechtliche Einwilligungen',
-      initiators: 'Auftraggeber',
-      suppliers: 'Einlieferer',
-      authors: 'Authoren',
-      references: 'Referenzen',
-      geometries: 'Geometrien',
-      legacy: 'Altdaten',
-    },
   },
   status: {
     Draft: 'Draft',
@@ -43,10 +32,6 @@ export default {
     tabHeading: 'Tab',
     reviewedLabel: 'Reviewed',
     publishedLabel: 'Published',
-    categories: {
-      files: 'Dateien',
-      contacts: 'Kontakte',
-    },
   },
   other: {
     publication: 'Publikation',

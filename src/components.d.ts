@@ -10,17 +10,19 @@ import { LocalDate } from "./models/base/local-date";
 import { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
 import { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
 import { NamespaceKey } from "./locales/i18n";
-import { Workflow, WorkflowChange, WorkflowStatus } from "./models/workflow.model";
+import { GenericWorkflow, GenericWorkflowSelection, WorkflowChange, WorkflowStatus } from "./models/workflow.model";
+import { SgcWorkflowSelectionChangeEventDetails, SgcWorkflowSelectionEntry } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
 import { SimpleUser } from "./models/user.model";
-import { SgcWorkflowSelectionChangeEventDetails } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
+import { SgcWorkflowSelectionChangeEventDetails as SgcWorkflowSelectionChangeEventDetails1, SgcWorkflowSelectionEntry as SgcWorkflowSelectionEntry1 } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
 export { SgcButtonColor, SgcButtonJustify, SgcButtonVariant } from "./components/sgc-button/sgc-button";
 export { LocalDate } from "./models/base/local-date";
 export { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
 export { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
 export { NamespaceKey } from "./locales/i18n";
-export { Workflow, WorkflowChange, WorkflowStatus } from "./models/workflow.model";
+export { GenericWorkflow, GenericWorkflowSelection, WorkflowChange, WorkflowStatus } from "./models/workflow.model";
+export { SgcWorkflowSelectionChangeEventDetails, SgcWorkflowSelectionEntry } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
 export { SimpleUser } from "./models/user.model";
-export { SgcWorkflowSelectionChangeEventDetails } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
+export { SgcWorkflowSelectionChangeEventDetails as SgcWorkflowSelectionChangeEventDetails1, SgcWorkflowSelectionEntry as SgcWorkflowSelectionEntry1 } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
 export namespace Components {
     interface SgcButton {
         "color": SgcButtonColor;
@@ -36,6 +38,8 @@ export namespace Components {
     }
     interface SgcChecklist {
         "isDisabled": boolean;
+        "label": string | null;
+        "name": string | null;
         "value": boolean | undefined;
     }
     interface SgcDate {
@@ -56,39 +60,44 @@ export namespace Components {
         "ns": NamespaceKey;
     }
     interface SgcWorkflow {
+        "approval": GenericWorkflowSelection;
         "isReadOnly": boolean;
-        "workflow": Workflow;
+        "review": GenericWorkflowSelection;
+        "selection": Array<SgcWorkflowSelectionEntry<string>>;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowAssignee {
-        "workflow": Workflow;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowChange {
         "change": WorkflowChange;
-        "workflow": Workflow;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowChangeTemplate {
         "createdAt": LocalDate;
         "creator": SimpleUser | null;
     }
     interface SgcWorkflowHistory {
-        "workflow": Workflow;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowPublication {
         "isReadOnly": boolean;
-        "workflow": Workflow;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowSelection {
+        "base": GenericWorkflowSelection | null;
+        "entries": Array<SgcWorkflowSelectionEntry1<string>>;
         "isReadOnly": boolean;
-        "selection": 'review' | 'approval';
-        "workflow": Workflow;
+        "selection": GenericWorkflowSelection;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowStep {
         "status": WorkflowStatus;
-        "workflow": Workflow;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowSteps {
         "isReadOnly": boolean;
-        "workflow": Workflow;
+        "workflow": GenericWorkflow;
     }
 }
 export interface SgcButtonCustomEvent<T> extends CustomEvent<T> {
@@ -102,6 +111,10 @@ export interface SgcCheckboxCustomEvent<T> extends CustomEvent<T> {
 export interface SgcChecklistCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcChecklistElement;
+}
+export interface SgcWorkflowCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcWorkflowElement;
 }
 export interface SgcWorkflowSelectionCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -189,7 +202,19 @@ declare global {
         prototype: HTMLSgcTranslateElement;
         new (): HTMLSgcTranslateElement;
     };
+    interface HTMLSgcWorkflowElementEventMap {
+        "workflowReviewChange": SgcWorkflowSelectionChangeEventDetails;
+        "workflowApprovalChange": SgcWorkflowSelectionChangeEventDetails;
+    }
     interface HTMLSgcWorkflowElement extends Components.SgcWorkflow, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcWorkflowElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowElement, ev: SgcWorkflowCustomEvent<HTMLSgcWorkflowElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcWorkflowElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowElement, ev: SgcWorkflowCustomEvent<HTMLSgcWorkflowElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLSgcWorkflowElement: {
         prototype: HTMLSgcWorkflowElement;
@@ -226,8 +251,7 @@ declare global {
         new (): HTMLSgcWorkflowPublicationElement;
     };
     interface HTMLSgcWorkflowSelectionElementEventMap {
-        "workflowReviewChange": SgcWorkflowSelectionChangeEventDetails;
-        "workflowApprovalChange": SgcWorkflowSelectionChangeEventDetails;
+        "workflowSelectionChange": SgcWorkflowSelectionChangeEventDetails1;
     }
     interface HTMLSgcWorkflowSelectionElement extends Components.SgcWorkflowSelection, HTMLStencilElement {
         addEventListener<K extends keyof HTMLSgcWorkflowSelectionElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowSelectionElement, ev: SgcWorkflowSelectionCustomEvent<HTMLSgcWorkflowSelectionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -292,6 +316,8 @@ declare namespace LocalJSX {
     }
     interface SgcChecklist {
         "isDisabled"?: boolean;
+        "label"?: string | null;
+        "name"?: string | null;
         "onChecklistChange"?: (event: SgcChecklistCustomEvent<boolean>) => void;
         "value"?: boolean | undefined;
     }
@@ -313,41 +339,47 @@ declare namespace LocalJSX {
         "ns": NamespaceKey;
     }
     interface SgcWorkflow {
+        "approval": GenericWorkflowSelection;
         "isReadOnly": boolean;
-        "workflow": Workflow;
+        "onWorkflowApprovalChange"?: (event: SgcWorkflowCustomEvent<SgcWorkflowSelectionChangeEventDetails>) => void;
+        "onWorkflowReviewChange"?: (event: SgcWorkflowCustomEvent<SgcWorkflowSelectionChangeEventDetails>) => void;
+        "review": GenericWorkflowSelection;
+        "selection": Array<SgcWorkflowSelectionEntry<string>>;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowAssignee {
-        "workflow": Workflow;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowChange {
         "change": WorkflowChange;
-        "workflow": Workflow;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowChangeTemplate {
         "createdAt": LocalDate;
         "creator": SimpleUser | null;
     }
     interface SgcWorkflowHistory {
-        "workflow": Workflow;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowPublication {
         "isReadOnly": boolean;
-        "workflow": Workflow;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowSelection {
+        "base"?: GenericWorkflowSelection | null;
+        "entries": Array<SgcWorkflowSelectionEntry1<string>>;
         "isReadOnly": boolean;
-        "onWorkflowApprovalChange"?: (event: SgcWorkflowSelectionCustomEvent<SgcWorkflowSelectionChangeEventDetails>) => void;
-        "onWorkflowReviewChange"?: (event: SgcWorkflowSelectionCustomEvent<SgcWorkflowSelectionChangeEventDetails>) => void;
-        "selection": 'review' | 'approval';
-        "workflow": Workflow;
+        "onWorkflowSelectionChange"?: (event: SgcWorkflowSelectionCustomEvent<SgcWorkflowSelectionChangeEventDetails1>) => void;
+        "selection": GenericWorkflowSelection;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowStep {
         "status": WorkflowStatus;
-        "workflow": Workflow;
+        "workflow": GenericWorkflow;
     }
     interface SgcWorkflowSteps {
         "isReadOnly": boolean;
-        "workflow": Workflow;
+        "workflow": GenericWorkflow;
     }
     interface IntrinsicElements {
         "sgc-button": SgcButton;

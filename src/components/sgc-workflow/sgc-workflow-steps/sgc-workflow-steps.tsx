@@ -1,5 +1,8 @@
 import { Component, h, Host, Prop } from '@stencil/core';
-import { Workflow, WorkflowStatus } from '../../../models/workflow.model';
+import {
+  GenericWorkflow,
+  WorkflowStatus,
+} from '../../../models/workflow.model';
 
 @Component({
   tag: 'sgc-workflow-steps',
@@ -8,7 +11,7 @@ import { Workflow, WorkflowStatus } from '../../../models/workflow.model';
 })
 export class SgcWorkflowSteps {
   @Prop()
-  workflow!: Workflow;
+  workflow!: GenericWorkflow;
 
   @Prop()
   isReadOnly!: boolean;
