@@ -4,7 +4,6 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "type": "module",
   "description": "swissgeol UI Core Library",
   "workspaces": [
     ".",
@@ -39,14 +38,16 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/swissgeol-ui-core/index.esm.js"
+      "import": "./dist/swissgeol-ui-core/index.esm.js",
+      "require": "./dist/cjs/index.cjs.js"
     },
     "./styles.css": {
       "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.css"
     },
     "./loader": {
       "types": "./loader/index.d.ts",
-      "import": "./loader/index.js"
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs.js"
     },
     "./components": {
       "types": "./dist/types/index.d.ts",
