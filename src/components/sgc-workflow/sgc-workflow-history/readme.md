@@ -12,7 +12,7 @@
 
 ### Used by
 
-- [sgc-workflow](../sgc-workflow)
+- [sgc-workflow](..)
 
 ### Depends on
 

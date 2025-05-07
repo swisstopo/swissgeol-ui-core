@@ -9,5 +9,5 @@ export default defineConfig({
       allow: ['..'], // allow access to www/ one level up
     },
   },
-  plugins: [liveReload(['../www/index.html'])],
+  plugins: [liveReload(['../www/index.html', '**/*.ts'])],
 });

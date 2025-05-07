@@ -18,8 +18,8 @@
 
 ### Depends on
 
-- [sgc-translate](../sgc-translate)
-- [sgc-date](../sgc-date)
+- [sgc-translate](../../sgc-translate)
+- [sgc-date](../../sgc-date)
 
 ### Graph
 

@@ -27,7 +27,8 @@
     "generate": "stencil generate",
     "lint": "npx eslint && npx prettier --check .",
     "lint:fix": "npx eslint --fix && npx prettier . --write",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepare": "husky"
   },
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -38,22 +39,18 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.esm.js",
-      "require": "./dist/swissgeol-ui-core/swissgeol-ui-core.cjs.js"
+      "import": "./dist/swissgeol-ui-core/index.esm.js"
     },
     "./styles.css": {
-      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.css",
-      "require": "./dist/swissgeol-ui-core/swissgeol-ui-core.css"
+      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.css"
     },
     "./loader": {
       "types": "./loader/index.d.ts",
-      "import": "./loader/index.js",
-      "require": "./loader/index.cjs"
+      "import": "./loader/index.js"
     },
     "./components": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.esm.js",
-      "require": "./dist/swissgeol-ui-core/swissgeol-ui-core.cjs.js"
+      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.esm.js"
     },
     "./components/index.js": {
       "types": "./dist/components/index.d.ts",
@@ -111,6 +108,10 @@
       "types": "./dist/components/sgc-workflow-publication.d.ts",
       "import": "./dist/components/sgc-workflow-publication.js"
     },
+    "./components/sgc-workflow-selection.js": {
+      "types": "./dist/components/sgc-workflow-selection.d.ts",
+      "import": "./dist/components/sgc-workflow-selection.js"
+    },
     "./components/sgc-workflow-step.js": {
       "types": "./dist/components/sgc-workflow-step.d.ts",
       "import": "./dist/components/sgc-workflow-step.js"
@@ -150,8 +151,10 @@
     "eslint-plugin-prettier": "^5.2.6",
     "eslint-plugin-sort-class-members": "^1.21.0",
     "globals": "^16.0.0",
+    "husky": "^9.1.7",
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
+    "lint-staged": "^15.5.2",
     "prettier": "^3.5.3",
     "puppeteer": "^24.3.0",
     "tsx": "^4.19.4",
