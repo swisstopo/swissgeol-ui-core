@@ -62,7 +62,7 @@ export class SgcWorkflowSelection {
   }
 
   private updateField(field: string, value: boolean): void {
-    this.selection = { ...this.selection, [field]: value };
+    this.fields = { ...this.fields, [field]: value };
     if (this.timeoutForSubmit !== null) {
       clearTimeout(this.timeoutForSubmit);
     }
@@ -72,7 +72,7 @@ export class SgcWorkflowSelection {
   private readonly submit = (): void => {
     this.timeoutForSubmit = null;
     const patch: Partial<GenericWorkflowSelection> = {};
-    for (const [key, isActive] of Object.entries(this.selection)) {
+    for (const [key, isActive] of Object.entries(this.fields)) {
       if (isActive !== this.selection[key]) {
         patch[key] = isActive;
       }
@@ -113,6 +113,9 @@ export class SgcWorkflowSelection {
     ></sgc-checklist>
   );
 }
+
+export type SgcWorkflowSelectionChangeEvent =
+  CustomEvent<SgcWorkflowSelectionChangeEventDetails>;
 
 export interface SgcWorkflowSelectionChangeEventDetails {
   changes: Partial<GenericWorkflowSelection>;
