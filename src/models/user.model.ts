@@ -1,7 +1,7 @@
 import { Id } from './base/id';
 
 export interface SimpleUser {
-  id: Id<this>;
+  id: Id<SimpleUser>;
   firstName: string;
   lastName: string;
 }

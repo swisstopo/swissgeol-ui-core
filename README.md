@@ -11,7 +11,7 @@ but also generates wrappers for [Angular](https://angular.dev/) and [React](http
 
 The library's npm packages are hosted in swisstopo's [GitHub registry](https://github.com/orgs/swisstopo/packages?ecosystem=npm).
 These packages are publicly available, but GitHub still enforces the need for an authentication token to be present when downloading them.
-To configure this token, first head to your [person access tokens](https://github.com/settings/tokens) and generate a \*classic" token with `read:packages` permissions.
+To configure this token, first head to your [person access tokens](https://github.com/settings/tokens) and generate a _classic_ token with `read:packages` permissions.
 Afterward, at the following to the `.npmrc` file in your home or project directory:
 
 ```
@@ -19,16 +19,17 @@ Afterward, at the following to the `.npmrc` file in your home or project directo
 //npm.pkg.github.com/:_authToken={your-github-token}
 ```
 
-> You may also set `{your-github-token}` with an environment variable like `${GITHUB_TOKEN}.
+> You may also set `{your-github-token}` with an environment variable like `${GITHUB_TOKEN}`.
 
-You may now proceed to any of the following sections depending on how you want to use the library:
+You can now proceed to any of the following sections depending on how you want to use the library:
 
 - [Getting Started: Web Components](#getting-started-web-components) if you want to use plain web components.
 - [Getting Started: Angular](#getting-started-angular) if you want to use the Angular wrappers.
 - [Getting Started: React](#getting-started-react) if you want to use the React wrappers.
-  Afterward, make sure to have a look at [Styling](#styling) and [Internationalization](#internationalization-i18n).
 
-## Getting Started: Web Components
+Afterward, make sure to have a look at [Styling](#styling) and [Internationalization](#internationalization-i18n).
+
+### Getting Started: Web Components
 
 To use swissgeol UI Core with plain web components, simply install the core library:
 
