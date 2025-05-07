@@ -15,8 +15,17 @@
   },
   "files": [
     "package.json",
-    "dist"
+    "public-api.d.ts",
+    "index.d.ts",
+    "fesm2022",
+    "lib"
   ],
+  "exports": {
+    ".": {
+      "types": "./public-api.d.ts",
+      "import": "./fesm2022/swissgeol-core-angular.mjs"
+    }
+  },
   "dependencies": {
     "zone.js": "~0.15.0"
   },

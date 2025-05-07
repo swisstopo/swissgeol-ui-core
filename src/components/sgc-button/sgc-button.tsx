@@ -1,4 +1,12 @@
-import { Component, Element, h, Host, Listen, Prop } from '@stencil/core';
+import {
+  Component,
+  Event,
+  EventEmitter,
+  h,
+  Host,
+  Listen,
+  Prop,
+} from '@stencil/core';
 import styles from './sgc-button.css';
 
 @Component({
@@ -22,12 +30,12 @@ export class SgcButton {
   @Prop({ reflect: true, attribute: 'active' })
   isActive = false;
 
-  @Element()
-  private readonly element!: HTMLElement;
+  @Event({ eventName: 'buttonClick', composed: true })
+  clickEvent!: EventEmitter<MouseEvent>;
 
-  @Listen('click', { capture: true })
+  @Listen('click')
   handleClick(event: MouseEvent): void {
-    this.element.dispatchEvent(event);
+    this.clickEvent.emit(event);
   }
 
   render() {

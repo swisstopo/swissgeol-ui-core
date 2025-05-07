@@ -1,0 +1,50 @@
+:host {
+  --step-color: var(--sgc-color-bg--disabled);
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-inline: 12px;
+  color: var(--step-color);
+  text-align: center;
+  vertical-align: middle;
+
+  font-family: var(--sgc-typo-body-2-medium--family);
+  font-weight: var(--sgc-typo-body-2-medium--weight);
+  font-size: var(--sgc-typo-body-2-medium--size);
+  line-height: var(--sgc-typo-body-2-medium--line-height);
+  letter-spacing: var(--sgc-typo-body-2-medium--letter-spacing);
+}
+
+:host(.is-active) {
+  --step-color: var(--sgc-color-primary);
+
+  border-radius: 4px;
+  padding: 12px;
+  background-color: var(--sgc-color-bg--grey);
+  border: 1px solid var(--sgc-color-border--default);
+
+  font-family: var(--sgc-typo-body-2-bold--family);
+  font-weight: var(--sgc-typo-body-2-bold--weight);
+  font-size: var(--sgc-typo-body-2-bold--size);
+  line-height: var(--sgc-typo-body-2-bold--line-height);
+  letter-spacing: var(--sgc-typo-body-2-bold--letter-spacing);
+}
+
+/* indicator */
+:host > .indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--step-color);
+  border-radius: 50%;
+  background-color: var(--sgc-color-bg--white);
+}
+
+:host > .indicator > svg-icon {
+  width: 20px;
+  height: 20px;
+}

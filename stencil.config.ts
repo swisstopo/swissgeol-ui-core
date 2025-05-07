@@ -27,6 +27,8 @@ export const config: Config = {
       serviceWorker: null, // disable service workers
       copy: [
         { src: 'assets', dest: 'assets' },
+        { src: 'examples/**/*.html', dest: 'examples' },
+        { src: 'examples/**/*.css', dest: 'examples' },
         { src: '**/test/*.html' },
         { src: '**/test/*.css' },
       ],

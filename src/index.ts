@@ -8,5 +8,14 @@
  * to consume components of this package as outlined in the `README.md`.
  */
 
-export { format } from './utils/utils';
 export type * from './components.d.ts';
+
+export { i18n as SwissgeolCoreI18n } from './locales/i18n';
+
+export { format } from './utils/utils';
+
+export * from './models/base/id';
+export * from './models/base/local-date';
+export * from './models/base/language';
+export * from './models/user.model';
+export * from './models/workflow.model';
