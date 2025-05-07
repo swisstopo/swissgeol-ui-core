@@ -64,6 +64,7 @@ export class SgcChecklist {
 
   connectedCallback(): void {
     this.element['component'] = this;
+    this.state = this.value ? CheckboxState.Checked : CheckboxState.Unchecked;
   }
 
   componentDidLoad(): void {
