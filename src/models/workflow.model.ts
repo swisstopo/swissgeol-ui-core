@@ -1,17 +1,16 @@
 import { SimpleUser } from './user.model';
 import { LocalDate } from './base/local-date';
 import { Id } from './base/id';
-import { Workgroup } from './workgroup.model';
 
 export interface GenericWorkflow {
-  id: Id<this>;
+  id: Id<GenericWorkflow>;
   hasRequestedChanges: boolean;
   status: WorkflowStatus;
   changes: WorkflowChange[];
   assignee: SimpleUser | null;
   creator: SimpleUser | null;
   createdAt: LocalDate;
-  workgroupId: Id<Workgroup>;
+  workgroupId: Id<unknown>;
 }
 
 export type GenericWorkflowSelection = {
