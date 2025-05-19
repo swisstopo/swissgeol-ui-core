@@ -10,11 +10,12 @@
     "packages/angular",
     "packages/angular-client",
     "packages/react",
-    "packages/react-client"
+    "packages/react-client",
+    "packages/wc-client"
   ],
   "scripts": {
     "build": "stencil build && npm run build:post && npm run build:angular && npm run build:react",
-    "build:post": "tsx scripts/generate-package-json.ts",
+    "build:post": "tsx scripts/generate-package-json.ts && tsx scripts/share-build.ts",
     "build:angular": "npm run build --workspace=packages/angular",
     "build:react": "npm run build --workspace=packages/react",
     "start": "concurrently \"npm:start:stencil\" \"npm:start:server\"",
@@ -48,6 +49,10 @@
       "types": "./loader/index.d.ts",
       "import": "./loader/index.js",
       "require": "./loader/index.cjs.js"
+    },
+    "./import": {
+      "types": "./dist/components/import.d.ts",
+      "import": "./dist/components/import.js"
     },
     "./components": {
       "types": "./dist/types/index.d.ts",
@@ -132,8 +137,7 @@
   },
   "files": [
     "package.json",
-    "dist/",
-    "loader/"
+    "dist/"
   ],
   "devDependencies": {
     "@eslint/css": "^0.6.0",

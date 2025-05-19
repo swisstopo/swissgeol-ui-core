@@ -1,7 +1,10 @@
-import { copyRecursive } from '../../../scripts/fs.utils';
-import { linkCore, resolveInProject } from '../../../scripts/project.utils';
+import fsUtils from '../../../scripts/fs.utils';
+import projectUtils from '../../../scripts/project.utils';
 import path from 'path';
 import fs from 'node:fs';
+
+const { copyRecursive } = fsUtils;
+const { linkCore, resolveInProject } = projectUtils;
 
 const clientDir = resolveInProject('packages/react-client');
 

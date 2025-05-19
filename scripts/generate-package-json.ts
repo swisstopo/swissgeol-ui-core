@@ -14,6 +14,8 @@ for (const key of Object.keys(packageJson.exports)) {
   }
 }
 
+let loaderScript = '';
+
 for (const file of fs.readdirSync(componentsDistDir)) {
   if (!file.endsWith('.d.ts')) {
     continue;
@@ -23,6 +25,10 @@ for (const file of fs.readdirSync(componentsDistDir)) {
     types: `./dist/components/${componentName}.d.ts`,
     import: `./dist/components/${componentName}.js`,
   };
+
+  if (componentName !== 'index') {
+    loaderScript += `import "./${componentName}.js";\n`;
+  }
 }
 
 fs.writeFileSync(
@@ -30,3 +36,10 @@ fs.writeFileSync(
   JSON.stringify(packageJson, null, 2),
   'utf-8',
 );
+
+fs.writeFileSync(
+  resolveInProject('dist/components/import.js'),
+  loaderScript,
+  'utf-8',
+);
+fs.writeFileSync(resolveInProject('dist/components/import.d.ts'), '', 'utf-8');
