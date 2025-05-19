@@ -1,5 +1,8 @@
-import { replaceInFile } from '../../../scripts/code.utils';
-import { linkCore, resolveInProject } from '../../../scripts/project.utils';
+import codeUtils from '../../../scripts/code.utils';
+import projectUtils from '../../../scripts/project.utils';
+
+const { replaceInFile } = codeUtils;
+const { linkCore, resolveInProject } = projectUtils;
 
 linkCore(resolveInProject('packages/react'));
 

@@ -22,6 +22,7 @@ const sourcePaths = [
   'packages/react/src',
   'packages/react/scripts',
   'packages/react-client/src',
+  'packages/wc-client/src',
 ].flatMap((root) => jsFileExtensions.map((ext) => `${root}/**/*${ext}`));
 
 const tsFiles = [

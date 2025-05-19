@@ -54,12 +54,10 @@ viteStaticCopy({
 });
 ```
 
-At startup, you will have to register the components:
+At startup, you will have to import the library:
 
 ```js
-import { defineCustomElements } from "@swisstopo/swissgeol-ui-core/loader";
-
-defineCustomElements();
+import "@swisstopo/swissgeol-ui-core/import";
 ```
 
 You can now use the web components in HTML.
