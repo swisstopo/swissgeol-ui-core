@@ -5,9 +5,9 @@ It details how new features are deployed, and how the development process affect
 
 [1. Development Cycle](#development-cycle)  
 [1.1. Development Branch](#development-branch)  
-[1.1. Release Candidate](#release-candidate)  
-[1.1. Release](#release)  
-[2. Hotfixes](#hotfixes)  
+[1.2. Patches](#patches)  
+[1.3. Breaking Changes](#breaking-changes)  
+[1.4. Release](#release)  
 [3. Versioning](#versioning)  
 [4. Naming Conventions for Branches](#naming-conventions-for-branches)
 
