@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* highlight */
+/*
+  Lifted from `sgc-workflow-change-template`.
+  We want to highlight a slotted value, which can't be styled from inside the web component,
+  which is why we have to copy the entire style block into here.
+*/
+.highlight {
+  color: var(--sgc-color-text--emphasis-high);
+
+  font-family: var(--sgc-typo-body-2-bold--family);
+  font-weight: var(--sgc-typo-body-2-bold--weight);
+  font-size: var(--sgc-typo-body-2-bold--size);
+  line-height: var(--sgc-typo-body-2-bold--line-height);
+  letter-spacing: var(--sgc-typo-body-2-bold--letter-spacing);
+}

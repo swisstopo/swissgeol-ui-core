@@ -1,0 +1,15 @@
+# Ignore artifacts:
+build
+coverage
+dist/**
+manuals/dist/**
+
+# Angular builds
+packages/angular/.angular/**
+packages/angular/.dist/**
+packages/angular/node_modules/**
+packages/angular-client/.angular/**
+packages/angular-client/node_modules/**
+
+# Generated files
+/src/components.d.ts

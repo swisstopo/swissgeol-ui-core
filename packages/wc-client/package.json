@@ -1,0 +1,19 @@
+{
+  "name": "wc-client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "rm -rf ./dist/ && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lit": "^3.3.0",
+    "@swisstopo/swissgeol-ui-core": "*"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5",
+    "vite-plugin-static-copy": "^3.0.0"
+  }
+}
