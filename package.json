@@ -137,7 +137,8 @@
   },
   "files": [
     "package.json",
-    "dist/"
+    "dist/",
+    "loader/"
   ],
   "devDependencies": {
     "@eslint/css": "^0.6.0",
