@@ -25,5 +25,7 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 .env
 
+/test-results/
+
 # Generated component documentation
 /src/components/**/readme.md
