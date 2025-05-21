@@ -9,10 +9,11 @@ import {
   Prop,
   Watch,
 } from '@stencil/core';
+import styles from './sgc-checkbox.css';
 
 @Component({
   tag: 'sgc-checkbox',
-  styleUrl: 'sgc-checkbox.css',
+  styles,
   shadow: true,
   formAssociated: true,
 })
@@ -42,7 +43,9 @@ export class SgcCheckbox {
   }
 
   @Listen('click')
-  handleClick(): void {
+  handleClick(e: MouseEvent): void {
+    e.preventDefault();
+    e.stopPropagation();
     this.changeEvent.emit(!this.value);
   }
 
