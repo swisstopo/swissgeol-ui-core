@@ -40,8 +40,8 @@
   },
   "peerDependencies": {
     "@stencil/react-output-target": "^1.0.2",
-    "swissgeol-core": "*",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "@swisstopo/swissgeol-ui-core": "*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }
