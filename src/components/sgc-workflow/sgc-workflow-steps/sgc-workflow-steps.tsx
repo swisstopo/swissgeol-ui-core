@@ -22,7 +22,7 @@ export class SgcWorkflowSteps {
   changeStatus: EventEmitter<void>;
 
   @Event({ eventName: 'changeRequest', composed: true })
-  requestChange: EventEmitter<void>;
+  requestChanges: EventEmitter<void>;
 
   @Event({ eventName: 'reviewRequest', composed: true })
   requestReview: EventEmitter<void>;
@@ -30,10 +30,10 @@ export class SgcWorkflowSteps {
   @Event({ eventName: 'reviewFinish', composed: true })
   finishReview: EventEmitter<void>;
 
-  private emitChangeStatus = () => {
+  private openStatusChangeDialog = () => {
     if (this.modalRef) {
       this.modalRef.innerHTML = '';
-      const requestReview = document.createElement('sgc-request-review');
+      const requestReview = document.createElement('sgc-change-status-dialog');
       requestReview.addEventListener('closeDialog', () => {
         this.modalRef.isopen = false;
       });
@@ -46,27 +46,54 @@ export class SgcWorkflowSteps {
     }
   };
 
-  private emitRequestChange = () => {
+  private openRequestChangesDialog = () => {
     if (this.modalRef) {
       this.modalRef.innerHTML = '';
-      const requestReview = document.createElement('sgc-request-review');
-      this.modalRef.appendChild(requestReview); // Slots will be distributed
+      const requestChanges = document.createElement(
+        'sgc-request-changes-dialog',
+      );
+      requestChanges.addEventListener('closeDialog', () => {
+        this.modalRef.isopen = false;
+      });
+      requestChanges.addEventListener('requestChanges', () => {
+        this.requestChanges.emit();
+        this.modalRef.isopen = false;
+      });
+      this.modalRef.appendChild(requestChanges);
       this.modalRef.isopen = true;
     }
-    this.requestChange.emit();
   };
 
-  private emitRequestReview = () => {
+  private openRequestReviewDialog = () => {
     if (this.modalRef) {
-      this.modalRef.innerHTML =
-        '<sgc-workflow-publication class="panel" workflow={this.workflow} isReadOnly={this.isReadOnly} ></sgc-workflow-publication>';
+      this.modalRef.innerHTML = '';
+      const requestReview = document.createElement('sgc-request-review-dialog');
+      requestReview.addEventListener('closeDialog', () => {
+        this.modalRef.isopen = false;
+      });
+      requestReview.addEventListener('requestReview', () => {
+        this.requestChanges.emit();
+        this.modalRef.isopen = false;
+      });
+      this.modalRef.appendChild(requestReview);
       this.modalRef.isopen = true;
     }
-    this.requestReview.emit();
   };
 
-  private emitFinishReview = () => {
-    this.finishReview.emit();
+  private openFinishReviewDialog = () => {
+    if (this.modalRef) {
+      this.modalRef.innerHTML = '';
+      const finisheReview = document.createElement('sgc-finish-review-dialog');
+      finisheReview.addEventListener('closeDialog', () => {
+        this.modalRef.isopen = false;
+      });
+      finisheReview.addEventListener('finishReview', () => {
+        this.finishReview.emit();
+        this.modalRef.isopen = false;
+      });
+      this.modalRef.appendChild(finisheReview);
+      this.modalRef.isopen = true;
+    }
   };
 
   render() {
@@ -107,23 +134,32 @@ export class SgcWorkflowSteps {
   private renderActions = () => (
     <div class="actions">
       {this.workflow.status === WorkflowStatus.Draft || [
-        <sgc-button color="secondary" onClick={this.emitChangeStatus}>
+        <sgc-button
+          color="secondary"
+          onButtonClick={this.openStatusChangeDialog}
+        >
           <sgc-translate ns="workflow">actions.changeStatus</sgc-translate>
           <sgc-icon name="edit"></sgc-icon>
         </sgc-button>,
-        <sgc-button color="secondary" onButtonClick={this.emitRequestChange}>
+        <sgc-button
+          color="secondary"
+          onButtonClick={this.openRequestChangesDialog}
+        >
           <sgc-translate ns="workflow">actions.requestChanges</sgc-translate>
           <sgc-icon name="close"></sgc-icon>
         </sgc-button>,
       ]}
       {this.workflow.status === WorkflowStatus.Draft && (
-        <sgc-button color="primary" onButtonClick={this.emitRequestReview}>
+        <sgc-button
+          color="primary"
+          onButtonClick={this.openRequestReviewDialog}
+        >
           <sgc-translate ns="workflow">actions.requestReview</sgc-translate>
           <sgc-icon name="chevronRight"></sgc-icon>
         </sgc-button>
       )}
       {this.workflow.status === WorkflowStatus.InReview && (
-        <sgc-button color="primary" onButtonClick={this.emitFinishReview}>
+        <sgc-button color="primary" onButtonClick={this.openFinishReviewDialog}>
           <sgc-translate ns="workflow">actions.finishReview</sgc-translate>
           <sgc-icon name="chevronRight"></sgc-icon>
         </sgc-button>

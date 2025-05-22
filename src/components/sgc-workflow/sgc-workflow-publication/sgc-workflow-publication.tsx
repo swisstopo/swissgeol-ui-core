@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 import {
   GenericWorkflow,
   WorkflowStatus,
@@ -16,6 +16,27 @@ export class SgcWorkflowPublication {
   @Prop()
   isReadOnly!: boolean;
 
+  private modalRef?: HTMLSgcModalElement;
+
+  @Event({ eventName: 'publish', composed: true })
+  publishEvent: EventEmitter<void>;
+
+  private openPublishDialog = () => {
+    if (this.modalRef) {
+      this.modalRef.innerHTML = '';
+      const publishDialog = document.createElement('sgc-publish-dialog');
+      publishDialog.addEventListener('closeDialog', () => {
+        this.modalRef.isopen = false;
+      });
+      publishDialog.addEventListener('publish', () => {
+        this.publishEvent.emit();
+        this.modalRef.isopen = false;
+      });
+      this.modalRef.appendChild(publishDialog);
+      this.modalRef.isopen = true;
+    }
+  };
+
   readonly render = () => (
     <Host>
       <h2 part="heading">
@@ -29,11 +50,12 @@ export class SgcWorkflowPublication {
 
       {this.workflow.status !== WorkflowStatus.Published &&
         !this.isReadOnly && (
-          <sgc-button color="primary">
+          <sgc-button color="primary" onButtonClick={this.openPublishDialog}>
             <sgc-translate ns="workflow">actions.publish</sgc-translate>
             <sgc-icon name="chevronRight"></sgc-icon>
           </sgc-button>
         )}
+      <sgc-modal ref={(el) => (this.modalRef = el)}></sgc-modal>
     </Host>
   );
 }
