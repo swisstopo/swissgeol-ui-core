@@ -1,7 +1,7 @@
 import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core';
 import {
-  getWorkflowStatusIndex,
   GenericWorkflow,
+  getWorkflowStatusIndex,
   WorkflowStatus,
 } from '../../../models/workflow.model';
 import styles from 'sgc-workflow-step.css';
@@ -28,6 +28,7 @@ export class SgcWorkflowStep {
 
   private isDone = false;
   private isActive = false;
+  private hasChangesRequested = false;
 
   connectedCallback(): void {
     this.handleStatusChange();
@@ -56,6 +57,15 @@ export class SgcWorkflowStep {
       this.stage === Stage.Done ||
       (this.stage === Stage.Active && this.status === WorkflowStatus.Published);
     this.element.classList.toggle('is-done', this.isDone);
+
+    this.hasChangesRequested =
+      this.stage === Stage.Active &&
+      this.status === WorkflowStatus.Draft &&
+      this.workflow.hasRequestedChanges;
+    this.element.classList.toggle(
+      'has-changes-requested',
+      this.hasChangesRequested,
+    );
   }
 
   private getStageByWorkflow(): Stage {
@@ -72,12 +82,26 @@ export class SgcWorkflowStep {
   render = () => (
     <Host>
       <div class="indicator">{this.renderIndicator()}</div>
-      {this.status === WorkflowStatus.Published &&
-      this.stage !== Stage.Active ? (
-        <sgc-translate ns="workflow">status.notPublished</sgc-translate>
-      ) : (
-        <sgc-translate ns="workflow">status.{this.status}</sgc-translate>
-      )}
+
+      <div class="title">
+        {this.status === WorkflowStatus.Published &&
+        this.stage !== Stage.Active ? (
+          <sgc-translate key="notPublished" ns="workflow">
+            status.notPublished
+          </sgc-translate>
+        ) : (
+          <sgc-translate key={this.status} ns="workflow">
+            status.{this.status}
+          </sgc-translate>
+        )}
+        {this.hasChangesRequested && (
+          <div class="subtitle">
+            <sgc-translate key="requestedChanges" ns="workflow">
+              actions.requestedChanges
+            </sgc-translate>
+          </div>
+        )}
+      </div>
     </Host>
   );
 
@@ -85,7 +109,11 @@ export class SgcWorkflowStep {
     if (this.isDone) {
       return <sgc-icon name="checkmark"></sgc-icon>;
     }
-    if (this.status === WorkflowStatus.Published) {
+    if (
+      this.status === WorkflowStatus.Published ||
+      (this.status === WorkflowStatus.Draft &&
+        this.workflow.hasRequestedChanges)
+    ) {
       return <sgc-icon name="cross"></sgc-icon>;
     }
     return `${this.index + 1}`;

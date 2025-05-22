@@ -62,9 +62,17 @@
       "types": "./dist/components/index.d.ts",
       "import": "./dist/components/index.js"
     },
+    "./components/sgc-assign-person-dialog.js": {
+      "types": "./dist/components/sgc-assign-person-dialog.d.ts",
+      "import": "./dist/components/sgc-assign-person-dialog.js"
+    },
     "./components/sgc-button.js": {
       "types": "./dist/components/sgc-button.d.ts",
       "import": "./dist/components/sgc-button.js"
+    },
+    "./components/sgc-change-status-dialog.js": {
+      "types": "./dist/components/sgc-change-status-dialog.d.ts",
+      "import": "./dist/components/sgc-change-status-dialog.js"
     },
     "./components/sgc-checkbox.js": {
       "types": "./dist/components/sgc-checkbox.d.ts",
@@ -77,6 +85,14 @@
     "./components/sgc-date.js": {
       "types": "./dist/components/sgc-date.d.ts",
       "import": "./dist/components/sgc-date.js"
+    },
+    "./components/sgc-finish-review-dialog.js": {
+      "types": "./dist/components/sgc-finish-review-dialog.d.ts",
+      "import": "./dist/components/sgc-finish-review-dialog.js"
+    },
+    "./components/sgc-form-item.js": {
+      "types": "./dist/components/sgc-form-item.d.ts",
+      "import": "./dist/components/sgc-form-item.js"
     },
     "./components/sgc-dropdown-item.js": {
       "types": "./dist/components/sgc-dropdown-item.d.ts",
@@ -94,6 +110,30 @@
       "types": "./dist/components/sgc-menu-item.d.ts",
       "import": "./dist/components/sgc-menu-item.js"
     },
+    "./components/sgc-modal-wrapper.js": {
+      "types": "./dist/components/sgc-modal-wrapper.d.ts",
+      "import": "./dist/components/sgc-modal-wrapper.js"
+    },
+    "./components/sgc-modal.js": {
+      "types": "./dist/components/sgc-modal.d.ts",
+      "import": "./dist/components/sgc-modal.js"
+    },
+    "./components/sgc-publish-dialog.js": {
+      "types": "./dist/components/sgc-publish-dialog.d.ts",
+      "import": "./dist/components/sgc-publish-dialog.js"
+    },
+    "./components/sgc-request-changes-dialog.js": {
+      "types": "./dist/components/sgc-request-changes-dialog.d.ts",
+      "import": "./dist/components/sgc-request-changes-dialog.js"
+    },
+    "./components/sgc-request-review-dialog.js": {
+      "types": "./dist/components/sgc-request-review-dialog.d.ts",
+      "import": "./dist/components/sgc-request-review-dialog.js"
+    },
+    "./components/sgc-select.js": {
+      "types": "./dist/components/sgc-select.d.ts",
+      "import": "./dist/components/sgc-select.js"
+    },
     "./components/sgc-tab.js": {
       "types": "./dist/components/sgc-tab.d.ts",
       "import": "./dist/components/sgc-tab.js"
@@ -101,6 +141,10 @@
     "./components/sgc-tabs.js": {
       "types": "./dist/components/sgc-tabs.d.ts",
       "import": "./dist/components/sgc-tabs.js"
+    },
+    "./components/sgc-text-area.js": {
+      "types": "./dist/components/sgc-text-area.d.ts",
+      "import": "./dist/components/sgc-text-area.js"
     },
     "./components/sgc-translate.js": {
       "types": "./dist/components/sgc-translate.d.ts",

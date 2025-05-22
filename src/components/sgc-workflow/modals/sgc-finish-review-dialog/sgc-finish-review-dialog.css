@@ -1,0 +1,5 @@
+@import "../../../../global/base.css";
+
+:host {
+  height: 100%;
+}

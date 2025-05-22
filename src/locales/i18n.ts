@@ -5,6 +5,10 @@ import workflowEn from './workflow/workflow.en';
 import workflowFr from './workflow/workflow.fr';
 import workflowIt from './workflow/workflow.it';
 import { DeepPartial } from '../utils/utility-types';
+import generalDe from './general/general.de';
+import generalEn from './general/general.en';
+import generalFr from './general/general.fr';
+import generalIt from './general/general.it';
 
 const flatten = <T>(object: T, prefix = ''): Record<string, string> => {
   let paths = {} as Record<string, string>;
@@ -41,6 +45,12 @@ const namespaces = {
     en: workflowEn,
     fr: workflowFr,
     it: workflowIt,
+  }),
+  general: ns({
+    de: generalDe,
+    en: generalEn,
+    fr: generalFr,
+    it: generalIt,
   }),
 };
 

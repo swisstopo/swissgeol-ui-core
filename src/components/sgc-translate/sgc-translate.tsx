@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Element } from '@stencil/core';
+import { Component, Element, h, Host, Prop } from '@stencil/core';
 import { i18n, NamespaceKey } from '../../locales/i18n';
 
 @Component({
@@ -28,7 +28,8 @@ export class SgcTranslate {
     const observer = new MutationObserver(this.updateKey);
     observer.observe(this.element, {
       childList: true,
-      subtree: false,
+      subtree: true,
+      characterData: true,
     });
 
     this.unsubscribeFromLanguageChange = i18n.onLanguageChange(this.translate);
@@ -37,10 +38,10 @@ export class SgcTranslate {
   }
 
   disconnectedCallback(): void {
-    this.observer.disconnect();
+    this.observer?.disconnect();
     this.observer = null;
 
-    this.unsubscribeFromLanguageChange();
+    this.unsubscribeFromLanguageChange?.();
     this.unsubscribeFromLanguageChange = null;
   }
 
@@ -54,8 +55,11 @@ export class SgcTranslate {
   }
 
   private translate(): void {
+    if (!this.key) {
+      return;
+    }
     this.shouldIgnoreNextChange = true;
-    this.element.innerText = i18n.t(this.ns, this.key!);
+    this.element.innerText = i18n.t(this.ns, this.key);
   }
 
   render() {

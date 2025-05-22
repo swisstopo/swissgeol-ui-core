@@ -19,16 +19,19 @@
       id: "24",
       firstName: "Hans",
       lastName: "Muster",
+      role: "Reviewer",
     };
     const userB = {
       id: "42",
       firstName: "Frederik",
       lastName: "Eisenhauer",
+      role: "Publisher",
     };
     const userC = {
       id: "132444",
       firstName: "Sigfrieda",
       lastName: "Mauermeister",
+      role: "Editor",
     };
 
     const ts = {
@@ -47,7 +50,7 @@
     workflow.isReadOnly = false;
     workflow.workflow = {
       id: 1234,
-      hasRequestedChanges: false,
+      hasRequestedChanges: true,
       changes: [
         {
           createdAt: { year: 2024, month: 8, day: 6 },
@@ -77,12 +80,18 @@
           toAssignee: userA,
         },
       ],
-      status: "Reviewed",
-      assignee: { id: 1, firstName: "Peter", lastName: "Puffer" },
+      status: "Draft",
+      assignee: {
+        id: 1,
+        firstName: "Peter",
+        lastName: "Puffer",
+        role: "Publisher",
+      },
       creator: null,
       createdAt: { year: 2025, month: 2, day: 21 },
       workgroupId: 1,
     };
+    workflow.availableAssignees = [userA, userB, userC];
 
     const field = (name) => ({
       field: name,
@@ -125,16 +134,37 @@
       legacy: false,
     };
 
-    workflow.addEventListener("workflowReviewChange", (event) => {
+    workflow.addEventListener("sgcWorkflowReviewChange", (event) => {
       workflow.workflow = {
         ...workflow.workflow,
         review: { ...workflow.workflow.review, ...event.detail.changes },
       };
     });
-    workflow.addEventListener("workflowApprovalChange", (event) => {
+    workflow.addEventListener("sgcWorkflowApprovalChange", (event) => {
       workflow.workflow = {
         ...workflow.workflow,
         approval: { ...workflow.workflow.approval, ...event.detail.changes },
+      };
+    });
+    workflow.addEventListener("sgcWorkflowChange", (event) => {
+      console.log("here", event);
+    });
+    workflow.addEventListener("sgcWorkflowPublish", (event) => {
+      workflow.workflow = {
+        ...workflow.workflow,
+        status: "Published",
+        changes: [
+          ...workflow.workflow.changes,
+          {
+            createdAt: { year: 2025, month: 3, day: 15 },
+            fromStatus: "Reviewed",
+            toStatus: "Published",
+            comment: "",
+            creator: null,
+            fromAssignee: userC,
+            toAssignee: userC,
+          },
+        ],
       };
     });
     document.body.appendChild(workflow);
