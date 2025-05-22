@@ -31,30 +31,87 @@ export class SgcWorkflow {
   @Prop()
   isReadOnly!: boolean;
 
+  private modalRef?: HTMLSgcModalElement;
+
   @Event({ eventName: 'workflowReviewChange', composed: true })
   reviewChangeEvent: EventEmitter<SgcWorkflowSelectionChangeEventDetails>;
 
   @Event({ eventName: 'workflowApprovalChange', composed: true })
   approvalChangeEvent: EventEmitter<SgcWorkflowSelectionChangeEventDetails>;
 
-  private handleManualStatusChange = () => {
-    console.log('manual status change');
+  @Event({ eventName: 'assigneeChange', composed: true })
+  assigneeChangeEvent: EventEmitter<void>;
+
+  @Event({ eventName: 'statusChange', composed: true })
+  statusChangeEvent: EventEmitter<void>;
+
+  @Event({ eventName: 'requestChanges', composed: true })
+  requestChangesEvent: EventEmitter<void>;
+
+  @Event({ eventName: 'requestReview', composed: true })
+  requestReviewEvent: EventEmitter<null>;
+
+  @Event({ eventName: 'finishReview', composed: true })
+  finishReviewEvent: EventEmitter<void>;
+
+  private openDialog(
+    dialogName: string,
+    eventName: string,
+    evntEmitter: EventEmitter,
+  ) {
+    if (this.modalRef) {
+      this.modalRef.innerHTML = '';
+      const dialog = document.createElement(dialogName);
+      dialog.addEventListener('closeDialog', () => {
+        this.modalRef.isopen = false;
+      });
+      dialog.addEventListener(eventName, () => {
+        evntEmitter.emit();
+        this.modalRef.isopen = false;
+      });
+      this.modalRef.appendChild(dialog);
+      this.modalRef.isopen = true;
+    }
+  }
+
+  private openChangeStatusDialog = () => {
+    this.openDialog(
+      'sgc-change-status-dialog',
+      'changeStatus',
+      this.statusChangeEvent,
+    );
   };
 
-  private handleChangeRequest = () => {
-    console.log('changes Requested');
+  private openRequestChangesDialog = () => {
+    this.openDialog(
+      'sgc-request-changes-dialog',
+      'requestChanges',
+      this.requestChangesEvent,
+    );
   };
 
-  private handleReviewRequest = () => {
-    console.log('review Requested');
+  private openRequestReviewDialog = () => {
+    this.openDialog(
+      'sgc-request-review-dialog',
+      'requestReview',
+      this.requestReviewEvent,
+    );
   };
 
-  private handleReviewFinish = () => {
-    console.log('review Finished');
+  private openFinishReviewDialog = () => {
+    this.openDialog(
+      'sgc-finish-review-dialog',
+      'finishReview',
+      this.finishReviewEvent,
+    );
   };
 
-  private handleAssignPerson = () => {
-    console.log('person assigned');
+  private openAssignPersonDialog = () => {
+    this.openDialog(
+      'sgc-assign-person-dialog',
+      'assignPerson',
+      this.assigneeChangeEvent,
+    );
   };
 
   private get shouldShowAssignee(): boolean {
@@ -68,6 +125,7 @@ export class SgcWorkflow {
     <Host>
       {this.renderStatus()}
       {this.renderTabs()}
+      <sgc-modal ref={(el) => (this.modalRef = el)}></sgc-modal>
     </Host>
   );
 
@@ -77,16 +135,16 @@ export class SgcWorkflow {
         class="panel"
         workflow={this.workflow}
         isReadOnly={this.isReadOnly}
-        onManualStatusChange={this.handleManualStatusChange}
-        onChangeRequest={this.handleChangeRequest}
-        onReviewRequest={this.handleReviewRequest}
-        onReviewFinish={this.handleReviewFinish}
+        onInitializeChangeStatus={this.openChangeStatusDialog}
+        onInitializeRequestChanges={this.openRequestChangesDialog}
+        onInitializeRequestReview={this.openRequestReviewDialog}
+        onInitializeFinishReview={this.openFinishReviewDialog}
       ></sgc-workflow-steps>
       {this.shouldShowAssignee ? (
         <sgc-workflow-assignee
           class="panel"
           workflow={this.workflow}
-          onAssignPerson={this.handleAssignPerson}
+          onInitializeAssignPerson={this.openAssignPersonDialog}
         ></sgc-workflow-assignee>
       ) : (
         <sgc-workflow-publication

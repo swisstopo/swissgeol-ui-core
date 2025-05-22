@@ -11,11 +11,11 @@ export class SgcWorkflowAssignee {
   @Prop()
   workflow!: GenericWorkflow;
 
-  @Event({ eventName: 'assignPerson', composed: true })
-  assignPersonEvent!: EventEmitter<void>;
+  @Event({ eventName: 'initializeAssignPerson', composed: true })
+  initializeAssignPersonEvent!: EventEmitter<void>;
 
-  private emitAssignPersonEvent = () => {
-    this.assignPersonEvent.emit();
+  private initializeAssignPerson = () => {
+    this.initializeAssignPersonEvent.emit();
   };
 
   readonly render = () => (
@@ -28,7 +28,7 @@ export class SgcWorkflowAssignee {
           {this.workflow.assignee.firstName} {this.workflow.assignee.lastName}
         </div>
       )}
-      <sgc-button color="secondary" onButtonClick={this.emitAssignPersonEvent}>
+      <sgc-button color="secondary" onButtonClick={this.initializeAssignPerson}>
         <sgc-translate ns="workflow">actions.assign</sgc-translate>
         <sgc-icon name="assign"></sgc-icon>
       </sgc-button>
