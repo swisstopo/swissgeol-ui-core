@@ -49,6 +49,13 @@ export namespace Components {
         "name": SgcIconKey;
         "size": SgcIconSize;
     }
+    interface SgcModal {
+        "isopen": boolean;
+    }
+    interface SgcModalWrapper {
+    }
+    interface SgcRequestReview {
+    }
     interface SgcTab {
         "isActive": boolean;
         "panel": HTMLElement | string | null;
@@ -112,6 +119,10 @@ export interface SgcChecklistCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcChecklistElement;
 }
+export interface SgcRequestReviewCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcRequestReviewElement;
+}
 export interface SgcWorkflowCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcWorkflowElement;
@@ -119,6 +130,10 @@ export interface SgcWorkflowCustomEvent<T> extends CustomEvent<T> {
 export interface SgcWorkflowSelectionCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcWorkflowSelectionElement;
+}
+export interface SgcWorkflowStepsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcWorkflowStepsElement;
 }
 declare global {
     interface HTMLSgcButtonElementEventMap {
@@ -183,6 +198,36 @@ declare global {
     var HTMLSgcIconElement: {
         prototype: HTMLSgcIconElement;
         new (): HTMLSgcIconElement;
+    };
+    interface HTMLSgcModalElement extends Components.SgcModal, HTMLStencilElement {
+    }
+    var HTMLSgcModalElement: {
+        prototype: HTMLSgcModalElement;
+        new (): HTMLSgcModalElement;
+    };
+    interface HTMLSgcModalWrapperElement extends Components.SgcModalWrapper, HTMLStencilElement {
+    }
+    var HTMLSgcModalWrapperElement: {
+        prototype: HTMLSgcModalWrapperElement;
+        new (): HTMLSgcModalWrapperElement;
+    };
+    interface HTMLSgcRequestReviewElementEventMap {
+        "closeDialog": void;
+        "changeStatus": void;
+    }
+    interface HTMLSgcRequestReviewElement extends Components.SgcRequestReview, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcRequestReviewElementEventMap>(type: K, listener: (this: HTMLSgcRequestReviewElement, ev: SgcRequestReviewCustomEvent<HTMLSgcRequestReviewElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcRequestReviewElementEventMap>(type: K, listener: (this: HTMLSgcRequestReviewElement, ev: SgcRequestReviewCustomEvent<HTMLSgcRequestReviewElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcRequestReviewElement: {
+        prototype: HTMLSgcRequestReviewElement;
+        new (): HTMLSgcRequestReviewElement;
     };
     interface HTMLSgcTabElement extends Components.SgcTab, HTMLStencilElement {
     }
@@ -273,7 +318,21 @@ declare global {
         prototype: HTMLSgcWorkflowStepElement;
         new (): HTMLSgcWorkflowStepElement;
     };
+    interface HTMLSgcWorkflowStepsElementEventMap {
+        "manualStatusChange": void;
+        "changeRequest": void;
+        "reviewRequest": void;
+        "reviewFinish": void;
+    }
     interface HTMLSgcWorkflowStepsElement extends Components.SgcWorkflowSteps, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcWorkflowStepsElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowStepsElement, ev: SgcWorkflowStepsCustomEvent<HTMLSgcWorkflowStepsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcWorkflowStepsElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowStepsElement, ev: SgcWorkflowStepsCustomEvent<HTMLSgcWorkflowStepsElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLSgcWorkflowStepsElement: {
         prototype: HTMLSgcWorkflowStepsElement;
@@ -285,6 +344,9 @@ declare global {
         "sgc-checklist": HTMLSgcChecklistElement;
         "sgc-date": HTMLSgcDateElement;
         "sgc-icon": HTMLSgcIconElement;
+        "sgc-modal": HTMLSgcModalElement;
+        "sgc-modal-wrapper": HTMLSgcModalWrapperElement;
+        "sgc-request-review": HTMLSgcRequestReviewElement;
         "sgc-tab": HTMLSgcTabElement;
         "sgc-tabs": HTMLSgcTabsElement;
         "sgc-translate": HTMLSgcTranslateElement;
@@ -327,6 +389,15 @@ declare namespace LocalJSX {
     interface SgcIcon {
         "name"?: SgcIconKey;
         "size"?: SgcIconSize;
+    }
+    interface SgcModal {
+        "isopen"?: boolean;
+    }
+    interface SgcModalWrapper {
+    }
+    interface SgcRequestReview {
+        "onChangeStatus"?: (event: SgcRequestReviewCustomEvent<void>) => void;
+        "onCloseDialog"?: (event: SgcRequestReviewCustomEvent<void>) => void;
     }
     interface SgcTab {
         "isActive"?: boolean;
@@ -379,6 +450,10 @@ declare namespace LocalJSX {
     }
     interface SgcWorkflowSteps {
         "isReadOnly": boolean;
+        "onChangeRequest"?: (event: SgcWorkflowStepsCustomEvent<void>) => void;
+        "onManualStatusChange"?: (event: SgcWorkflowStepsCustomEvent<void>) => void;
+        "onReviewFinish"?: (event: SgcWorkflowStepsCustomEvent<void>) => void;
+        "onReviewRequest"?: (event: SgcWorkflowStepsCustomEvent<void>) => void;
         "workflow": GenericWorkflow;
     }
     interface IntrinsicElements {
@@ -387,6 +462,9 @@ declare namespace LocalJSX {
         "sgc-checklist": SgcChecklist;
         "sgc-date": SgcDate;
         "sgc-icon": SgcIcon;
+        "sgc-modal": SgcModal;
+        "sgc-modal-wrapper": SgcModalWrapper;
+        "sgc-request-review": SgcRequestReview;
         "sgc-tab": SgcTab;
         "sgc-tabs": SgcTabs;
         "sgc-translate": SgcTranslate;
@@ -410,6 +488,9 @@ declare module "@stencil/core" {
             "sgc-checklist": LocalJSX.SgcChecklist & JSXBase.HTMLAttributes<HTMLSgcChecklistElement>;
             "sgc-date": LocalJSX.SgcDate & JSXBase.HTMLAttributes<HTMLSgcDateElement>;
             "sgc-icon": LocalJSX.SgcIcon & JSXBase.HTMLAttributes<HTMLSgcIconElement>;
+            "sgc-modal": LocalJSX.SgcModal & JSXBase.HTMLAttributes<HTMLSgcModalElement>;
+            "sgc-modal-wrapper": LocalJSX.SgcModalWrapper & JSXBase.HTMLAttributes<HTMLSgcModalWrapperElement>;
+            "sgc-request-review": LocalJSX.SgcRequestReview & JSXBase.HTMLAttributes<HTMLSgcRequestReviewElement>;
             "sgc-tab": LocalJSX.SgcTab & JSXBase.HTMLAttributes<HTMLSgcTabElement>;
             "sgc-tabs": LocalJSX.SgcTabs & JSXBase.HTMLAttributes<HTMLSgcTabsElement>;
             "sgc-translate": LocalJSX.SgcTranslate & JSXBase.HTMLAttributes<HTMLSgcTranslateElement>;

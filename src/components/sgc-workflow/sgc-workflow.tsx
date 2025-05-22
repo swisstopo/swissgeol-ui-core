@@ -37,6 +37,22 @@ export class SgcWorkflow {
   @Event({ eventName: 'workflowApprovalChange', composed: true })
   approvalChangeEvent: EventEmitter<SgcWorkflowSelectionChangeEventDetails>;
 
+  private handleManualStatusChange = () => {
+    console.log('manual status change');
+  };
+
+  private handleChangeRequest = () => {
+    console.log('changes Requested');
+  };
+
+  private handleReviewRequest = () => {
+    console.log('review Requested');
+  };
+
+  private handleReviewFinish = () => {
+    console.log('review Finished');
+  };
+
   private get shouldShowAssignee(): boolean {
     return (
       this.workflow.status === WorkflowStatus.Draft ||
@@ -57,6 +73,10 @@ export class SgcWorkflow {
         class="panel"
         workflow={this.workflow}
         isReadOnly={this.isReadOnly}
+        onManualStatusChange={this.handleManualStatusChange}
+        onChangeRequest={this.handleChangeRequest}
+        onReviewRequest={this.handleReviewRequest}
+        onReviewFinish={this.handleReviewFinish}
       ></sgc-workflow-steps>
       {this.shouldShowAssignee ? (
         <sgc-workflow-assignee

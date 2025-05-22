@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 16px;
+  font-weight: var(--sgc-typo-modal-title-1--weight);
+  font-size: var(--sgc-typo-modal-title-1--size);
+  line-height: var(--sgc-typo-modal-title-1--line-height);
+  letter-spacing: var(--sgc-typo-modal-title-1--letter-spacing);
+  border-bottom: 1px solid var(--sgc-color-border--default);
+  margin: 0;
+}
+
+.content {
+  flex: 1;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 24px;
+  border-top: 1px solid var(--sgc-color-border--default);
+}
+
+::slotted([slot="footer"]) {
+  display: flex;
+  gap: 6px;
+}
