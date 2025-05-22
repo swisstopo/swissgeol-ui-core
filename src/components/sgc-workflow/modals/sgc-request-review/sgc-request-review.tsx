@@ -16,7 +16,7 @@ export class SgcRequestReview {
     return (
       <sgc-modal-wrapper>
         <div slot="header">
-          <sgc-translate ns="workflow">actions.changeStatus</sgc-translate>
+          <sgc-translate ns="workflow">actions.forward</sgc-translate>
         </div>
         <div slot="content">Content</div>
         <div slot="footer">
@@ -24,7 +24,7 @@ export class SgcRequestReview {
             color="secondary"
             onButtonClick={() => this.closeEvent.emit()}
           >
-            <sgc-translate ns="workflow">actions.requestChanges</sgc-translate>
+            <sgc-translate ns="general">cancel</sgc-translate>
             <sgc-icon name="close"></sgc-icon>
           </sgc-button>
           <sgc-button onButtonClick={() => this.statusChangeEvent.emit()}>

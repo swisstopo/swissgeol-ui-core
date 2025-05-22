@@ -17,6 +17,7 @@ export default {
     finishReview: 'Review abschliessen',
     assign: 'Neue Person zuweisen',
     publish: 'Publish',
+    forward: 'Weiterleiten',
   },
   tabs: {
     history: 'Verlauf',
