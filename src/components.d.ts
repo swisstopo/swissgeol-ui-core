@@ -24,6 +24,8 @@ export { SgcWorkflowSelectionChangeEventDetails, SgcWorkflowSelectionEntry } fro
 export { SimpleUser } from "./models/user.model";
 export { SgcWorkflowSelectionChangeEventDetails as SgcWorkflowSelectionChangeEventDetails1, SgcWorkflowSelectionEntry as SgcWorkflowSelectionEntry1 } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
 export namespace Components {
+    interface SgcAssignPersonDialog {
+    }
     interface SgcButton {
         "color": SgcButtonColor;
         "isActive": boolean;
@@ -115,6 +117,10 @@ export namespace Components {
         "workflow": GenericWorkflow;
     }
 }
+export interface SgcAssignPersonDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcAssignPersonDialogElement;
+}
 export interface SgcButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcButtonElement;
@@ -151,6 +157,10 @@ export interface SgcWorkflowCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcWorkflowElement;
 }
+export interface SgcWorkflowAssigneeCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcWorkflowAssigneeElement;
+}
 export interface SgcWorkflowPublicationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcWorkflowPublicationElement;
@@ -164,6 +174,24 @@ export interface SgcWorkflowStepsCustomEvent<T> extends CustomEvent<T> {
     target: HTMLSgcWorkflowStepsElement;
 }
 declare global {
+    interface HTMLSgcAssignPersonDialogElementEventMap {
+        "closeDialog": void;
+        "assignPerson": void;
+    }
+    interface HTMLSgcAssignPersonDialogElement extends Components.SgcAssignPersonDialog, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcAssignPersonDialogElementEventMap>(type: K, listener: (this: HTMLSgcAssignPersonDialogElement, ev: SgcAssignPersonDialogCustomEvent<HTMLSgcAssignPersonDialogElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcAssignPersonDialogElementEventMap>(type: K, listener: (this: HTMLSgcAssignPersonDialogElement, ev: SgcAssignPersonDialogCustomEvent<HTMLSgcAssignPersonDialogElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcAssignPersonDialogElement: {
+        prototype: HTMLSgcAssignPersonDialogElement;
+        new (): HTMLSgcAssignPersonDialogElement;
+    };
     interface HTMLSgcButtonElementEventMap {
         "buttonClick": MouseEvent;
     }
@@ -365,7 +393,18 @@ declare global {
         prototype: HTMLSgcWorkflowElement;
         new (): HTMLSgcWorkflowElement;
     };
+    interface HTMLSgcWorkflowAssigneeElementEventMap {
+        "assignPerson": void;
+    }
     interface HTMLSgcWorkflowAssigneeElement extends Components.SgcWorkflowAssignee, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcWorkflowAssigneeElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowAssigneeElement, ev: SgcWorkflowAssigneeCustomEvent<HTMLSgcWorkflowAssigneeElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcWorkflowAssigneeElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowAssigneeElement, ev: SgcWorkflowAssigneeCustomEvent<HTMLSgcWorkflowAssigneeElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLSgcWorkflowAssigneeElement: {
         prototype: HTMLSgcWorkflowAssigneeElement;
@@ -450,6 +489,7 @@ declare global {
         new (): HTMLSgcWorkflowStepsElement;
     };
     interface HTMLElementTagNameMap {
+        "sgc-assign-person-dialog": HTMLSgcAssignPersonDialogElement;
         "sgc-button": HTMLSgcButtonElement;
         "sgc-change-status-dialog": HTMLSgcChangeStatusDialogElement;
         "sgc-checkbox": HTMLSgcCheckboxElement;
@@ -477,6 +517,10 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface SgcAssignPersonDialog {
+        "onAssignPerson"?: (event: SgcAssignPersonDialogCustomEvent<void>) => void;
+        "onCloseDialog"?: (event: SgcAssignPersonDialogCustomEvent<void>) => void;
+    }
     interface SgcButton {
         "color"?: SgcButtonColor;
         "isActive"?: boolean;
@@ -550,6 +594,7 @@ declare namespace LocalJSX {
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowAssignee {
+        "onAssignPerson"?: (event: SgcWorkflowAssigneeCustomEvent<void>) => void;
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowChange {
@@ -589,6 +634,7 @@ declare namespace LocalJSX {
         "workflow": GenericWorkflow;
     }
     interface IntrinsicElements {
+        "sgc-assign-person-dialog": SgcAssignPersonDialog;
         "sgc-button": SgcButton;
         "sgc-change-status-dialog": SgcChangeStatusDialog;
         "sgc-checkbox": SgcCheckbox;
@@ -619,6 +665,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "sgc-assign-person-dialog": LocalJSX.SgcAssignPersonDialog & JSXBase.HTMLAttributes<HTMLSgcAssignPersonDialogElement>;
             "sgc-button": LocalJSX.SgcButton & JSXBase.HTMLAttributes<HTMLSgcButtonElement>;
             "sgc-change-status-dialog": LocalJSX.SgcChangeStatusDialog & JSXBase.HTMLAttributes<HTMLSgcChangeStatusDialogElement>;
             "sgc-checkbox": LocalJSX.SgcCheckbox & JSXBase.HTMLAttributes<HTMLSgcCheckboxElement>;

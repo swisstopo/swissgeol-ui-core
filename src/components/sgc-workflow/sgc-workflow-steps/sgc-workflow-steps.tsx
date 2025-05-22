@@ -30,70 +30,56 @@ export class SgcWorkflowSteps {
   @Event({ eventName: 'reviewFinish', composed: true })
   finishReview: EventEmitter<void>;
 
-  private openStatusChangeDialog = () => {
+  private openDialog(
+    dialogName: string,
+    eventName: string,
+    evntEmitter: EventEmitter,
+  ) {
     if (this.modalRef) {
       this.modalRef.innerHTML = '';
-      const requestReview = document.createElement('sgc-change-status-dialog');
-      requestReview.addEventListener('closeDialog', () => {
+      const dialog = document.createElement(dialogName);
+      dialog.addEventListener('closeDialog', () => {
         this.modalRef.isopen = false;
       });
-      requestReview.addEventListener('changeStatus', () => {
-        this.changeStatus.emit();
+      dialog.addEventListener(eventName, () => {
+        evntEmitter.emit();
         this.modalRef.isopen = false;
       });
-      this.modalRef.appendChild(requestReview);
+      this.modalRef.appendChild(dialog);
       this.modalRef.isopen = true;
     }
+  }
+
+  private openStatusChangeDialog = () => {
+    this.openDialog(
+      'sgc-change-status-dialog',
+      'changeStatus',
+      this.changeStatus,
+    );
   };
 
   private openRequestChangesDialog = () => {
-    if (this.modalRef) {
-      this.modalRef.innerHTML = '';
-      const requestChanges = document.createElement(
-        'sgc-request-changes-dialog',
-      );
-      requestChanges.addEventListener('closeDialog', () => {
-        this.modalRef.isopen = false;
-      });
-      requestChanges.addEventListener('requestChanges', () => {
-        this.requestChanges.emit();
-        this.modalRef.isopen = false;
-      });
-      this.modalRef.appendChild(requestChanges);
-      this.modalRef.isopen = true;
-    }
+    this.openDialog(
+      'sgc-request-changes-dialog',
+      'requestChanges',
+      this.requestChanges,
+    );
   };
 
   private openRequestReviewDialog = () => {
-    if (this.modalRef) {
-      this.modalRef.innerHTML = '';
-      const requestReview = document.createElement('sgc-request-review-dialog');
-      requestReview.addEventListener('closeDialog', () => {
-        this.modalRef.isopen = false;
-      });
-      requestReview.addEventListener('requestReview', () => {
-        this.requestChanges.emit();
-        this.modalRef.isopen = false;
-      });
-      this.modalRef.appendChild(requestReview);
-      this.modalRef.isopen = true;
-    }
+    this.openDialog(
+      'sgc-request-review-dialog',
+      'requestReview',
+      this.requestReview,
+    );
   };
 
   private openFinishReviewDialog = () => {
-    if (this.modalRef) {
-      this.modalRef.innerHTML = '';
-      const finisheReview = document.createElement('sgc-finish-review-dialog');
-      finisheReview.addEventListener('closeDialog', () => {
-        this.modalRef.isopen = false;
-      });
-      finisheReview.addEventListener('finishReview', () => {
-        this.finishReview.emit();
-        this.modalRef.isopen = false;
-      });
-      this.modalRef.appendChild(finisheReview);
-      this.modalRef.isopen = true;
-    }
+    this.openDialog(
+      'sgc-finish-review-dialog',
+      'finishReview',
+      this.finishReview,
+    );
   };
 
   render() {

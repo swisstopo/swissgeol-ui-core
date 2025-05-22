@@ -53,6 +53,10 @@ export class SgcWorkflow {
     console.log('review Finished');
   };
 
+  private handleAssignPerson = () => {
+    console.log('person assigned');
+  };
+
   private get shouldShowAssignee(): boolean {
     return (
       this.workflow.status === WorkflowStatus.Draft ||
@@ -82,6 +86,7 @@ export class SgcWorkflow {
         <sgc-workflow-assignee
           class="panel"
           workflow={this.workflow}
+          onAssignPerson={this.handleAssignPerson}
         ></sgc-workflow-assignee>
       ) : (
         <sgc-workflow-publication
