@@ -42,7 +42,7 @@ export class SgcWorkflow {
   @Event({ eventName: 'assigneeChange', composed: true })
   assigneeChangeEvent: EventEmitter<void>;
 
-  @Event({ eventName: 'statusChange', composed: true })
+  @Event({ eventName: 'workflowStatusChange', composed: true })
   statusChangeEvent: EventEmitter<void>;
 
   @Event({ eventName: 'requestChanges', composed: true })

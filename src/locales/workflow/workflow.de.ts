@@ -37,5 +37,7 @@ export default {
   other: {
     publication: 'Publikation',
     deletedUserName: 'gelöschter Benutzer',
+    assignee: 'Empfänger:in',
+    comment: 'Kommentar',
   },
 };

@@ -18,7 +18,14 @@ export class SgcRequestReviewDialog {
         <div slot="header">
           <sgc-translate ns="workflow">actions.forward</sgc-translate>
         </div>
-        <div slot="content">Content</div>
+        <div slot="content">
+          <sgc-text-area
+            label="other.comment"
+            placeholder="Type here..."
+            rows={3}
+            onValueChanged={(event) => console.log(event.detail)}
+          ></sgc-text-area>
+        </div>
         <div slot="footer">
           <sgc-button
             color="secondary"
@@ -28,7 +35,7 @@ export class SgcRequestReviewDialog {
           </sgc-button>
           <sgc-button onButtonClick={() => this.requestReviewEvent.emit()}>
             <sgc-translate ns="workflow">actions.requestReview</sgc-translate>
-            <sgc-icon name="edit"></sgc-icon>
+            <sgc-icon name="chevronRight"></sgc-icon>
           </sgc-button>
         </div>
       </sgc-modal-wrapper>
