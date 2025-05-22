@@ -26,9 +26,29 @@ export { SgcWorkflowSelectionChangeEventDetails as SgcWorkflowSelectionChangeEve
 export namespace Components {
     interface SgcButton {
         "color": SgcButtonColor;
+        /**
+          * Anchor `download` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#download}
+         */
+        "download": string | null;
+        /**
+          * Anchor `href` attribute. When this is set, the button will use the `a` tag instead of `button`.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a anchor}
+         */
+        "href": string | null;
         "isActive": boolean;
         "isDisabled": boolean;
         "justify": SgcButtonJustify;
+        /**
+          * Anchor `rel` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
+         */
+        "rel": string | null;
+        /**
+          * Anchor `target` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
+         */
+        "target": string | null;
         "variant": SgcButtonVariant;
     }
     interface SgcCheckbox {
@@ -302,10 +322,30 @@ declare global {
 declare namespace LocalJSX {
     interface SgcButton {
         "color"?: SgcButtonColor;
+        /**
+          * Anchor `download` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#download}
+         */
+        "download"?: string | null;
+        /**
+          * Anchor `href` attribute. When this is set, the button will use the `a` tag instead of `button`.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a anchor}
+         */
+        "href"?: string | null;
         "isActive"?: boolean;
         "isDisabled"?: boolean;
         "justify"?: SgcButtonJustify;
         "onButtonClick"?: (event: SgcButtonCustomEvent<MouseEvent>) => void;
+        /**
+          * Anchor `rel` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
+         */
+        "rel"?: string | null;
+        /**
+          * Anchor `target` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
+         */
+        "target"?: string | null;
         "variant"?: SgcButtonVariant;
     }
     interface SgcCheckbox {
