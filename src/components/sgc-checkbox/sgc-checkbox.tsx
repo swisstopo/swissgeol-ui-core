@@ -19,6 +19,12 @@ import styles from './sgc-checkbox.css';
   formAssociated: true,
 })
 export class SgcCheckbox {
+  /**
+   * Whether the checkbox is on or off.
+   *
+   * If this is `undefined`, the checkbox will keep track of the state internally.
+   * Otherwise, the use side is responsible for toggling this value.
+   */
   @Prop()
   value?: boolean;
 

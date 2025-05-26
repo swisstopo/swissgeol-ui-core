@@ -38,6 +38,10 @@ export namespace Components {
         "href": string | null;
         "isActive": boolean;
         "isDisabled": boolean;
+        /**
+          * Makes the button's background transparent. Buttons without this attribute are called *solid* in the swissgeol Figma.
+         */
+        "isTransparent": boolean;
         "justify": SgcButtonJustify;
         /**
           * Anchor `rel` attribute. Only has an effect when {@link href} is set.
@@ -54,7 +58,10 @@ export namespace Components {
     interface SgcCheckbox {
         "isDisabled": boolean;
         "isIndeterminate": boolean;
-        "value": boolean;
+        /**
+          * Whether the checkbox is on or off.  If this is `undefined`, the checkbox will keep track of the state internally. Otherwise, the use side is responsible for toggling this value.
+         */
+        "value"?: boolean;
     }
     interface SgcChecklist {
         "isDisabled": boolean;
@@ -334,6 +341,10 @@ declare namespace LocalJSX {
         "href"?: string | null;
         "isActive"?: boolean;
         "isDisabled"?: boolean;
+        /**
+          * Makes the button's background transparent. Buttons without this attribute are called *solid* in the swissgeol Figma.
+         */
+        "isTransparent"?: boolean;
         "justify"?: SgcButtonJustify;
         "onButtonClick"?: (event: SgcButtonCustomEvent<MouseEvent>) => void;
         /**
@@ -352,7 +363,10 @@ declare namespace LocalJSX {
         "isDisabled"?: boolean;
         "isIndeterminate"?: boolean;
         "onCheckboxChange"?: (event: SgcCheckboxCustomEvent<boolean>) => void;
-        "value": boolean;
+        /**
+          * Whether the checkbox is on or off.  If this is `undefined`, the checkbox will keep track of the state internally. Otherwise, the use side is responsible for toggling this value.
+         */
+        "value"?: boolean;
     }
     interface SgcChecklist {
         "isDisabled"?: boolean;

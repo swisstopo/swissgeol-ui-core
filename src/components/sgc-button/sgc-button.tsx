@@ -28,6 +28,13 @@ export class SgcButton {
   isDisabled = false;
 
   /**
+   * Makes the button's background transparent.
+   * Buttons without this attribute are called *solid* in the swissgeol Figma.
+   */
+  @Prop({ reflect: true, attribute: 'transparent' })
+  isTransparent = false;
+
+  /**
    * Anchor `href` attribute.
    * When this is set, the button will use the `a` tag instead of `button`.
    *

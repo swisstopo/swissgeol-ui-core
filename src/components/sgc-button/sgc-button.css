@@ -139,28 +139,29 @@ a {
 :host([color="tertiary"]) {
   --button-text: var(--sgc-color-primary);
   --button-bg: var(--sgc-color-bg--white);
-  --button-border: var(--sgc-color-bg--white);
+  --button-border: var(--button-bg);
 
   --button-text--hovered: var(--sgc-color-text--emphasis-medium);
   --button-bg--hovered: var(--sgc-color-secondary--hovered);
-  --button-border--hovered: var(--sgc-color-secondary--hovered);
+  --button-border--hovered: var(--button-bg);
 
   --button-text--pressed: var(--sgc-color-text--emphasis-medium);
   --button-bg--pressed: var(--sgc-color-secondary--pressed);
-  --button-border--pressed: var(--sgc-color-secondary--pressed);
+  --button-border--pressed: var(--button-bg--pressed);
 
   --button-text--disabled: var(--sgc-color-bg--disabled);
   --button-bg--disabled: var(--sgc-color-secondary--disabled);
-  --button-border--disabled: var(--sgc-color-secondary--disabled);
+  --button-border--disabled: var(--button-bg--disabled);
 
   --button-text--active: var(--sgc-color-text--emphasis-medium);
   --button-bg--active: var(--sgc-color-secondary--active);
-  --button-border--active: var(--sgc-color-secondary--active);
+  --button-border--active: var(--button-bg--active);
 }
 
 /* transparent */
-:host([transparent]) {
+:host([transparent]:not([color="primary"])) {
   --button-bg: transparent;
+  --button-bg--disabled: transparent;
 }
 
 /* icon shape */
