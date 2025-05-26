@@ -19,7 +19,10 @@ export class SgcButton {
   color: SgcButtonColor = 'primary';
 
   @Prop({ reflect: true })
-  variant: SgcButtonVariant = 'normal';
+  variant: SgcButtonVariant = 'default';
+
+  @Prop({ reflect: true })
+  size: SgcButtonSize = 'normal';
 
   @Prop({ reflect: true })
   justify: SgcButtonJustify = 'center';
@@ -107,11 +110,8 @@ export class SgcButton {
 
 export type SgcButtonColor = 'primary' | 'secondary' | 'tertiary';
 
-export type SgcButtonVariant =
-  | 'normal'
-  | 'large'
-  | 'icon'
-  | 'icon-round'
-  | 'chip';
+export type SgcButtonVariant = 'default' | 'icon' | 'icon-round' | 'chip';
+
+export type SgcButtonSize = 'small' | 'normal' | 'large';
 
 export type SgcButtonJustify = 'center' | 'start' | 'end';

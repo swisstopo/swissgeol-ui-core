@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { SgcButtonColor, SgcButtonJustify, SgcButtonVariant } from "./components/sgc-button/sgc-button";
+import { SgcButtonColor, SgcButtonJustify, SgcButtonSize, SgcButtonVariant } from "./components/sgc-button/sgc-button";
 import { LocalDate } from "./models/base/local-date";
 import { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
 import { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
@@ -14,7 +14,7 @@ import { GenericWorkflow, GenericWorkflowSelection, WorkflowChange, WorkflowStat
 import { SgcWorkflowSelectionChangeEventDetails, SgcWorkflowSelectionEntry } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
 import { SimpleUser } from "./models/user.model";
 import { SgcWorkflowSelectionChangeEventDetails as SgcWorkflowSelectionChangeEventDetails1, SgcWorkflowSelectionEntry as SgcWorkflowSelectionEntry1 } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
-export { SgcButtonColor, SgcButtonJustify, SgcButtonVariant } from "./components/sgc-button/sgc-button";
+export { SgcButtonColor, SgcButtonJustify, SgcButtonSize, SgcButtonVariant } from "./components/sgc-button/sgc-button";
 export { LocalDate } from "./models/base/local-date";
 export { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
 export { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
@@ -48,6 +48,7 @@ export namespace Components {
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
          */
         "rel": string | null;
+        "size": SgcButtonSize;
         /**
           * Anchor `target` attribute. Only has an effect when {@link href} is set.
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
@@ -352,6 +353,7 @@ declare namespace LocalJSX {
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
          */
         "rel"?: string | null;
+        "size"?: SgcButtonSize;
         /**
           * Anchor `target` attribute. Only has an effect when {@link href} is set.
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
