@@ -78,6 +78,14 @@
       "types": "./dist/components/sgc-date.d.ts",
       "import": "./dist/components/sgc-date.js"
     },
+    "./components/sgc-dropdown-item.js": {
+      "types": "./dist/components/sgc-dropdown-item.d.ts",
+      "import": "./dist/components/sgc-dropdown-item.js"
+    },
+    "./components/sgc-dropdown.js": {
+      "types": "./dist/components/sgc-dropdown.d.ts",
+      "import": "./dist/components/sgc-dropdown.js"
+    },
     "./components/sgc-icon.js": {
       "types": "./dist/components/sgc-icon.d.ts",
       "import": "./dist/components/sgc-icon.js"

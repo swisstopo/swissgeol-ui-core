@@ -14,7 +14,7 @@ const compat = new FlatCompat({
   recommendedConfig: js.configs.recommended,
 });
 
-const jsFileExtensions = ['.ts', '.tsx', '.js', '.jsx'];
+const jsFileExtensions = ['.ts', '.tsx'];
 const sourcePaths = [
   'src/',
   'scripts/',

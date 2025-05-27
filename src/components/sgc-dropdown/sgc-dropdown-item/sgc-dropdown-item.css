@@ -1,0 +1,45 @@
+@import "../../../global/base.css";
+
+:host {
+  display: block;
+  height: 48px;
+  min-height: 48px;
+  overflow-y: hidden;
+
+  transition: ease-out 250ms;
+  transition-property: background-color;
+}
+
+:host(:hover) {
+  background-color: #f0f4f7;
+}
+
+:host,
+:host > .button,
+::slotted(*) {
+  font-family: var(--sgc-typo-body-2--family);
+  font-weight: var(--sgc-typo-body-2--weight);
+  font-size: var(--sgc-typo-body-2--size);
+  line-height: var(--sgc-typo-body-2--line-height);
+  letter-spacing: var(--sgc-typo-body-2--letter-spacing);
+}
+
+:host > .button {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+a.button,
+a.button:active,
+a.button:focus {
+  text-decoration: none;
+  color: var(--sgc-color-text--emphasis-high);
+}
