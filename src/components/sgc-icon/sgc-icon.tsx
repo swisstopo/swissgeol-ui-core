@@ -1,7 +1,7 @@
 import { Component, h, Host, Prop } from '@stencil/core';
 import styles from './sgc-icon.css';
 import { plusSvg } from './icons/plus.svg';
-import { closeSvg } from './icons/check.svg';
+import { crossSvg } from './icons/cross.svg';
 import { checkmarkSvg } from './icons/checkmark.svg';
 import { assignSvg } from './icons/assign.svg';
 import { editSvg } from './icons/edit.svg';
@@ -30,7 +30,7 @@ export class SgcIcon {
 
 const icons = {
   assign: assignSvg,
-  close: closeSvg,
+  cross: crossSvg,
   checkmark: checkmarkSvg,
   chevronRight: chevronRightSvg,
   edit: editSvg,

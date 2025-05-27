@@ -60,7 +60,7 @@ export class SgcWorkflowSteps {
         </sgc-button>,
         <sgc-button color="secondary">
           <sgc-translate ns="workflow">actions.requestChanges</sgc-translate>
-          <sgc-icon name="close"></sgc-icon>
+          <sgc-icon name="cross"></sgc-icon>
         </sgc-button>,
       ]}
       {this.workflow.status === WorkflowStatus.Draft && (

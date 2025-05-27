@@ -86,7 +86,7 @@ export class SgcWorkflowStep {
       return <sgc-icon name="checkmark"></sgc-icon>;
     }
     if (this.status === WorkflowStatus.Published) {
-      return <sgc-icon name="close"></sgc-icon>;
+      return <sgc-icon name="cross"></sgc-icon>;
     }
     return `${this.index + 1}`;
   }
