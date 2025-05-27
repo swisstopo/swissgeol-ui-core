@@ -49,6 +49,8 @@
   --sgc-color-bg--grey: #f1f3f5;
   --sgc-color-bg--disabled: var(--sgc-color-secondary--300);
   --sgc-color-bg--error: #d8232a;
+
+  --sgc-color-green--600: #059669;
 }
 
 /* ### Typography ### */

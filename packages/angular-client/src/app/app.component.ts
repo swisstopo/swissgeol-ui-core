@@ -6,4 +6,8 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css',
   standalone: false,
 })
-export class AppComponent {}
+export class AppComponent {
+  onItemClick(event: Event) {
+    console.log('Angular - Menu item clicked:', event);
+  }
+}
