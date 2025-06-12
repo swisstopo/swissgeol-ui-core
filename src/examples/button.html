@@ -21,12 +21,30 @@
       gap: 2rem;
     "
   >
+    <h1>Buttons</h1>
+
+    <div style="display: flex; gap: 2rem; align-items: end">
+      <label>
+        <sgc-checkbox id="transparency-toggle"></sgc-checkbox>
+        <span>Transparent?</span>
+      </label>
+      <label>
+        Size
+        <select id="size-toggle">
+          <option value="small">small</option>
+          <option value="normal" selected>normal</option>
+          <option value="large">large</option>
+        </select>
+      </label>
+    </div>
+
     <div
       style="
         display: grid;
         grid-template-columns: repeat(15, auto);
         gap: 1rem;
         justify-items: start;
+        align-items: center;
       "
     >
       <sgc-button color="primary"> Primary </sgc-button>
@@ -187,5 +205,86 @@
         </sgc-button>
       </div>
     </section>
+
+    <section>
+      <h2>Chips</h2>
+
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(3, auto);
+          gap: 1rem;
+          justify-items: start;
+          align-items: center;
+        "
+      >
+        <sgc-button color="primary" variant="chip"> Primary </sgc-button>
+        <sgc-button color="primary" variant="chip" disabled>
+          Disabled
+        </sgc-button>
+        <sgc-button color="primary" variant="chip" active> Active </sgc-button>
+
+        <sgc-button color="secondary" variant="chip"> Secondary </sgc-button>
+        <sgc-button color="secondary" variant="chip" disabled>
+          Disabled
+        </sgc-button>
+        <sgc-button color="secondary" variant="chip" active>
+          Active
+        </sgc-button>
+
+        <sgc-button color="tertiary" variant="chip"> Tertiary </sgc-button>
+        <sgc-button color="tertiary" variant="chip" disabled>
+          Tertiary
+        </sgc-button>
+        <sgc-button color="tertiary" variant="chip" active>
+          Tertiary
+        </sgc-button>
+      </div>
+    </section>
   </body>
+  <script>
+    document
+      .getElementById("transparency-toggle")
+      .addEventListener("checkboxChange", (event) => {
+        document.querySelectorAll("sgc-button").forEach((button) => {
+          button.isTransparent = event.detail;
+        });
+      });
+
+    const sizeToggle = document.getElementById("size-toggle");
+    let currentSize = "normal";
+    const updateSize = () => {
+      document.querySelectorAll("sgc-button").forEach((button) => {
+        console.log(currentSize, button.variant);
+        if (button.size === currentSize) {
+          button.size = sizeToggle.value;
+        }
+      });
+      currentSize = sizeToggle.value;
+    };
+    window.addEventListener("load", () => updateSize());
+    sizeToggle.addEventListener("change", () => updateSize());
+  </script>
+  <style>
+    h1 {
+      margin-bottom: 0;
+    }
+
+    body {
+      background-color: #f7f7f7;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label:has(sgc-checkbox) {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+  </style>
 </html>

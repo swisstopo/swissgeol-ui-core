@@ -8,7 +8,7 @@ describe('sgc-button', () => {
       html: '<sgc-button></sgc-button>',
     });
     expect(page.root).toEqualHtml(`
-      <sgc-button color="primary" justify="center" variant="normal">
+      <sgc-button color="primary" justify="center" variant="default" size="normal">
         <mock:shadow-root>
           <button class="button" part="button">
             <slot></slot>

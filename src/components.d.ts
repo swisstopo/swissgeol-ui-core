@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { SgcButtonColor, SgcButtonJustify, SgcButtonVariant } from "./components/sgc-button/sgc-button";
+import { SgcButtonColor, SgcButtonJustify, SgcButtonSize, SgcButtonVariant } from "./components/sgc-button/sgc-button";
 import { LocalDate } from "./models/base/local-date";
 import { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
 import { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
@@ -14,7 +14,7 @@ import { GenericWorkflow, GenericWorkflowSelection, WorkflowChange, WorkflowStat
 import { SgcWorkflowSelectionChangeEventDetails, SgcWorkflowSelectionEntry } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
 import { SimpleUser } from "./models/user.model";
 import { SgcWorkflowSelectionChangeEventDetails as SgcWorkflowSelectionChangeEventDetails1, SgcWorkflowSelectionEntry as SgcWorkflowSelectionEntry1 } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
-export { SgcButtonColor, SgcButtonJustify, SgcButtonVariant } from "./components/sgc-button/sgc-button";
+export { SgcButtonColor, SgcButtonJustify, SgcButtonSize, SgcButtonVariant } from "./components/sgc-button/sgc-button";
 export { LocalDate } from "./models/base/local-date";
 export { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
 export { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
@@ -38,12 +38,17 @@ export namespace Components {
         "href": string | null;
         "isActive": boolean;
         "isDisabled": boolean;
+        /**
+          * Makes the button's background transparent. Buttons without this attribute are called *solid* in the swissgeol Figma.
+         */
+        "isTransparent": boolean;
         "justify": SgcButtonJustify;
         /**
           * Anchor `rel` attribute. Only has an effect when {@link href} is set.
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
          */
         "rel": string | null;
+        "size": SgcButtonSize;
         /**
           * Anchor `target` attribute. Only has an effect when {@link href} is set.
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
@@ -54,7 +59,10 @@ export namespace Components {
     interface SgcCheckbox {
         "isDisabled": boolean;
         "isIndeterminate": boolean;
-        "value": boolean;
+        /**
+          * Whether the checkbox is on or off.  If this is `undefined`, the checkbox will keep track of the state internally. Otherwise, the use side is responsible for toggling this value.
+         */
+        "value"?: boolean;
     }
     interface SgcChecklist {
         "isDisabled": boolean;
@@ -334,6 +342,10 @@ declare namespace LocalJSX {
         "href"?: string | null;
         "isActive"?: boolean;
         "isDisabled"?: boolean;
+        /**
+          * Makes the button's background transparent. Buttons without this attribute are called *solid* in the swissgeol Figma.
+         */
+        "isTransparent"?: boolean;
         "justify"?: SgcButtonJustify;
         "onButtonClick"?: (event: SgcButtonCustomEvent<MouseEvent>) => void;
         /**
@@ -341,6 +353,7 @@ declare namespace LocalJSX {
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
          */
         "rel"?: string | null;
+        "size"?: SgcButtonSize;
         /**
           * Anchor `target` attribute. Only has an effect when {@link href} is set.
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
@@ -352,7 +365,10 @@ declare namespace LocalJSX {
         "isDisabled"?: boolean;
         "isIndeterminate"?: boolean;
         "onCheckboxChange"?: (event: SgcCheckboxCustomEvent<boolean>) => void;
-        "value": boolean;
+        /**
+          * Whether the checkbox is on or off.  If this is `undefined`, the checkbox will keep track of the state internally. Otherwise, the use side is responsible for toggling this value.
+         */
+        "value"?: boolean;
     }
     interface SgcChecklist {
         "isDisabled"?: boolean;
