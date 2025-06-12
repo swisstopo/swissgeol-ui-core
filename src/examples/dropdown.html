@@ -1,0 +1,54 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Stencil Component Starter</title>
+
+    <script type="module" src="/build/swissgeol-ui-core.esm.js"></script>
+    <script nomodule src="/build/swissgeol-ui-core.js"></script>
+
+    <link rel="stylesheet" href="/build/swissgeol-ui-core.css" />
+  </head>
+  <body style="display: flex; flex-direction: column; gap: 2rem">
+    <h1>Dropdown</h1>
+    <div id="controls"></div>
+    <div id="dropdowns" style="display: flex; gap: 2rem; margin-left: 10rem">
+      <sgc-dropdown>
+        <sgc-button style="width: auto">A Dropdown</sgc-button>
+        <sgc-dropdown-item> An Item </sgc-dropdown-item>
+        <sgc-dropdown-item
+          href="https://www.youtube.com/watch?v=04854XqcfCY"
+          target="_blank"
+        >
+          An External Link
+        </sgc-dropdown-item>
+      </sgc-dropdown>
+    </div>
+  </body>
+  <script></script>
+  <script src="./dropdown/controls.js"></script>
+  <script src="./dropdown/dynamic-items.js"></script>
+  <script src="./dropdown/insert.js"></script>
+  <style>
+    h1 {
+      margin-bottom: 0;
+    }
+
+    body {
+      background-color: #f7f7f7;
+    }
+
+    #controls {
+      display: flex;
+      gap: 2rem;
+    }
+
+    sgc-dropdown-item.is-highlighted {
+      background-color: #ffd6ba;
+    }
+  </style>
+</html>

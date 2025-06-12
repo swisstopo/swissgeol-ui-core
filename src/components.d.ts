@@ -5,8 +5,9 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { SgcButtonColor, SgcButtonJustify, SgcButtonSize, SgcButtonVariant } from "./components/sgc-button/sgc-button";
+import { SgcButtonColor, SgcButtonJustify, SgcButtonVariant } from "./components/sgc-button/sgc-button";
 import { LocalDate } from "./models/base/local-date";
+import { SgcPopupAlignment, SgcPopupPosition } from "./utils/popup.utils";
 import { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
 import { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
 import { NamespaceKey } from "./locales/i18n";
@@ -14,8 +15,9 @@ import { GenericWorkflow, GenericWorkflowSelection, WorkflowChange, WorkflowStat
 import { SgcWorkflowSelectionChangeEventDetails, SgcWorkflowSelectionEntry } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
 import { SimpleUser } from "./models/user.model";
 import { SgcWorkflowSelectionChangeEventDetails as SgcWorkflowSelectionChangeEventDetails1, SgcWorkflowSelectionEntry as SgcWorkflowSelectionEntry1 } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
-export { SgcButtonColor, SgcButtonJustify, SgcButtonSize, SgcButtonVariant } from "./components/sgc-button/sgc-button";
+export { SgcButtonColor, SgcButtonJustify, SgcButtonVariant } from "./components/sgc-button/sgc-button";
 export { LocalDate } from "./models/base/local-date";
+export { SgcPopupAlignment, SgcPopupPosition } from "./utils/popup.utils";
 export { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
 export { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
 export { NamespaceKey } from "./locales/i18n";
@@ -38,17 +40,12 @@ export namespace Components {
         "href": string | null;
         "isActive": boolean;
         "isDisabled": boolean;
-        /**
-          * Makes the button's background transparent. Buttons without this attribute are called *solid* in the swissgeol Figma.
-         */
-        "isTransparent": boolean;
         "justify": SgcButtonJustify;
         /**
           * Anchor `rel` attribute. Only has an effect when {@link href} is set.
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
          */
         "rel": string | null;
-        "size": SgcButtonSize;
         /**
           * Anchor `target` attribute. Only has an effect when {@link href} is set.
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
@@ -59,10 +56,7 @@ export namespace Components {
     interface SgcCheckbox {
         "isDisabled": boolean;
         "isIndeterminate": boolean;
-        /**
-          * Whether the checkbox is on or off.  If this is `undefined`, the checkbox will keep track of the state internally. Otherwise, the use side is responsible for toggling this value.
-         */
-        "value"?: boolean;
+        "value": boolean;
     }
     interface SgcChecklist {
         "isDisabled": boolean;
@@ -73,15 +67,43 @@ export namespace Components {
     interface SgcDate {
         "value": LocalDate | Date;
     }
+    interface SgcDropdown {
+        /**
+          * How the dropdown is aligned relative to its target.  If this is `null`, the alignment will be automatically determined.
+         */
+        "align": SgcPopupAlignment | null;
+        "isOpen": boolean | null;
+        /**
+          * How the dropdown is positioned relative to its target.  If this is `null`, the position will be automatically determined.
+         */
+        "position": SgcPopupPosition | null;
+    }
+    interface SgcDropdownItem {
+        /**
+          * Anchor `download` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#download}
+         */
+        "download": string | null;
+        /**
+          * Anchor `href` attribute. When this is set, the button will use the `a` tag instead of `button`.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a anchor}
+         */
+        "href": string | null;
+        "isDisabled": boolean;
+        /**
+          * Anchor `rel` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
+         */
+        "rel": string | null;
+        /**
+          * Anchor `target` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
+         */
+        "target": string | null;
+    }
     interface SgcIcon {
         "name": SgcIconKey;
         "size": SgcIconSize;
-    }
-    interface SgcMenuItem {
-        "isActive": boolean;
-        "isChild": boolean;
-        "isEmpty": boolean;
-        "isReviewed": boolean | string;
     }
     interface SgcTab {
         "isActive": boolean;
@@ -146,9 +168,9 @@ export interface SgcChecklistCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcChecklistElement;
 }
-export interface SgcMenuItemCustomEvent<T> extends CustomEvent<T> {
+export interface SgcDropdownCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLSgcMenuItemElement;
+    target: HTMLSgcDropdownElement;
 }
 export interface SgcWorkflowCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -216,28 +238,34 @@ declare global {
         prototype: HTMLSgcDateElement;
         new (): HTMLSgcDateElement;
     };
+    interface HTMLSgcDropdownElementEventMap {
+        "sgcToggle": boolean;
+    }
+    interface HTMLSgcDropdownElement extends Components.SgcDropdown, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcDropdownElementEventMap>(type: K, listener: (this: HTMLSgcDropdownElement, ev: SgcDropdownCustomEvent<HTMLSgcDropdownElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcDropdownElementEventMap>(type: K, listener: (this: HTMLSgcDropdownElement, ev: SgcDropdownCustomEvent<HTMLSgcDropdownElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcDropdownElement: {
+        prototype: HTMLSgcDropdownElement;
+        new (): HTMLSgcDropdownElement;
+    };
+    interface HTMLSgcDropdownItemElement extends Components.SgcDropdownItem, HTMLStencilElement {
+    }
+    var HTMLSgcDropdownItemElement: {
+        prototype: HTMLSgcDropdownItemElement;
+        new (): HTMLSgcDropdownItemElement;
+    };
     interface HTMLSgcIconElement extends Components.SgcIcon, HTMLStencilElement {
     }
     var HTMLSgcIconElement: {
         prototype: HTMLSgcIconElement;
         new (): HTMLSgcIconElement;
-    };
-    interface HTMLSgcMenuItemElementEventMap {
-        "itemClick": MouseEvent;
-    }
-    interface HTMLSgcMenuItemElement extends Components.SgcMenuItem, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLSgcMenuItemElementEventMap>(type: K, listener: (this: HTMLSgcMenuItemElement, ev: SgcMenuItemCustomEvent<HTMLSgcMenuItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLSgcMenuItemElementEventMap>(type: K, listener: (this: HTMLSgcMenuItemElement, ev: SgcMenuItemCustomEvent<HTMLSgcMenuItemElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLSgcMenuItemElement: {
-        prototype: HTMLSgcMenuItemElement;
-        new (): HTMLSgcMenuItemElement;
     };
     interface HTMLSgcTabElement extends Components.SgcTab, HTMLStencilElement {
     }
@@ -339,8 +367,9 @@ declare global {
         "sgc-checkbox": HTMLSgcCheckboxElement;
         "sgc-checklist": HTMLSgcChecklistElement;
         "sgc-date": HTMLSgcDateElement;
+        "sgc-dropdown": HTMLSgcDropdownElement;
+        "sgc-dropdown-item": HTMLSgcDropdownItemElement;
         "sgc-icon": HTMLSgcIconElement;
-        "sgc-menu-item": HTMLSgcMenuItemElement;
         "sgc-tab": HTMLSgcTabElement;
         "sgc-tabs": HTMLSgcTabsElement;
         "sgc-translate": HTMLSgcTranslateElement;
@@ -370,10 +399,6 @@ declare namespace LocalJSX {
         "href"?: string | null;
         "isActive"?: boolean;
         "isDisabled"?: boolean;
-        /**
-          * Makes the button's background transparent. Buttons without this attribute are called *solid* in the swissgeol Figma.
-         */
-        "isTransparent"?: boolean;
         "justify"?: SgcButtonJustify;
         "onButtonClick"?: (event: SgcButtonCustomEvent<MouseEvent>) => void;
         /**
@@ -381,7 +406,6 @@ declare namespace LocalJSX {
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
          */
         "rel"?: string | null;
-        "size"?: SgcButtonSize;
         /**
           * Anchor `target` attribute. Only has an effect when {@link href} is set.
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
@@ -393,10 +417,7 @@ declare namespace LocalJSX {
         "isDisabled"?: boolean;
         "isIndeterminate"?: boolean;
         "onCheckboxChange"?: (event: SgcCheckboxCustomEvent<boolean>) => void;
-        /**
-          * Whether the checkbox is on or off.  If this is `undefined`, the checkbox will keep track of the state internally. Otherwise, the use side is responsible for toggling this value.
-         */
-        "value"?: boolean;
+        "value": boolean;
     }
     interface SgcChecklist {
         "isDisabled"?: boolean;
@@ -408,16 +429,44 @@ declare namespace LocalJSX {
     interface SgcDate {
         "value"?: LocalDate | Date;
     }
+    interface SgcDropdown {
+        /**
+          * How the dropdown is aligned relative to its target.  If this is `null`, the alignment will be automatically determined.
+         */
+        "align"?: SgcPopupAlignment | null;
+        "isOpen"?: boolean | null;
+        "onSgcToggle"?: (event: SgcDropdownCustomEvent<boolean>) => void;
+        /**
+          * How the dropdown is positioned relative to its target.  If this is `null`, the position will be automatically determined.
+         */
+        "position"?: SgcPopupPosition | null;
+    }
+    interface SgcDropdownItem {
+        /**
+          * Anchor `download` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#download}
+         */
+        "download"?: string | null;
+        /**
+          * Anchor `href` attribute. When this is set, the button will use the `a` tag instead of `button`.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a anchor}
+         */
+        "href"?: string | null;
+        "isDisabled"?: boolean;
+        /**
+          * Anchor `rel` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
+         */
+        "rel"?: string | null;
+        /**
+          * Anchor `target` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
+         */
+        "target"?: string | null;
+    }
     interface SgcIcon {
         "name"?: SgcIconKey;
         "size"?: SgcIconSize;
-    }
-    interface SgcMenuItem {
-        "isActive"?: boolean;
-        "isChild"?: boolean;
-        "isEmpty"?: boolean;
-        "isReviewed"?: boolean | string;
-        "onItemClick"?: (event: SgcMenuItemCustomEvent<MouseEvent>) => void;
     }
     interface SgcTab {
         "isActive"?: boolean;
@@ -477,8 +526,9 @@ declare namespace LocalJSX {
         "sgc-checkbox": SgcCheckbox;
         "sgc-checklist": SgcChecklist;
         "sgc-date": SgcDate;
+        "sgc-dropdown": SgcDropdown;
+        "sgc-dropdown-item": SgcDropdownItem;
         "sgc-icon": SgcIcon;
-        "sgc-menu-item": SgcMenuItem;
         "sgc-tab": SgcTab;
         "sgc-tabs": SgcTabs;
         "sgc-translate": SgcTranslate;
@@ -501,8 +551,9 @@ declare module "@stencil/core" {
             "sgc-checkbox": LocalJSX.SgcCheckbox & JSXBase.HTMLAttributes<HTMLSgcCheckboxElement>;
             "sgc-checklist": LocalJSX.SgcChecklist & JSXBase.HTMLAttributes<HTMLSgcChecklistElement>;
             "sgc-date": LocalJSX.SgcDate & JSXBase.HTMLAttributes<HTMLSgcDateElement>;
+            "sgc-dropdown": LocalJSX.SgcDropdown & JSXBase.HTMLAttributes<HTMLSgcDropdownElement>;
+            "sgc-dropdown-item": LocalJSX.SgcDropdownItem & JSXBase.HTMLAttributes<HTMLSgcDropdownItemElement>;
             "sgc-icon": LocalJSX.SgcIcon & JSXBase.HTMLAttributes<HTMLSgcIconElement>;
-            "sgc-menu-item": LocalJSX.SgcMenuItem & JSXBase.HTMLAttributes<HTMLSgcMenuItemElement>;
             "sgc-tab": LocalJSX.SgcTab & JSXBase.HTMLAttributes<HTMLSgcTabElement>;
             "sgc-tabs": LocalJSX.SgcTabs & JSXBase.HTMLAttributes<HTMLSgcTabsElement>;
             "sgc-translate": LocalJSX.SgcTranslate & JSXBase.HTMLAttributes<HTMLSgcTranslateElement>;
