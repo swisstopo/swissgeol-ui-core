@@ -144,3 +144,15 @@
     <sgc-icon name="plus"></sgc-icon>
   </sgc-button>
 </div>
+<div style="display: flex; flex-direction: column">
+  <sgc-menu-item active (itemClick)="onItemClick($event)">
+    Active item with content
+  </sgc-menu-item>
+  <sgc-menu-item active empty> Active item without content </sgc-menu-item>
+  <sgc-menu-item reviewed="partial"> Item with content </sgc-menu-item>
+  <sgc-menu-item empty reviewed="partial"> Item without content </sgc-menu-item>
+  <sgc-menu-item child> Child item with content </sgc-menu-item>
+  <sgc-menu-item active child reviewed>
+    Active child item without content
+  </sgc-menu-item>
+</div>

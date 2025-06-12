@@ -1,7 +1,11 @@
 // Uncomment this line to use CSS modules
 // import styles from './app.module.scss';
 
-import { SgcButton, SgcIcon } from '@swisstopo/swissgeol-ui-core-react';
+import {
+  SgcButton,
+  SgcIcon,
+  SgcMenuItem,
+} from '@swisstopo/swissgeol-ui-core-react';
 import styles from './app.module.scss';
 
 export function App() {
@@ -163,6 +167,25 @@ export function App() {
         <SgcButton color="tertiary" variant="icon-round" isActive>
           <SgcIcon name="plus"></SgcIcon>
         </SgcButton>
+      </div>
+      <div className={styles.menu}>
+        <SgcMenuItem
+          isActive
+          onItemClick={(e) => console.log('React - Menu item clicked:', e)}
+        >
+          Active item with content Active item with content
+        </SgcMenuItem>
+        <SgcMenuItem isActive isEmpty>
+          Active item without content
+        </SgcMenuItem>
+        <SgcMenuItem isReviewed="partial">Item with content</SgcMenuItem>
+        <SgcMenuItem isEmpty isReviewed="partial">
+          Item without content
+        </SgcMenuItem>
+        <SgcMenuItem isChild>Child item with content</SgcMenuItem>
+        <SgcMenuItem isActive isChild isReviewed>
+          Active child item without content
+        </SgcMenuItem>
       </div>
     </div>
   );

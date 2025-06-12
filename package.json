@@ -82,6 +82,10 @@
       "types": "./dist/components/sgc-icon.d.ts",
       "import": "./dist/components/sgc-icon.js"
     },
+    "./components/sgc-menu-item.js": {
+      "types": "./dist/components/sgc-menu-item.d.ts",
+      "import": "./dist/components/sgc-menu-item.js"
+    },
     "./components/sgc-tab.js": {
       "types": "./dist/components/sgc-tab.d.ts",
       "import": "./dist/components/sgc-tab.js"

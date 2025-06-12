@@ -1,0 +1,61 @@
+@import "../../global/base.css";
+
+:host {
+  font-family: var(--sgc-typo-body-2--family);
+  font-weight: var(--sgc-typo-body-2--weight);
+  font-size: var(--sgc-typo-body-2--size);
+  line-height: var(--sgc-typo-body-2--line-height);
+  letter-spacing: var(--sgc-typo-body-2--letter-spacing);
+  color: var(--sgc-color-text--emphasis-high);
+  cursor: pointer;
+
+  height: 40px;
+  width: 100%;
+  padding-top: 10px;
+  padding-right: 16px;
+  padding-bottom: 10px;
+  padding-left: 38px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--sgc-color-border--default);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+:host > .icon {
+  color: var(--sgc-color-green--600);
+}
+
+:host([empty]) {
+  color: var(--sgc-color-text--disabled);
+}
+
+:host([child]) {
+  padding-left: 50px;
+}
+
+:host([active]) {
+  font-family: var(--sgc-typo-body-2-bold--family);
+  font-weight: var(--sgc-typo-body-2-bold--weight);
+  font-size: var(--sgc-typo-body-2-bold--size);
+  line-height: var(--sgc-typo-body-2-bold--line-height);
+  letter-spacing: var(--sgc-typo-body-2-bold--letter-spacing);
+  color: var(--sgc-color-primary--active);
+  background-color: var(--sgc-color-textfield-grey);
+
+  padding-left: 35px;
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-left-color: var(--sgc-color-primary--active);
+}
+
+:host([active][child]) {
+  padding-left: 47px;
+}
+
+:host([active][empty]) {
+  color: var(--sgc-color-text--disabled);
+}

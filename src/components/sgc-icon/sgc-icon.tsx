@@ -3,6 +3,7 @@ import styles from './sgc-icon.css';
 import { plusSvg } from './icons/plus.svg';
 import { crossSvg } from './icons/cross.svg';
 import { checkmarkSvg } from './icons/checkmark.svg';
+import { checkmarkBracketsSvg } from './icons/checkmark-brackets.svg';
 import { assignSvg } from './icons/assign.svg';
 import { editSvg } from './icons/edit.svg';
 import { chevronRightSvg } from './icons/chevron-right.svg';
@@ -32,6 +33,7 @@ const icons = {
   assign: assignSvg,
   cross: crossSvg,
   checkmark: checkmarkSvg,
+  checkmarkBrackets: checkmarkBracketsSvg,
   chevronRight: chevronRightSvg,
   edit: editSvg,
   plus: plusSvg,

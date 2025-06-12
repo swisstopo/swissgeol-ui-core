@@ -77,6 +77,12 @@ export namespace Components {
         "name": SgcIconKey;
         "size": SgcIconSize;
     }
+    interface SgcMenuItem {
+        "isActive": boolean;
+        "isChild": boolean;
+        "isEmpty": boolean;
+        "isReviewed": boolean | string;
+    }
     interface SgcTab {
         "isActive": boolean;
         "panel": HTMLElement | string | null;
@@ -139,6 +145,10 @@ export interface SgcCheckboxCustomEvent<T> extends CustomEvent<T> {
 export interface SgcChecklistCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcChecklistElement;
+}
+export interface SgcMenuItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcMenuItemElement;
 }
 export interface SgcWorkflowCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -211,6 +221,23 @@ declare global {
     var HTMLSgcIconElement: {
         prototype: HTMLSgcIconElement;
         new (): HTMLSgcIconElement;
+    };
+    interface HTMLSgcMenuItemElementEventMap {
+        "itemClick": MouseEvent;
+    }
+    interface HTMLSgcMenuItemElement extends Components.SgcMenuItem, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcMenuItemElementEventMap>(type: K, listener: (this: HTMLSgcMenuItemElement, ev: SgcMenuItemCustomEvent<HTMLSgcMenuItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcMenuItemElementEventMap>(type: K, listener: (this: HTMLSgcMenuItemElement, ev: SgcMenuItemCustomEvent<HTMLSgcMenuItemElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcMenuItemElement: {
+        prototype: HTMLSgcMenuItemElement;
+        new (): HTMLSgcMenuItemElement;
     };
     interface HTMLSgcTabElement extends Components.SgcTab, HTMLStencilElement {
     }
@@ -313,6 +340,7 @@ declare global {
         "sgc-checklist": HTMLSgcChecklistElement;
         "sgc-date": HTMLSgcDateElement;
         "sgc-icon": HTMLSgcIconElement;
+        "sgc-menu-item": HTMLSgcMenuItemElement;
         "sgc-tab": HTMLSgcTabElement;
         "sgc-tabs": HTMLSgcTabsElement;
         "sgc-translate": HTMLSgcTranslateElement;
@@ -384,6 +412,13 @@ declare namespace LocalJSX {
         "name"?: SgcIconKey;
         "size"?: SgcIconSize;
     }
+    interface SgcMenuItem {
+        "isActive"?: boolean;
+        "isChild"?: boolean;
+        "isEmpty"?: boolean;
+        "isReviewed"?: boolean | string;
+        "onItemClick"?: (event: SgcMenuItemCustomEvent<MouseEvent>) => void;
+    }
     interface SgcTab {
         "isActive"?: boolean;
         "panel"?: HTMLElement | string | null;
@@ -443,6 +478,7 @@ declare namespace LocalJSX {
         "sgc-checklist": SgcChecklist;
         "sgc-date": SgcDate;
         "sgc-icon": SgcIcon;
+        "sgc-menu-item": SgcMenuItem;
         "sgc-tab": SgcTab;
         "sgc-tabs": SgcTabs;
         "sgc-translate": SgcTranslate;
@@ -466,6 +502,7 @@ declare module "@stencil/core" {
             "sgc-checklist": LocalJSX.SgcChecklist & JSXBase.HTMLAttributes<HTMLSgcChecklistElement>;
             "sgc-date": LocalJSX.SgcDate & JSXBase.HTMLAttributes<HTMLSgcDateElement>;
             "sgc-icon": LocalJSX.SgcIcon & JSXBase.HTMLAttributes<HTMLSgcIconElement>;
+            "sgc-menu-item": LocalJSX.SgcMenuItem & JSXBase.HTMLAttributes<HTMLSgcMenuItemElement>;
             "sgc-tab": LocalJSX.SgcTab & JSXBase.HTMLAttributes<HTMLSgcTabElement>;
             "sgc-tabs": LocalJSX.SgcTabs & JSXBase.HTMLAttributes<HTMLSgcTabsElement>;
             "sgc-translate": LocalJSX.SgcTranslate & JSXBase.HTMLAttributes<HTMLSgcTranslateElement>;
