@@ -1,4 +1,4 @@
-import { Component, h, Host, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Host, Prop } from '@stencil/core';
 import {
   GenericWorkflow,
   WorkflowStatus,
@@ -16,13 +16,24 @@ export class SgcWorkflowSteps {
   @Prop()
   isReadOnly!: boolean;
 
+  @Event({ eventName: 'sgcOpenChangeStatusDialog', composed: true })
+  openChangeStatusDialogEvent: EventEmitter<void>;
+
+  @Event({ eventName: 'sgcOpenRequestChangesDialog', composed: true })
+  openRequestChangesDialogEvent: EventEmitter<void>;
+
+  @Event({ eventName: 'sgcOpenRequestReviewDialog', composed: true })
+  openRequestReviewDialogEvent: EventEmitter<null>;
+
+  @Event({ eventName: 'sgcOpenFinishReviewDialog', composed: true })
+  openFinishReviewDialogEvent: EventEmitter<void>;
+
   render() {
     return (
       <Host>
         <h2 part="heading">
           <sgc-translate ns="workflow">attributes.status</sgc-translate>
         </h2>
-
         <ul>
           <li>
             <sgc-workflow-step
@@ -51,27 +62,47 @@ export class SgcWorkflowSteps {
     );
   }
 
-  private renderActions = () => (
+  private readonly renderActions = () => (
     <div class="actions">
       {this.workflow.status === WorkflowStatus.Draft || [
-        <sgc-button color="secondary">
-          <sgc-translate ns="workflow">actions.changeStatus</sgc-translate>
+        <sgc-button
+          color="secondary"
+          onButtonClick={() => this.openChangeStatusDialogEvent.emit()}
+        >
+          <sgc-translate key="changeStatus" ns="workflow">
+            actions.changeStatus
+          </sgc-translate>
           <sgc-icon name="edit"></sgc-icon>
         </sgc-button>,
-        <sgc-button color="secondary">
-          <sgc-translate ns="workflow">actions.requestChanges</sgc-translate>
-          <sgc-icon name="close"></sgc-icon>
+        <sgc-button
+          color="secondary"
+          onButtonClick={() => this.openRequestChangesDialogEvent.emit()}
+        >
+          <sgc-translate key="requestChanges" ns="workflow">
+            actions.requestChanges
+          </sgc-translate>
+          <sgc-icon name="cross"></sgc-icon>
         </sgc-button>,
       ]}
       {this.workflow.status === WorkflowStatus.Draft && (
-        <sgc-button color="primary">
-          <sgc-translate ns="workflow">actions.requestReview</sgc-translate>
+        <sgc-button
+          color="primary"
+          onButtonClick={() => this.openRequestReviewDialogEvent.emit()}
+        >
+          <sgc-translate key="requestReview" ns="workflow">
+            actions.requestReview
+          </sgc-translate>
           <sgc-icon name="chevronRight"></sgc-icon>
         </sgc-button>
       )}
       {this.workflow.status === WorkflowStatus.InReview && (
-        <sgc-button color="primary">
-          <sgc-translate ns="workflow">actions.finishReview</sgc-translate>
+        <sgc-button
+          color="primary"
+          onButtonClick={() => this.openFinishReviewDialogEvent.emit()}
+        >
+          <sgc-translate key="finishReview" ns="workflow">
+            actions.finishReview
+          </sgc-translate>
           <sgc-icon name="chevronRight"></sgc-icon>
         </sgc-button>
       )}

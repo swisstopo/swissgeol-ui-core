@@ -7,16 +7,18 @@ export default {
     Draft: 'Draft',
     InReview: 'Review',
     Reviewed: 'Reviewed',
-    Published: 'Veröffentlicht',
-    notPublished: 'Nicht Veröffentlicht',
+    Published: 'Published',
+    notPublished: 'Not published',
   },
   actions: {
     changeStatus: 'Status manuell ändern',
     requestReview: 'Review anfordern',
     requestChanges: 'Änderungen anfordern',
+    requestedChanges: 'Änderungen angefordert',
     finishReview: 'Review abschliessen',
     assign: 'Neue Person zuweisen',
     publish: 'Publish',
+    forward: 'Weiterleiten',
   },
   tabs: {
     history: 'Verlauf',
@@ -26,7 +28,7 @@ export default {
   history: {
     created: '{{ status }} erstellt',
     statusChanged: 'Status von {{ from }} zu {{ to }} geändert',
-    assigneeChanged: 'Asset {{ assignee }} zugewiesen',
+    assigneeChanged: '{{ item }} {{ assignee }} zugewiesen',
   },
   selection: {
     tabHeading: 'Tab',
@@ -36,5 +38,10 @@ export default {
   other: {
     publication: 'Publikation',
     deletedUserName: 'gelöschter Benutzer',
+    assignee: 'Empfänger:in',
+    comment: 'Kommentar',
+    placeholder: 'Platzhalter',
+    publishHint:
+      'Mit dieser Aktion werden alle im Freigabe-Tab markierten Tabs veröffentlicht.',
   },
 };

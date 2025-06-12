@@ -5,6 +5,7 @@
   --sgc-color-checkbox--inactive: var(--sgc-color-primary);
   --sgc-color-checkbox--background: var(--sgc-color-bg--white);
 
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;

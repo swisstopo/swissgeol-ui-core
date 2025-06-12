@@ -7,18 +7,26 @@ import {
   Host,
   Listen,
   Prop,
+  State,
   Watch,
 } from '@stencil/core';
+import styles from './sgc-checkbox.css';
 
 @Component({
   tag: 'sgc-checkbox',
-  styleUrl: 'sgc-checkbox.css',
+  styles,
   shadow: true,
   formAssociated: true,
 })
 export class SgcCheckbox {
+  /**
+   * Whether the checkbox is on or off.
+   *
+   * If this is `undefined`, the checkbox will keep track of the state internally.
+   * Otherwise, the use side is responsible for toggling this value.
+   */
   @Prop()
-  value!: boolean;
+  value?: boolean;
 
   @Prop({ reflect: true, attribute: 'indeterminate' })
   isIndeterminate = false;
@@ -32,27 +40,44 @@ export class SgcCheckbox {
   @AttachInternals()
   internals!: ElementInternals;
 
+  @State()
+  private internalValue = false;
+
   connectedCallback(): void {
     this.handleValueChange();
   }
 
   @Watch('value')
   handleValueChange(): void {
-    this.internals?.setFormValue(this.value ? 'on' : null);
+    this.internalValue = this.value ?? false;
+    this.updateFormValue();
+  }
+
+  private updateFormValue(): void {
+    this.internals?.setFormValue(this.internalValue ? 'on' : null);
   }
 
   @Listen('click')
-  handleClick(): void {
-    this.changeEvent.emit(!this.value);
+  handleClick(e: MouseEvent): void {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (this.value === undefined) {
+      this.internalValue = !this.internalValue;
+      this.updateFormValue();
+      this.changeEvent.emit(this.internalValue);
+    } else {
+      this.changeEvent.emit(!this.value);
+    }
   }
 
   render = () => (
     <Host
       role="checkbox"
       tabindex="0"
-      aria-checked={this.value.toString()}
+      aria-checked={this.internalValue.toString()}
       class={{
-        'is-checked': this.value,
+        'is-checked': this.internalValue,
         'is-indeterminate': this.isIndeterminate,
       }}
     >

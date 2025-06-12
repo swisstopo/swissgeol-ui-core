@@ -125,6 +125,7 @@ const loadVersions = async ({ receive, abort, package: packageName }) => {
 
   let page = isCacheable ? FIRST_UNCACHED_VERSION_PAGE : 1;
   while (true) {
+    await sleep(1000);
     const data = await fetchPackagePage(owner, name, page);
     if (data.length === 0) {
       if (isCacheable) {
@@ -222,3 +223,5 @@ export const removePackageVersions = async (versions) => {
     }
   }
 };
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));

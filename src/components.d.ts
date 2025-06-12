@@ -5,36 +5,80 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { SgcButtonColor, SgcButtonJustify, SgcButtonVariant } from "./components/sgc-button/sgc-button";
+import { GenericWorkflow, GenericWorkflowSelection, WorkflowChange, WorkflowStatus } from "./models/workflow.model";
+import { SimpleUser, SwissgeolItem } from "./models/user.model";
+import { SgcButtonColor, SgcButtonJustify, SgcButtonSize, SgcButtonVariant } from "./components/sgc-button/sgc-button";
 import { LocalDate } from "./models/base/local-date";
+import { SgcPopupAlignment, SgcPopupPosition } from "./utils/popup.utils";
 import { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
+import { SelectKey, SelectValue } from "./components/sgc-select/sgc-select";
 import { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
 import { NamespaceKey } from "./locales/i18n";
-import { GenericWorkflow, GenericWorkflowSelection, WorkflowChange, WorkflowStatus } from "./models/workflow.model";
 import { SgcWorkflowSelectionChangeEventDetails, SgcWorkflowSelectionEntry } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
-import { SimpleUser } from "./models/user.model";
+import { SimpleUser as SimpleUser1 } from "./components";
+import { SgcWorkflowChangeEventDetail } from "./components/sgc-workflow/sgc-workflow";
 import { SgcWorkflowSelectionChangeEventDetails as SgcWorkflowSelectionChangeEventDetails1, SgcWorkflowSelectionEntry as SgcWorkflowSelectionEntry1 } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
-export { SgcButtonColor, SgcButtonJustify, SgcButtonVariant } from "./components/sgc-button/sgc-button";
+export { GenericWorkflow, GenericWorkflowSelection, WorkflowChange, WorkflowStatus } from "./models/workflow.model";
+export { SimpleUser, SwissgeolItem } from "./models/user.model";
+export { SgcButtonColor, SgcButtonJustify, SgcButtonSize, SgcButtonVariant } from "./components/sgc-button/sgc-button";
 export { LocalDate } from "./models/base/local-date";
+export { SgcPopupAlignment, SgcPopupPosition } from "./utils/popup.utils";
 export { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
+export { SelectKey, SelectValue } from "./components/sgc-select/sgc-select";
 export { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
 export { NamespaceKey } from "./locales/i18n";
-export { GenericWorkflow, GenericWorkflowSelection, WorkflowChange, WorkflowStatus } from "./models/workflow.model";
 export { SgcWorkflowSelectionChangeEventDetails, SgcWorkflowSelectionEntry } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
-export { SimpleUser } from "./models/user.model";
+export { SimpleUser as SimpleUser1 } from "./components";
+export { SgcWorkflowChangeEventDetail } from "./components/sgc-workflow/sgc-workflow";
 export { SgcWorkflowSelectionChangeEventDetails as SgcWorkflowSelectionChangeEventDetails1, SgcWorkflowSelectionEntry as SgcWorkflowSelectionEntry1 } from "./components/sgc-workflow/sgc-workflow-selection/sgc-workflow-selection";
 export namespace Components {
+    interface SgcAssignPersonDialog {
+        "availableAssignees": SimpleUser[];
+        "workflow": GenericWorkflow;
+    }
     interface SgcButton {
         "color": SgcButtonColor;
+        /**
+          * Anchor `download` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#download}
+         */
+        "download": string | null;
+        /**
+          * Anchor `href` attribute. When this is set, the button will use the `a` tag instead of `button`.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a anchor}
+         */
+        "href": string | null;
         "isActive": boolean;
         "isDisabled": boolean;
+        /**
+          * Makes the button's background transparent. Buttons without this attribute are called *solid* in the swissgeol Figma.
+         */
+        "isTransparent": boolean;
         "justify": SgcButtonJustify;
+        /**
+          * Anchor `rel` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
+         */
+        "rel": string | null;
+        "size": SgcButtonSize;
+        /**
+          * Anchor `target` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
+         */
+        "target": string | null;
         "variant": SgcButtonVariant;
+    }
+    interface SgcChangeStatusDialog {
+        "availableAssignees": SimpleUser[];
+        "workflow": GenericWorkflow;
     }
     interface SgcCheckbox {
         "isDisabled": boolean;
         "isIndeterminate": boolean;
-        "value": boolean;
+        /**
+          * Whether the checkbox is on or off.  If this is `undefined`, the checkbox will keep track of the state internally. Otherwise, the use side is responsible for toggling this value.
+         */
+        "value"?: boolean;
     }
     interface SgcChecklist {
         "isDisabled": boolean;
@@ -45,9 +89,82 @@ export namespace Components {
     interface SgcDate {
         "value": LocalDate | Date;
     }
+    interface SgcDropdown {
+        /**
+          * How the dropdown is aligned relative to its target.  If this is `null`, the alignment will be automatically determined.
+         */
+        "align": SgcPopupAlignment | null;
+        "isOpen": boolean | null;
+        /**
+          * How the dropdown is positioned relative to its target.  If this is `null`, the position will be automatically determined.
+         */
+        "position": SgcPopupPosition | null;
+    }
+    interface SgcDropdownItem {
+        /**
+          * Anchor `download` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#download}
+         */
+        "download": string | null;
+        /**
+          * Anchor `href` attribute. When this is set, the button will use the `a` tag instead of `button`.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a anchor}
+         */
+        "href": string | null;
+        "isDisabled": boolean;
+        /**
+          * Anchor `rel` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
+         */
+        "rel": string | null;
+        /**
+          * Anchor `target` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
+         */
+        "target": string | null;
+    }
+    interface SgcFinishReviewDialog {
+        "workflow": GenericWorkflow;
+    }
+    interface SgcFormItem {
+    }
     interface SgcIcon {
         "name": SgcIconKey;
         "size": SgcIconSize;
+    }
+    interface SgcMenuItem {
+        "isActive": boolean;
+        "isChild": boolean;
+        "isEmpty": boolean;
+        "isReviewed": boolean | string;
+    }
+    interface SgcModal {
+        "isOpen": boolean;
+        "isPersistent": boolean;
+    }
+    interface SgcModalWrapper {
+    }
+    interface SgcPublishDialog {
+        "workflow": GenericWorkflow;
+    }
+    interface SgcRequestChangesDialog {
+        "availableAssignees": SimpleUser[];
+        "workflow": GenericWorkflow;
+    }
+    interface SgcRequestReviewDialog {
+        "availableAssignees": SimpleUser[];
+        "workflow": GenericWorkflow;
+    }
+    interface SgcSelect {
+        "bindKey"?: string;
+        "bindLabel"?: string;
+        "disabled": boolean;
+        "errorMessage": string;
+        "initialKeys": SelectKey[];
+        "multiple": boolean;
+        "placeholder": string;
+        "trigger": string;
+        "values": SelectValue[];
     }
     interface SgcTab {
         "isActive": boolean;
@@ -56,12 +173,20 @@ export namespace Components {
     interface SgcTabs {
         "persistence": SgcTabPersistence;
     }
+    interface SgcTextArea {
+        "disabled": boolean;
+        "placeholder": string;
+        "rows": number;
+        "value": string;
+    }
     interface SgcTranslate {
         "ns": NamespaceKey;
     }
     interface SgcWorkflow {
         "approval": GenericWorkflowSelection;
+        "availableAssignees": SimpleUser1[];
         "isReadOnly": boolean;
+        "item": SwissgeolItem;
         "review": GenericWorkflowSelection;
         "selection": Array<SgcWorkflowSelectionEntry<string>>;
         "workflow": GenericWorkflow;
@@ -71,6 +196,7 @@ export namespace Components {
     }
     interface SgcWorkflowChange {
         "change": WorkflowChange;
+        "item": SwissgeolItem;
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowChangeTemplate {
@@ -78,6 +204,7 @@ export namespace Components {
         "creator": SimpleUser | null;
     }
     interface SgcWorkflowHistory {
+        "item": SwissgeolItem;
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowPublication {
@@ -100,9 +227,17 @@ export namespace Components {
         "workflow": GenericWorkflow;
     }
 }
+export interface SgcAssignPersonDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcAssignPersonDialogElement;
+}
 export interface SgcButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcButtonElement;
+}
+export interface SgcChangeStatusDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcChangeStatusDialogElement;
 }
 export interface SgcCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -112,15 +247,77 @@ export interface SgcChecklistCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcChecklistElement;
 }
+export interface SgcDropdownCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcDropdownElement;
+}
+export interface SgcFinishReviewDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcFinishReviewDialogElement;
+}
+export interface SgcMenuItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcMenuItemElement;
+}
+export interface SgcPublishDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcPublishDialogElement;
+}
+export interface SgcRequestChangesDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcRequestChangesDialogElement;
+}
+export interface SgcRequestReviewDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcRequestReviewDialogElement;
+}
+export interface SgcSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcSelectElement;
+}
+export interface SgcTextAreaCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcTextAreaElement;
+}
 export interface SgcWorkflowCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcWorkflowElement;
+}
+export interface SgcWorkflowAssigneeCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcWorkflowAssigneeElement;
+}
+export interface SgcWorkflowPublicationCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcWorkflowPublicationElement;
 }
 export interface SgcWorkflowSelectionCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcWorkflowSelectionElement;
 }
+export interface SgcWorkflowStepsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcWorkflowStepsElement;
+}
 declare global {
+    interface HTMLSgcAssignPersonDialogElementEventMap {
+        "sgcCloseDialog": void;
+        "sgcAssignPerson": WorkflowChange;
+    }
+    interface HTMLSgcAssignPersonDialogElement extends Components.SgcAssignPersonDialog, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcAssignPersonDialogElementEventMap>(type: K, listener: (this: HTMLSgcAssignPersonDialogElement, ev: SgcAssignPersonDialogCustomEvent<HTMLSgcAssignPersonDialogElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcAssignPersonDialogElementEventMap>(type: K, listener: (this: HTMLSgcAssignPersonDialogElement, ev: SgcAssignPersonDialogCustomEvent<HTMLSgcAssignPersonDialogElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcAssignPersonDialogElement: {
+        prototype: HTMLSgcAssignPersonDialogElement;
+        new (): HTMLSgcAssignPersonDialogElement;
+    };
     interface HTMLSgcButtonElementEventMap {
         "buttonClick": MouseEvent;
     }
@@ -137,6 +334,24 @@ declare global {
     var HTMLSgcButtonElement: {
         prototype: HTMLSgcButtonElement;
         new (): HTMLSgcButtonElement;
+    };
+    interface HTMLSgcChangeStatusDialogElementEventMap {
+        "sgcCloseDialog": void;
+        "sgcChangeStatus": WorkflowChange;
+    }
+    interface HTMLSgcChangeStatusDialogElement extends Components.SgcChangeStatusDialog, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcChangeStatusDialogElementEventMap>(type: K, listener: (this: HTMLSgcChangeStatusDialogElement, ev: SgcChangeStatusDialogCustomEvent<HTMLSgcChangeStatusDialogElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcChangeStatusDialogElementEventMap>(type: K, listener: (this: HTMLSgcChangeStatusDialogElement, ev: SgcChangeStatusDialogCustomEvent<HTMLSgcChangeStatusDialogElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcChangeStatusDialogElement: {
+        prototype: HTMLSgcChangeStatusDialogElement;
+        new (): HTMLSgcChangeStatusDialogElement;
     };
     interface HTMLSgcCheckboxElementEventMap {
         "checkboxChange": boolean;
@@ -178,11 +393,158 @@ declare global {
         prototype: HTMLSgcDateElement;
         new (): HTMLSgcDateElement;
     };
+    interface HTMLSgcDropdownElementEventMap {
+        "sgcToggle": boolean;
+    }
+    interface HTMLSgcDropdownElement extends Components.SgcDropdown, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcDropdownElementEventMap>(type: K, listener: (this: HTMLSgcDropdownElement, ev: SgcDropdownCustomEvent<HTMLSgcDropdownElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcDropdownElementEventMap>(type: K, listener: (this: HTMLSgcDropdownElement, ev: SgcDropdownCustomEvent<HTMLSgcDropdownElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcDropdownElement: {
+        prototype: HTMLSgcDropdownElement;
+        new (): HTMLSgcDropdownElement;
+    };
+    interface HTMLSgcDropdownItemElement extends Components.SgcDropdownItem, HTMLStencilElement {
+    }
+    var HTMLSgcDropdownItemElement: {
+        prototype: HTMLSgcDropdownItemElement;
+        new (): HTMLSgcDropdownItemElement;
+    };
+    interface HTMLSgcFinishReviewDialogElementEventMap {
+        "sgcCloseDialog": void;
+        "sgcFinishReview": WorkflowChange;
+    }
+    interface HTMLSgcFinishReviewDialogElement extends Components.SgcFinishReviewDialog, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcFinishReviewDialogElementEventMap>(type: K, listener: (this: HTMLSgcFinishReviewDialogElement, ev: SgcFinishReviewDialogCustomEvent<HTMLSgcFinishReviewDialogElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcFinishReviewDialogElementEventMap>(type: K, listener: (this: HTMLSgcFinishReviewDialogElement, ev: SgcFinishReviewDialogCustomEvent<HTMLSgcFinishReviewDialogElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcFinishReviewDialogElement: {
+        prototype: HTMLSgcFinishReviewDialogElement;
+        new (): HTMLSgcFinishReviewDialogElement;
+    };
+    interface HTMLSgcFormItemElement extends Components.SgcFormItem, HTMLStencilElement {
+    }
+    var HTMLSgcFormItemElement: {
+        prototype: HTMLSgcFormItemElement;
+        new (): HTMLSgcFormItemElement;
+    };
     interface HTMLSgcIconElement extends Components.SgcIcon, HTMLStencilElement {
     }
     var HTMLSgcIconElement: {
         prototype: HTMLSgcIconElement;
         new (): HTMLSgcIconElement;
+    };
+    interface HTMLSgcMenuItemElementEventMap {
+        "sgcClick": MouseEvent;
+    }
+    interface HTMLSgcMenuItemElement extends Components.SgcMenuItem, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcMenuItemElementEventMap>(type: K, listener: (this: HTMLSgcMenuItemElement, ev: SgcMenuItemCustomEvent<HTMLSgcMenuItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcMenuItemElementEventMap>(type: K, listener: (this: HTMLSgcMenuItemElement, ev: SgcMenuItemCustomEvent<HTMLSgcMenuItemElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcMenuItemElement: {
+        prototype: HTMLSgcMenuItemElement;
+        new (): HTMLSgcMenuItemElement;
+    };
+    interface HTMLSgcModalElement extends Components.SgcModal, HTMLStencilElement {
+    }
+    var HTMLSgcModalElement: {
+        prototype: HTMLSgcModalElement;
+        new (): HTMLSgcModalElement;
+    };
+    interface HTMLSgcModalWrapperElement extends Components.SgcModalWrapper, HTMLStencilElement {
+    }
+    var HTMLSgcModalWrapperElement: {
+        prototype: HTMLSgcModalWrapperElement;
+        new (): HTMLSgcModalWrapperElement;
+    };
+    interface HTMLSgcPublishDialogElementEventMap {
+        "sgcCloseDialog": void;
+        "sgcPublish": WorkflowChange;
+    }
+    interface HTMLSgcPublishDialogElement extends Components.SgcPublishDialog, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcPublishDialogElementEventMap>(type: K, listener: (this: HTMLSgcPublishDialogElement, ev: SgcPublishDialogCustomEvent<HTMLSgcPublishDialogElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcPublishDialogElementEventMap>(type: K, listener: (this: HTMLSgcPublishDialogElement, ev: SgcPublishDialogCustomEvent<HTMLSgcPublishDialogElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcPublishDialogElement: {
+        prototype: HTMLSgcPublishDialogElement;
+        new (): HTMLSgcPublishDialogElement;
+    };
+    interface HTMLSgcRequestChangesDialogElementEventMap {
+        "sgcCloseDialog": void;
+        "sgcRequestChanges": WorkflowChange;
+    }
+    interface HTMLSgcRequestChangesDialogElement extends Components.SgcRequestChangesDialog, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcRequestChangesDialogElementEventMap>(type: K, listener: (this: HTMLSgcRequestChangesDialogElement, ev: SgcRequestChangesDialogCustomEvent<HTMLSgcRequestChangesDialogElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcRequestChangesDialogElementEventMap>(type: K, listener: (this: HTMLSgcRequestChangesDialogElement, ev: SgcRequestChangesDialogCustomEvent<HTMLSgcRequestChangesDialogElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcRequestChangesDialogElement: {
+        prototype: HTMLSgcRequestChangesDialogElement;
+        new (): HTMLSgcRequestChangesDialogElement;
+    };
+    interface HTMLSgcRequestReviewDialogElementEventMap {
+        "sgcCloseDialog": void;
+        "sgcRequestReview": WorkflowChange;
+    }
+    interface HTMLSgcRequestReviewDialogElement extends Components.SgcRequestReviewDialog, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcRequestReviewDialogElementEventMap>(type: K, listener: (this: HTMLSgcRequestReviewDialogElement, ev: SgcRequestReviewDialogCustomEvent<HTMLSgcRequestReviewDialogElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcRequestReviewDialogElementEventMap>(type: K, listener: (this: HTMLSgcRequestReviewDialogElement, ev: SgcRequestReviewDialogCustomEvent<HTMLSgcRequestReviewDialogElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcRequestReviewDialogElement: {
+        prototype: HTMLSgcRequestReviewDialogElement;
+        new (): HTMLSgcRequestReviewDialogElement;
+    };
+    interface HTMLSgcSelectElementEventMap {
+        "selectionChanged": SelectKey[];
+    }
+    interface HTMLSgcSelectElement extends Components.SgcSelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcSelectElementEventMap>(type: K, listener: (this: HTMLSgcSelectElement, ev: SgcSelectCustomEvent<HTMLSgcSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcSelectElementEventMap>(type: K, listener: (this: HTMLSgcSelectElement, ev: SgcSelectCustomEvent<HTMLSgcSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcSelectElement: {
+        prototype: HTMLSgcSelectElement;
+        new (): HTMLSgcSelectElement;
     };
     interface HTMLSgcTabElement extends Components.SgcTab, HTMLStencilElement {
     }
@@ -196,6 +558,23 @@ declare global {
         prototype: HTMLSgcTabsElement;
         new (): HTMLSgcTabsElement;
     };
+    interface HTMLSgcTextAreaElementEventMap {
+        "valueChanged": string;
+    }
+    interface HTMLSgcTextAreaElement extends Components.SgcTextArea, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcTextAreaElementEventMap>(type: K, listener: (this: HTMLSgcTextAreaElement, ev: SgcTextAreaCustomEvent<HTMLSgcTextAreaElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcTextAreaElementEventMap>(type: K, listener: (this: HTMLSgcTextAreaElement, ev: SgcTextAreaCustomEvent<HTMLSgcTextAreaElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcTextAreaElement: {
+        prototype: HTMLSgcTextAreaElement;
+        new (): HTMLSgcTextAreaElement;
+    };
     interface HTMLSgcTranslateElement extends Components.SgcTranslate, HTMLStencilElement {
     }
     var HTMLSgcTranslateElement: {
@@ -203,8 +582,10 @@ declare global {
         new (): HTMLSgcTranslateElement;
     };
     interface HTMLSgcWorkflowElementEventMap {
-        "workflowReviewChange": SgcWorkflowSelectionChangeEventDetails;
-        "workflowApprovalChange": SgcWorkflowSelectionChangeEventDetails;
+        "sgcWorkflowReviewChange": SgcWorkflowSelectionChangeEventDetails;
+        "sgcWorkflowApprovalChange": SgcWorkflowSelectionChangeEventDetails;
+        "sgcWorkflowChange": SgcWorkflowChangeEventDetail;
+        "sgcWorkflowPublish": SgcWorkflowChangeEventDetail;
     }
     interface HTMLSgcWorkflowElement extends Components.SgcWorkflow, HTMLStencilElement {
         addEventListener<K extends keyof HTMLSgcWorkflowElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowElement, ev: SgcWorkflowCustomEvent<HTMLSgcWorkflowElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -220,7 +601,18 @@ declare global {
         prototype: HTMLSgcWorkflowElement;
         new (): HTMLSgcWorkflowElement;
     };
+    interface HTMLSgcWorkflowAssigneeElementEventMap {
+        "sgcOpenAssignPersonDialog": void;
+    }
     interface HTMLSgcWorkflowAssigneeElement extends Components.SgcWorkflowAssignee, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcWorkflowAssigneeElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowAssigneeElement, ev: SgcWorkflowAssigneeCustomEvent<HTMLSgcWorkflowAssigneeElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcWorkflowAssigneeElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowAssigneeElement, ev: SgcWorkflowAssigneeCustomEvent<HTMLSgcWorkflowAssigneeElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLSgcWorkflowAssigneeElement: {
         prototype: HTMLSgcWorkflowAssigneeElement;
@@ -244,7 +636,18 @@ declare global {
         prototype: HTMLSgcWorkflowHistoryElement;
         new (): HTMLSgcWorkflowHistoryElement;
     };
+    interface HTMLSgcWorkflowPublicationElementEventMap {
+        "sgcOpenPublicationDialog": void;
+    }
     interface HTMLSgcWorkflowPublicationElement extends Components.SgcWorkflowPublication, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcWorkflowPublicationElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowPublicationElement, ev: SgcWorkflowPublicationCustomEvent<HTMLSgcWorkflowPublicationElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcWorkflowPublicationElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowPublicationElement, ev: SgcWorkflowPublicationCustomEvent<HTMLSgcWorkflowPublicationElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLSgcWorkflowPublicationElement: {
         prototype: HTMLSgcWorkflowPublicationElement;
@@ -273,20 +676,48 @@ declare global {
         prototype: HTMLSgcWorkflowStepElement;
         new (): HTMLSgcWorkflowStepElement;
     };
+    interface HTMLSgcWorkflowStepsElementEventMap {
+        "sgcOpenChangeStatusDialog": void;
+        "sgcOpenRequestChangesDialog": void;
+        "sgcOpenRequestReviewDialog": null;
+        "sgcOpenFinishReviewDialog": void;
+    }
     interface HTMLSgcWorkflowStepsElement extends Components.SgcWorkflowSteps, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcWorkflowStepsElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowStepsElement, ev: SgcWorkflowStepsCustomEvent<HTMLSgcWorkflowStepsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcWorkflowStepsElementEventMap>(type: K, listener: (this: HTMLSgcWorkflowStepsElement, ev: SgcWorkflowStepsCustomEvent<HTMLSgcWorkflowStepsElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLSgcWorkflowStepsElement: {
         prototype: HTMLSgcWorkflowStepsElement;
         new (): HTMLSgcWorkflowStepsElement;
     };
     interface HTMLElementTagNameMap {
+        "sgc-assign-person-dialog": HTMLSgcAssignPersonDialogElement;
         "sgc-button": HTMLSgcButtonElement;
+        "sgc-change-status-dialog": HTMLSgcChangeStatusDialogElement;
         "sgc-checkbox": HTMLSgcCheckboxElement;
         "sgc-checklist": HTMLSgcChecklistElement;
         "sgc-date": HTMLSgcDateElement;
+        "sgc-dropdown": HTMLSgcDropdownElement;
+        "sgc-dropdown-item": HTMLSgcDropdownItemElement;
+        "sgc-finish-review-dialog": HTMLSgcFinishReviewDialogElement;
+        "sgc-form-item": HTMLSgcFormItemElement;
         "sgc-icon": HTMLSgcIconElement;
+        "sgc-menu-item": HTMLSgcMenuItemElement;
+        "sgc-modal": HTMLSgcModalElement;
+        "sgc-modal-wrapper": HTMLSgcModalWrapperElement;
+        "sgc-publish-dialog": HTMLSgcPublishDialogElement;
+        "sgc-request-changes-dialog": HTMLSgcRequestChangesDialogElement;
+        "sgc-request-review-dialog": HTMLSgcRequestReviewDialogElement;
+        "sgc-select": HTMLSgcSelectElement;
         "sgc-tab": HTMLSgcTabElement;
         "sgc-tabs": HTMLSgcTabsElement;
+        "sgc-text-area": HTMLSgcTextAreaElement;
         "sgc-translate": HTMLSgcTranslateElement;
         "sgc-workflow": HTMLSgcWorkflowElement;
         "sgc-workflow-assignee": HTMLSgcWorkflowAssigneeElement;
@@ -300,19 +731,59 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface SgcAssignPersonDialog {
+        "availableAssignees"?: SimpleUser[];
+        "onSgcAssignPerson"?: (event: SgcAssignPersonDialogCustomEvent<WorkflowChange>) => void;
+        "onSgcCloseDialog"?: (event: SgcAssignPersonDialogCustomEvent<void>) => void;
+        "workflow"?: GenericWorkflow;
+    }
     interface SgcButton {
         "color"?: SgcButtonColor;
+        /**
+          * Anchor `download` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#download}
+         */
+        "download"?: string | null;
+        /**
+          * Anchor `href` attribute. When this is set, the button will use the `a` tag instead of `button`.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a anchor}
+         */
+        "href"?: string | null;
         "isActive"?: boolean;
         "isDisabled"?: boolean;
+        /**
+          * Makes the button's background transparent. Buttons without this attribute are called *solid* in the swissgeol Figma.
+         */
+        "isTransparent"?: boolean;
         "justify"?: SgcButtonJustify;
         "onButtonClick"?: (event: SgcButtonCustomEvent<MouseEvent>) => void;
+        /**
+          * Anchor `rel` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
+         */
+        "rel"?: string | null;
+        "size"?: SgcButtonSize;
+        /**
+          * Anchor `target` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
+         */
+        "target"?: string | null;
         "variant"?: SgcButtonVariant;
+    }
+    interface SgcChangeStatusDialog {
+        "availableAssignees"?: SimpleUser[];
+        "onSgcChangeStatus"?: (event: SgcChangeStatusDialogCustomEvent<WorkflowChange>) => void;
+        "onSgcCloseDialog"?: (event: SgcChangeStatusDialogCustomEvent<void>) => void;
+        "workflow"?: GenericWorkflow;
     }
     interface SgcCheckbox {
         "isDisabled"?: boolean;
         "isIndeterminate"?: boolean;
         "onCheckboxChange"?: (event: SgcCheckboxCustomEvent<boolean>) => void;
-        "value": boolean;
+        /**
+          * Whether the checkbox is on or off.  If this is `undefined`, the checkbox will keep track of the state internally. Otherwise, the use side is responsible for toggling this value.
+         */
+        "value"?: boolean;
     }
     interface SgcChecklist {
         "isDisabled"?: boolean;
@@ -324,9 +795,93 @@ declare namespace LocalJSX {
     interface SgcDate {
         "value"?: LocalDate | Date;
     }
+    interface SgcDropdown {
+        /**
+          * How the dropdown is aligned relative to its target.  If this is `null`, the alignment will be automatically determined.
+         */
+        "align"?: SgcPopupAlignment | null;
+        "isOpen"?: boolean | null;
+        "onSgcToggle"?: (event: SgcDropdownCustomEvent<boolean>) => void;
+        /**
+          * How the dropdown is positioned relative to its target.  If this is `null`, the position will be automatically determined.
+         */
+        "position"?: SgcPopupPosition | null;
+    }
+    interface SgcDropdownItem {
+        /**
+          * Anchor `download` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#download}
+         */
+        "download"?: string | null;
+        /**
+          * Anchor `href` attribute. When this is set, the button will use the `a` tag instead of `button`.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a anchor}
+         */
+        "href"?: string | null;
+        "isDisabled"?: boolean;
+        /**
+          * Anchor `rel` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
+         */
+        "rel"?: string | null;
+        /**
+          * Anchor `target` attribute. Only has an effect when {@link href} is set.
+          * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#target}
+         */
+        "target"?: string | null;
+    }
+    interface SgcFinishReviewDialog {
+        "onSgcCloseDialog"?: (event: SgcFinishReviewDialogCustomEvent<void>) => void;
+        "onSgcFinishReview"?: (event: SgcFinishReviewDialogCustomEvent<WorkflowChange>) => void;
+        "workflow"?: GenericWorkflow;
+    }
+    interface SgcFormItem {
+    }
     interface SgcIcon {
         "name"?: SgcIconKey;
         "size"?: SgcIconSize;
+    }
+    interface SgcMenuItem {
+        "isActive"?: boolean;
+        "isChild"?: boolean;
+        "isEmpty"?: boolean;
+        "isReviewed"?: boolean | string;
+        "onSgcClick"?: (event: SgcMenuItemCustomEvent<MouseEvent>) => void;
+    }
+    interface SgcModal {
+        "isOpen"?: boolean;
+        "isPersistent"?: boolean;
+    }
+    interface SgcModalWrapper {
+    }
+    interface SgcPublishDialog {
+        "onSgcCloseDialog"?: (event: SgcPublishDialogCustomEvent<void>) => void;
+        "onSgcPublish"?: (event: SgcPublishDialogCustomEvent<WorkflowChange>) => void;
+        "workflow"?: GenericWorkflow;
+    }
+    interface SgcRequestChangesDialog {
+        "availableAssignees"?: SimpleUser[];
+        "onSgcCloseDialog"?: (event: SgcRequestChangesDialogCustomEvent<void>) => void;
+        "onSgcRequestChanges"?: (event: SgcRequestChangesDialogCustomEvent<WorkflowChange>) => void;
+        "workflow"?: GenericWorkflow;
+    }
+    interface SgcRequestReviewDialog {
+        "availableAssignees"?: SimpleUser[];
+        "onSgcCloseDialog"?: (event: SgcRequestReviewDialogCustomEvent<void>) => void;
+        "onSgcRequestReview"?: (event: SgcRequestReviewDialogCustomEvent<WorkflowChange>) => void;
+        "workflow"?: GenericWorkflow;
+    }
+    interface SgcSelect {
+        "bindKey"?: string;
+        "bindLabel"?: string;
+        "disabled"?: boolean;
+        "errorMessage"?: string;
+        "initialKeys"?: SelectKey[];
+        "multiple"?: boolean;
+        "onSelectionChanged"?: (event: SgcSelectCustomEvent<SelectKey[]>) => void;
+        "placeholder"?: string;
+        "trigger"?: string;
+        "values"?: SelectValue[];
     }
     interface SgcTab {
         "isActive"?: boolean;
@@ -335,23 +890,36 @@ declare namespace LocalJSX {
     interface SgcTabs {
         "persistence"?: SgcTabPersistence;
     }
+    interface SgcTextArea {
+        "disabled"?: boolean;
+        "onValueChanged"?: (event: SgcTextAreaCustomEvent<string>) => void;
+        "placeholder"?: string;
+        "rows"?: number;
+        "value"?: string;
+    }
     interface SgcTranslate {
         "ns": NamespaceKey;
     }
     interface SgcWorkflow {
         "approval": GenericWorkflowSelection;
+        "availableAssignees"?: SimpleUser1[];
         "isReadOnly": boolean;
-        "onWorkflowApprovalChange"?: (event: SgcWorkflowCustomEvent<SgcWorkflowSelectionChangeEventDetails>) => void;
-        "onWorkflowReviewChange"?: (event: SgcWorkflowCustomEvent<SgcWorkflowSelectionChangeEventDetails>) => void;
+        "item"?: SwissgeolItem;
+        "onSgcWorkflowApprovalChange"?: (event: SgcWorkflowCustomEvent<SgcWorkflowSelectionChangeEventDetails>) => void;
+        "onSgcWorkflowChange"?: (event: SgcWorkflowCustomEvent<SgcWorkflowChangeEventDetail>) => void;
+        "onSgcWorkflowPublish"?: (event: SgcWorkflowCustomEvent<SgcWorkflowChangeEventDetail>) => void;
+        "onSgcWorkflowReviewChange"?: (event: SgcWorkflowCustomEvent<SgcWorkflowSelectionChangeEventDetails>) => void;
         "review": GenericWorkflowSelection;
         "selection": Array<SgcWorkflowSelectionEntry<string>>;
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowAssignee {
+        "onSgcOpenAssignPersonDialog"?: (event: SgcWorkflowAssigneeCustomEvent<void>) => void;
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowChange {
         "change": WorkflowChange;
+        "item": SwissgeolItem;
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowChangeTemplate {
@@ -359,10 +927,12 @@ declare namespace LocalJSX {
         "creator": SimpleUser | null;
     }
     interface SgcWorkflowHistory {
+        "item": SwissgeolItem;
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowPublication {
         "isReadOnly": boolean;
+        "onSgcOpenPublicationDialog"?: (event: SgcWorkflowPublicationCustomEvent<void>) => void;
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowSelection {
@@ -379,16 +949,34 @@ declare namespace LocalJSX {
     }
     interface SgcWorkflowSteps {
         "isReadOnly": boolean;
+        "onSgcOpenChangeStatusDialog"?: (event: SgcWorkflowStepsCustomEvent<void>) => void;
+        "onSgcOpenFinishReviewDialog"?: (event: SgcWorkflowStepsCustomEvent<void>) => void;
+        "onSgcOpenRequestChangesDialog"?: (event: SgcWorkflowStepsCustomEvent<void>) => void;
+        "onSgcOpenRequestReviewDialog"?: (event: SgcWorkflowStepsCustomEvent<null>) => void;
         "workflow": GenericWorkflow;
     }
     interface IntrinsicElements {
+        "sgc-assign-person-dialog": SgcAssignPersonDialog;
         "sgc-button": SgcButton;
+        "sgc-change-status-dialog": SgcChangeStatusDialog;
         "sgc-checkbox": SgcCheckbox;
         "sgc-checklist": SgcChecklist;
         "sgc-date": SgcDate;
+        "sgc-dropdown": SgcDropdown;
+        "sgc-dropdown-item": SgcDropdownItem;
+        "sgc-finish-review-dialog": SgcFinishReviewDialog;
+        "sgc-form-item": SgcFormItem;
         "sgc-icon": SgcIcon;
+        "sgc-menu-item": SgcMenuItem;
+        "sgc-modal": SgcModal;
+        "sgc-modal-wrapper": SgcModalWrapper;
+        "sgc-publish-dialog": SgcPublishDialog;
+        "sgc-request-changes-dialog": SgcRequestChangesDialog;
+        "sgc-request-review-dialog": SgcRequestReviewDialog;
+        "sgc-select": SgcSelect;
         "sgc-tab": SgcTab;
         "sgc-tabs": SgcTabs;
+        "sgc-text-area": SgcTextArea;
         "sgc-translate": SgcTranslate;
         "sgc-workflow": SgcWorkflow;
         "sgc-workflow-assignee": SgcWorkflowAssignee;
@@ -405,13 +993,27 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "sgc-assign-person-dialog": LocalJSX.SgcAssignPersonDialog & JSXBase.HTMLAttributes<HTMLSgcAssignPersonDialogElement>;
             "sgc-button": LocalJSX.SgcButton & JSXBase.HTMLAttributes<HTMLSgcButtonElement>;
+            "sgc-change-status-dialog": LocalJSX.SgcChangeStatusDialog & JSXBase.HTMLAttributes<HTMLSgcChangeStatusDialogElement>;
             "sgc-checkbox": LocalJSX.SgcCheckbox & JSXBase.HTMLAttributes<HTMLSgcCheckboxElement>;
             "sgc-checklist": LocalJSX.SgcChecklist & JSXBase.HTMLAttributes<HTMLSgcChecklistElement>;
             "sgc-date": LocalJSX.SgcDate & JSXBase.HTMLAttributes<HTMLSgcDateElement>;
+            "sgc-dropdown": LocalJSX.SgcDropdown & JSXBase.HTMLAttributes<HTMLSgcDropdownElement>;
+            "sgc-dropdown-item": LocalJSX.SgcDropdownItem & JSXBase.HTMLAttributes<HTMLSgcDropdownItemElement>;
+            "sgc-finish-review-dialog": LocalJSX.SgcFinishReviewDialog & JSXBase.HTMLAttributes<HTMLSgcFinishReviewDialogElement>;
+            "sgc-form-item": LocalJSX.SgcFormItem & JSXBase.HTMLAttributes<HTMLSgcFormItemElement>;
             "sgc-icon": LocalJSX.SgcIcon & JSXBase.HTMLAttributes<HTMLSgcIconElement>;
+            "sgc-menu-item": LocalJSX.SgcMenuItem & JSXBase.HTMLAttributes<HTMLSgcMenuItemElement>;
+            "sgc-modal": LocalJSX.SgcModal & JSXBase.HTMLAttributes<HTMLSgcModalElement>;
+            "sgc-modal-wrapper": LocalJSX.SgcModalWrapper & JSXBase.HTMLAttributes<HTMLSgcModalWrapperElement>;
+            "sgc-publish-dialog": LocalJSX.SgcPublishDialog & JSXBase.HTMLAttributes<HTMLSgcPublishDialogElement>;
+            "sgc-request-changes-dialog": LocalJSX.SgcRequestChangesDialog & JSXBase.HTMLAttributes<HTMLSgcRequestChangesDialogElement>;
+            "sgc-request-review-dialog": LocalJSX.SgcRequestReviewDialog & JSXBase.HTMLAttributes<HTMLSgcRequestReviewDialogElement>;
+            "sgc-select": LocalJSX.SgcSelect & JSXBase.HTMLAttributes<HTMLSgcSelectElement>;
             "sgc-tab": LocalJSX.SgcTab & JSXBase.HTMLAttributes<HTMLSgcTabElement>;
             "sgc-tabs": LocalJSX.SgcTabs & JSXBase.HTMLAttributes<HTMLSgcTabsElement>;
+            "sgc-text-area": LocalJSX.SgcTextArea & JSXBase.HTMLAttributes<HTMLSgcTextAreaElement>;
             "sgc-translate": LocalJSX.SgcTranslate & JSXBase.HTMLAttributes<HTMLSgcTranslateElement>;
             "sgc-workflow": LocalJSX.SgcWorkflow & JSXBase.HTMLAttributes<HTMLSgcWorkflowElement>;
             "sgc-workflow-assignee": LocalJSX.SgcWorkflowAssignee & JSXBase.HTMLAttributes<HTMLSgcWorkflowAssigneeElement>;

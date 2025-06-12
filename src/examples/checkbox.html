@@ -1,0 +1,57 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Stencil Component Starter</title>
+
+    <script type="module" src="/build/swissgeol-ui-core.esm.js"></script>
+    <script nomodule src="/build/swissgeol-ui-core.js"></script>
+
+    <link rel="stylesheet" href="/build/swissgeol-ui-core.css" />
+  </head>
+  <body style="display: flex; flex-direction: column; gap: 12px"></body>
+  <script>
+    const simpleCheckbox = document.createElement("sgc-checkbox");
+    simpleCheckbox.value = false;
+    simpleCheckbox.addEventListener("checkboxChange", (event) => {
+      simpleCheckbox.value = event.detail;
+    });
+
+    const simpleLabel = document.createElement("label");
+    simpleLabel.style.display = "inline-flex";
+    simpleLabel.style.alignItems = "center";
+    simpleLabel.style.gap = "6px";
+    simpleLabel.style.cursor = "pointer";
+    simpleLabel.appendChild(simpleCheckbox);
+    simpleLabel.append("a simple checkbox");
+
+    document.body.appendChild(simpleLabel);
+  </script>
+  <script>
+    const imCheckbox = document.createElement("sgc-checkbox");
+    imCheckbox.value = false;
+    imCheckbox.addEventListener("checkboxChange", (event) => {
+      if (imCheckbox.value && !imCheckbox.isIndeterminate) {
+        imCheckbox.value = true;
+        imCheckbox.isIndeterminate = true;
+      } else {
+        imCheckbox.value = event.detail;
+        imCheckbox.isIndeterminate = false;
+      }
+    });
+
+    const imLabel = document.createElement("label");
+    imLabel.style.display = "inline-flex";
+    imLabel.style.alignItems = "center";
+    imLabel.style.gap = "6px";
+    imLabel.style.cursor = "pointer";
+    imLabel.appendChild(imCheckbox);
+    imLabel.append("an indeterminate checkbox");
+
+    document.body.appendChild(imLabel);
+  </script>
+</html>

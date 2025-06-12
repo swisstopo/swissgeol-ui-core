@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
 import sortClassMembers from 'eslint-plugin-sort-class-members';
+import stylistic from '@stylistic/eslint-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,7 +14,7 @@ const compat = new FlatCompat({
   recommendedConfig: js.configs.recommended,
 });
 
-const jsFileExtensions = ['.ts', '.tsx', '.js', '.jsx'];
+const jsFileExtensions = ['.ts', '.tsx'];
 const sourcePaths = [
   'src/',
   'scripts/',
@@ -66,7 +67,6 @@ const sharedConfig = {
     'no-var': 'error',
     'object-shorthand': 'off',
     'prefer-arrow-callback': 'error',
-    'prefer-const': 'error',
     quotes: [
       'error',
       'single',
@@ -74,7 +74,6 @@ const sharedConfig = {
         avoidEscape: true,
       },
     ],
-
     semi: 'error',
     'space-before-blocks': 'error',
     'space-in-parens': 'error',
@@ -93,10 +92,29 @@ const sharedConfig = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
-
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-unused-expressions': 'off',
+
+    // Require braces around control statements.
+    curly: 'error',
+
+    // Disallow nested ternaries.
+    'no-nested-ternary': 'error',
+
+    // Disallow the use of the `public` keyword.
+    '@typescript-eslint/explicit-member-accessibility': [
+      'error',
+      {
+        accessibility: 'no-public',
+      },
+    ],
+
+    // Use `const` over `let` where possible.
+    'prefer-const': 'error',
+
+    // Require parentheses around arrow function parameters.
+    '@stylistic/arrow-parens': ['error', 'always'],
   },
 };
 
@@ -109,6 +127,10 @@ const baseConfigs = compat
   )
   .map((config) => ({
     ...config,
+    plugins: {
+      ...config.plugins,
+      '@stylistic': stylistic,
+    },
     ignores: sharedConfig.ignores,
     languageOptions: {
       globals: {
@@ -162,18 +184,7 @@ export default [
           ],
           types: ['boolean'],
           format: ['PascalCase'],
-          prefix: [
-            'is',
-            'has',
-            'hide',
-            'show',
-            'should',
-            'does',
-            'can',
-            'use',
-            'needs',
-            'was',
-          ],
+          prefix: ['is', 'has', 'can', 'should', 'will', 'was', 'needs'],
         },
       ],
       'sort-class-members/sort-class-members': [

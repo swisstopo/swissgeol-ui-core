@@ -25,6 +25,7 @@ export interface WorkflowChange {
   fromStatus: WorkflowStatus;
   toStatus: WorkflowStatus;
   createdAt: LocalDate;
+  hasRequestedChanges?: boolean;
 }
 
 export enum WorkflowStatus {

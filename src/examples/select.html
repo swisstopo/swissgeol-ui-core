@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Select</title>
+    <script type="module" src="/build/swissgeol-ui-core.esm.js"></script>
+    <script nomodule src="/build/swissgeol-ui-core.js"></script>
+
+    <link rel="stylesheet" href="/build/swissgeol-ui-core.css" />
+  </head>
+  <body>
+    <h1>Select</h1>
+    <div>
+      <sgc-form-item>
+        <span slot="label">Single Select with error message</span>
+        <sgc-icon name="required" slot="icon"></sgc-icon>
+
+        <sgc-select id="singleSelect"></sgc-select>
+      </sgc-form-item>
+
+      <sgc-form-item>
+        <span slot="label">Multiple Select with preselect</span>
+        <sgc-icon name="required" slot="icon"></sgc-icon>
+
+        <sgc-select id="multiSelect"></sgc-select>
+      </sgc-form-item>
+
+      <sgc-form-item>
+        <span slot="label">Names with trigger</span>
+        <sgc-icon name="required" slot="icon"></sgc-icon>
+
+        <sgc-select id="names"></sgc-select>
+      </sgc-form-item>
+    </div>
+
+    <script>
+      const assignees = [
+        { id: "1", fullName: "Alice Johnson" },
+        { id: "2", fullName: "Bob Smith" },
+        { id: "3", fullName: "Charlie Davis" },
+      ];
+
+      const names = assignees.map((assignee) => assignee.fullName);
+
+      const singleSelect = document.getElementById("singleSelect");
+      singleSelect.values = assignees;
+      singleSelect.bindLabel = "fullName";
+      singleSelect.bindKey = "id";
+      singleSelect.multiple = false;
+      singleSelect.errorMessage = "Ein Fehler ist aufgetreten";
+
+      const multiSelect = document.getElementById("multiSelect");
+      multiSelect.values = assignees;
+      multiSelect.bindLabel = "fullName";
+      multiSelect.bindKey = "id";
+      multiSelect.multiple = true;
+      multiSelect.initialKeys = ["1", "2"];
+
+      const namesSelect = document.getElementById("names");
+      namesSelect.values = names;
+      namesSelect.multiple = true;
+      namesSelect.trigger = "ausgewählte Namen";
+      namesSelect.initialKeys = ["Alice Johnson", "Bob Smith"];
+
+      singleSelect.addEventListener("selectionChanged", (event) => {
+        const selectedAssignee = event.detail[0];
+        console.log("Selected assignee:", selectedAssignee);
+      });
+    </script>
+    <style>
+      div {
+        display: flex;
+        gap: 1rem;
+      }
+    </style>
+  </body>
+</html>

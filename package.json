@@ -62,9 +62,17 @@
       "types": "./dist/components/index.d.ts",
       "import": "./dist/components/index.js"
     },
+    "./components/sgc-assign-person-dialog.js": {
+      "types": "./dist/components/sgc-assign-person-dialog.d.ts",
+      "import": "./dist/components/sgc-assign-person-dialog.js"
+    },
     "./components/sgc-button.js": {
       "types": "./dist/components/sgc-button.d.ts",
       "import": "./dist/components/sgc-button.js"
+    },
+    "./components/sgc-change-status-dialog.js": {
+      "types": "./dist/components/sgc-change-status-dialog.d.ts",
+      "import": "./dist/components/sgc-change-status-dialog.js"
     },
     "./components/sgc-checkbox.js": {
       "types": "./dist/components/sgc-checkbox.d.ts",
@@ -78,9 +86,53 @@
       "types": "./dist/components/sgc-date.d.ts",
       "import": "./dist/components/sgc-date.js"
     },
+    "./components/sgc-finish-review-dialog.js": {
+      "types": "./dist/components/sgc-finish-review-dialog.d.ts",
+      "import": "./dist/components/sgc-finish-review-dialog.js"
+    },
+    "./components/sgc-form-item.js": {
+      "types": "./dist/components/sgc-form-item.d.ts",
+      "import": "./dist/components/sgc-form-item.js"
+    },
+    "./components/sgc-dropdown-item.js": {
+      "types": "./dist/components/sgc-dropdown-item.d.ts",
+      "import": "./dist/components/sgc-dropdown-item.js"
+    },
+    "./components/sgc-dropdown.js": {
+      "types": "./dist/components/sgc-dropdown.d.ts",
+      "import": "./dist/components/sgc-dropdown.js"
+    },
     "./components/sgc-icon.js": {
       "types": "./dist/components/sgc-icon.d.ts",
       "import": "./dist/components/sgc-icon.js"
+    },
+    "./components/sgc-menu-item.js": {
+      "types": "./dist/components/sgc-menu-item.d.ts",
+      "import": "./dist/components/sgc-menu-item.js"
+    },
+    "./components/sgc-modal-wrapper.js": {
+      "types": "./dist/components/sgc-modal-wrapper.d.ts",
+      "import": "./dist/components/sgc-modal-wrapper.js"
+    },
+    "./components/sgc-modal.js": {
+      "types": "./dist/components/sgc-modal.d.ts",
+      "import": "./dist/components/sgc-modal.js"
+    },
+    "./components/sgc-publish-dialog.js": {
+      "types": "./dist/components/sgc-publish-dialog.d.ts",
+      "import": "./dist/components/sgc-publish-dialog.js"
+    },
+    "./components/sgc-request-changes-dialog.js": {
+      "types": "./dist/components/sgc-request-changes-dialog.d.ts",
+      "import": "./dist/components/sgc-request-changes-dialog.js"
+    },
+    "./components/sgc-request-review-dialog.js": {
+      "types": "./dist/components/sgc-request-review-dialog.d.ts",
+      "import": "./dist/components/sgc-request-review-dialog.js"
+    },
+    "./components/sgc-select.js": {
+      "types": "./dist/components/sgc-select.d.ts",
+      "import": "./dist/components/sgc-select.js"
     },
     "./components/sgc-tab.js": {
       "types": "./dist/components/sgc-tab.d.ts",
@@ -89,6 +141,10 @@
     "./components/sgc-tabs.js": {
       "types": "./dist/components/sgc-tabs.d.ts",
       "import": "./dist/components/sgc-tabs.js"
+    },
+    "./components/sgc-text-area.js": {
+      "types": "./dist/components/sgc-text-area.d.ts",
+      "import": "./dist/components/sgc-text-area.js"
     },
     "./components/sgc-translate.js": {
       "types": "./dist/components/sgc-translate.d.ts",
@@ -149,6 +205,7 @@
     "@stencil/eslint-plugin": "^1.0.0",
     "@stencil/playwright": "^0.2.1",
     "@stencil/react-output-target": "^1.0.2",
+    "@stylistic/eslint-plugin": "^4.4.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.5",
     "concurrently": "^9.1.2",

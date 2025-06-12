@@ -80,6 +80,7 @@ export class SgcWorkflowSelection {
     if (Object.keys(patch).length !== 0) {
       this.changeEvent.emit({ changes: patch });
     }
+    this.selection = { ...this.fields };
   };
 
   readonly render = () => (

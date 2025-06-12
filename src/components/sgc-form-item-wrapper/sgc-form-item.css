@@ -1,0 +1,20 @@
+@import "../../global/base.css";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 11px;
+  font-size: var(--sgc-typo-subtitle-2--size);
+  font-weight: var(--sgc-typo-subtitle-2--weight);
+  line-height: var(--sgc-typo-subtitle-2--line-height);
+  letter-spacing: var(--sgc-typo-subtitle-2--letter-spacing);
+  font-family: var(--sgc-typo-subtitle-2--family);
+}

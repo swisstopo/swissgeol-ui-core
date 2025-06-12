@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Select</title>
+    <script type="module" src="/build/swissgeol-ui-core.esm.js"></script>
+    <script nomodule src="/build/swissgeol-ui-core.js"></script>
+
+    <link rel="stylesheet" href="/build/swissgeol-ui-core.css" />
+  </head>
+  <body>
+    <h1>Textarea</h1>
+    <div>
+      <sgc-form-item>
+        <span slot="label">Textarea</span>
+        <sgc-icon name="required" slot="icon"></sgc-icon>
+        <sgc-text-area id="textarea"></sgc-text-area>
+      </sgc-form-item>
+    </div>
+
+    <script>
+      const textarea = document.getElementById("textarea");
+      textarea.value = "test text";
+      textarea.errorMessage = "Ein Fehler ist aufgetreten";
+      textarea.rows = 2;
+    </script>
+  </body>
+</html>

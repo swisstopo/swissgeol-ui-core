@@ -31,9 +31,25 @@
   letter-spacing: var(--sgc-typo-body-2-bold--letter-spacing);
 }
 
+:host(.has-changes-requested) {
+  --step-color: var(--sgc-color-error);
+
+  border-radius: 4px;
+  padding: 12px;
+  background-color: var(--sgc-color-bg--error);
+  border: 1px solid var(--sgc-color-error);
+
+  font-family: var(--sgc-typo-body-2-bold--family);
+  font-weight: var(--sgc-typo-body-2-bold--weight);
+  font-size: var(--sgc-typo-body-2-bold--size);
+  line-height: var(--sgc-typo-body-2-bold--line-height);
+  letter-spacing: var(--sgc-typo-body-2-bold--letter-spacing);
+}
+
 /* indicator */
 :host > .indicator {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -42,6 +58,20 @@
   border: 1px solid var(--step-color);
   border-radius: 50%;
   background-color: var(--sgc-color-bg--white);
+}
+
+:host > .title {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+:host > .title > .subtitle {
+  font-family: var(--sgc-typo-body-2--family);
+  font-weight: var(--sgc-typo-body-2--weight);
+  font-size: var(--sgc-typo-body-2--size);
+  line-height: var(--sgc-typo-body-2--line-height);
+  letter-spacing: var(--sgc-typo-body-2--letter-spacing);
 }
 
 :host > .indicator > svg-icon {
