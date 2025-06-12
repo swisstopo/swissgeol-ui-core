@@ -7,6 +7,9 @@ import { checkmarkBracketsSvg } from './icons/checkmark-brackets.svg';
 import { assignSvg } from './icons/assign.svg';
 import { editSvg } from './icons/edit.svg';
 import { chevronRightSvg } from './icons/chevron-right.svg';
+import { optionalSvg } from './icons/optional.svg';
+import { requiredSvg } from './icons/required.svg';
+import { chevronDownSvg } from './icons/chevron-down.svg';
 
 @Component({
   tag: 'sgc-icon',
@@ -33,10 +36,13 @@ const icons = {
   assign: assignSvg,
   cross: crossSvg,
   checkmark: checkmarkSvg,
+  chevronDown: chevronDownSvg,
   checkmarkBrackets: checkmarkBracketsSvg,
   chevronRight: chevronRightSvg,
   edit: editSvg,
+  optional: optionalSvg,
   plus: plusSvg,
+  required: requiredSvg,
 };
 
 export type SgcIconKey = keyof typeof icons;

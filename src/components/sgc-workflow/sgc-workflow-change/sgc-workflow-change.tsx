@@ -5,6 +5,7 @@ import {
 } from '../../../models/workflow.model';
 import { OnLanguageChange, registerI18n } from '../../../locales/component';
 import { i18n } from '../../../locales/i18n';
+import { SwissgeolItem } from '../../../models/user.model';
 
 @Component({
   tag: 'sgc-workflow-change',
@@ -17,6 +18,9 @@ export class SgcWorkflowChange implements OnLanguageChange {
 
   @Prop()
   change!: WorkflowChange;
+
+  @Prop()
+  item!: SwissgeolItem;
 
   private statusMutationHtml: string | null;
   private assigneeMutationHtml: string | null;
@@ -50,6 +54,7 @@ export class SgcWorkflowChange implements OnLanguageChange {
         ? i18n.t('workflow', 'other.deletedUserName')
         : `${toAssignee.firstName} ${toAssignee.lastName}`;
     return i18n.t('workflow', 'history.assigneeChanged', {
+      item: this.item,
       assignee: `<span class="highlight">${assignee}</span>`,
     });
   }
@@ -65,7 +70,7 @@ export class SgcWorkflowChange implements OnLanguageChange {
       {this.assigneeMutationHtml && (
         <li slot="mutations" innerHTML={this.assigneeMutationHtml}></li>
       )}
-      {this.change.comment !== null && (
+      {this.change.comment && (
         <div slot="body" class="comment">
           {this.change.comment}
         </div>

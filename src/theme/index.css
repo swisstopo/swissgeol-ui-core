@@ -19,6 +19,7 @@
   --sgc-color-focus: #8655f6;
   --sgc-color-active: #a83526;
   --sgc-color-active--light: #ff0000;
+  --sgc-color-error: #99191e;
 
   --sgc-color-primary: #337083;
   --sgc-color-primary--light: #4fa7bc;
@@ -49,6 +50,7 @@
   --sgc-color-bg--grey: #f1f3f5;
   --sgc-color-bg--disabled: var(--sgc-color-secondary--300);
   --sgc-color-bg--error: #d8232a;
+  --sgc-color-bg--error--light: #ffe7ea;
 
   --sgc-color-green--600: #059669;
 }

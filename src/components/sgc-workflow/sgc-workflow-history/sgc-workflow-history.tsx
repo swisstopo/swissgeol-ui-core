@@ -6,6 +6,7 @@ import {
 } from '../../../models/workflow.model';
 import { i18n } from '../../../locales/i18n';
 import { OnLanguageChange, registerI18n } from '../../../locales/component';
+import { SwissgeolItem } from '../../../models/user.model';
 
 @Component({
   tag: 'sgc-workflow-history',
@@ -15,6 +16,9 @@ import { OnLanguageChange, registerI18n } from '../../../locales/component';
 export class SgcWorkflowHistory implements OnLanguageChange {
   @Prop()
   workflow!: GenericWorkflow;
+
+  @Prop()
+  item!: SwissgeolItem;
 
   changes!: WorkflowChange[];
 
@@ -41,6 +45,7 @@ export class SgcWorkflowHistory implements OnLanguageChange {
         <sgc-workflow-change
           key={change.createdAt.toString()}
           workflow={this.workflow}
+          item={this.item}
           change={change}
         ></sgc-workflow-change>
       ))}

@@ -1,5 +1,6 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Event, h, Host, Prop } from '@stencil/core';
 import { GenericWorkflow } from '../../../models/workflow.model';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   tag: 'sgc-workflow-assignee',
@@ -9,6 +10,9 @@ import { GenericWorkflow } from '../../../models/workflow.model';
 export class SgcWorkflowAssignee {
   @Prop()
   workflow!: GenericWorkflow;
+
+  @Event({ eventName: 'sgcOpenAssignPersonDialog', composed: true })
+  openAssignPersonDialogEvent!: EventEmitter<void>;
 
   readonly render = () => (
     <Host>
@@ -20,7 +24,10 @@ export class SgcWorkflowAssignee {
           {this.workflow.assignee.firstName} {this.workflow.assignee.lastName}
         </div>
       )}
-      <sgc-button color="secondary">
+      <sgc-button
+        color="secondary"
+        onButtonClick={() => this.openAssignPersonDialogEvent.emit()}
+      >
         <sgc-translate ns="workflow">actions.assign</sgc-translate>
         <sgc-icon name="assign"></sgc-icon>
       </sgc-button>

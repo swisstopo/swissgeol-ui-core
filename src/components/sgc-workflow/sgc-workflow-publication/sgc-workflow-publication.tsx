@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Host, Prop } from '@stencil/core';
 import {
   GenericWorkflow,
   WorkflowStatus,
@@ -16,6 +16,9 @@ export class SgcWorkflowPublication {
   @Prop()
   isReadOnly!: boolean;
 
+  @Event({ eventName: 'sgcOpenPublicationDialog', composed: true })
+  openPublicationDialogEvent: EventEmitter<void>;
+
   readonly render = () => (
     <Host>
       <h2 part="heading">
@@ -29,7 +32,10 @@ export class SgcWorkflowPublication {
 
       {this.workflow.status !== WorkflowStatus.Published &&
         !this.isReadOnly && (
-          <sgc-button color="primary">
+          <sgc-button
+            color="primary"
+            onButtonClick={() => this.openPublicationDialogEvent.emit()}
+          >
             <sgc-translate ns="workflow">actions.publish</sgc-translate>
             <sgc-icon name="chevronRight"></sgc-icon>
           </sgc-button>

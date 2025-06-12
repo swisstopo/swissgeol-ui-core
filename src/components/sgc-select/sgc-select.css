@@ -1,0 +1,75 @@
+@import "../../global/base.css";
+
+:host {
+  display: block;
+  position: relative;
+}
+.select-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid var(--sgc-color-secondary--400);
+  padding: 10px 6px 10px 12px;
+  background: white;
+  cursor: pointer;
+  height: 44px;
+  box-sizing: border-box;
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.select-dropdown {
+  position: absolute;
+  top: 44px;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid var(--sgc-color-secondary--400);
+  background: white;
+  z-index: 100;
+  max-height: 200px;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+sgc-icon {
+  transition: transform 0.3s ease;
+
+  &.is-open {
+    transform: rotate(180deg);
+  }
+
+  &.is-hidden {
+    visibility: hidden;
+  }
+}
+
+.select-option {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+
+  &.selected {
+    background: #eef;
+  }
+
+  &:hover {
+    background: #ddd;
+  }
+}
+
+.error-message {
+  color: var(--sgc-color-error);
+  margin: 4px 0 0 0;
+
+  font-size: var(--sgc-typo-body-2--size);
+  font-weight: var(--sgc-typo-body-2--weight);
+  line-height: var(--sgc-typo-body-2--line-height);
+  letter-spacing: var(--sgc-typo-body-2--letter-spacing);
+  font-family: var(--sgc-font-family), var(--sgc-font-family--fallback);
+}
