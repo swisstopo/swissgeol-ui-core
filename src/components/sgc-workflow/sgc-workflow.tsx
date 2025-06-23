@@ -39,7 +39,7 @@ export class SgcWorkflow {
   isReadOnly!: boolean;
 
   @Prop()
-  canPublish!: boolean;
+  canChangeStatus!: boolean;
 
   @Prop()
   item: SwissgeolItem = 'Asset';
@@ -151,7 +151,7 @@ export class SgcWorkflow {
       <sgc-workflow-steps
         class="panel"
         workflow={this.workflow}
-        isReadOnly={this.isReadOnly}
+        canChangeStatus={this.canChangeStatus}
         onSgcOpenChangeStatusDialog={this.openChangeStatusDialog}
         onSgcOpenRequestChangesDialog={this.openRequestChangesDialog}
         onSgcOpenRequestReviewDialog={this.openRequestReviewDialog}
@@ -167,7 +167,7 @@ export class SgcWorkflow {
         <sgc-workflow-publication
           class="panel"
           workflow={this.workflow}
-          isReadOnly={!this.canPublish}
+          isReadOnly={this.isReadOnly}
           onSgcOpenPublicationDialog={this.openPublishDialog}
         ></sgc-workflow-publication>
       )}

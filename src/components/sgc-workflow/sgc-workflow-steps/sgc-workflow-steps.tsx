@@ -14,7 +14,7 @@ export class SgcWorkflowSteps {
   workflow!: GenericWorkflow;
 
   @Prop()
-  isReadOnly!: boolean;
+  canChangeStatus!: boolean;
 
   @Event({ eventName: 'sgcOpenChangeStatusDialog', composed: true })
   openChangeStatusDialogEvent: EventEmitter<void>;
@@ -57,7 +57,7 @@ export class SgcWorkflowSteps {
           </li>
         </ul>
 
-        {this.isReadOnly || this.renderActions()}
+        {this.canChangeStatus && this.renderActions()}
       </Host>
     );
   }
