@@ -39,6 +39,9 @@ export class SgcWorkflow {
   isReadOnly!: boolean;
 
   @Prop()
+  canPublish!: boolean;
+
+  @Prop()
   item: SwissgeolItem = 'Asset';
 
   private modalRef?: HTMLSgcModalElement;
@@ -164,7 +167,7 @@ export class SgcWorkflow {
         <sgc-workflow-publication
           class="panel"
           workflow={this.workflow}
-          isReadOnly={this.isReadOnly}
+          isReadOnly={!this.canPublish}
           onSgcOpenPublicationDialog={this.openPublishDialog}
         ></sgc-workflow-publication>
       )}

@@ -185,6 +185,7 @@ export namespace Components {
     interface SgcWorkflow {
         "approval": GenericWorkflowSelection;
         "availableAssignees": SimpleUser1[];
+        "canPublish": boolean;
         "isReadOnly": boolean;
         "item": SwissgeolItem;
         "review": GenericWorkflowSelection;
@@ -903,6 +904,7 @@ declare namespace LocalJSX {
     interface SgcWorkflow {
         "approval": GenericWorkflowSelection;
         "availableAssignees"?: SimpleUser1[];
+        "canPublish": boolean;
         "isReadOnly": boolean;
         "item"?: SwissgeolItem;
         "onSgcWorkflowApprovalChange"?: (event: SgcWorkflowCustomEvent<SgcWorkflowSelectionChangeEventDetails>) => void;
