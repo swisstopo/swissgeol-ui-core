@@ -9,7 +9,11 @@ import {
 } from '@stencil/core';
 import { SgcSelectWorkflowAssigneeChangeEvent } from '../sgc-request-review-dialog/sgc-request-review-dialog';
 import { Id } from '../../../../models/base/id';
-import { getRoleIndex, Role, SimpleUser } from '../../../../models/user.model';
+import {
+  getRoleForStatus,
+  getRoleIndex,
+  SimpleUser,
+} from '../../../../models/user.model';
 import {
   GenericWorkflow,
   WorkflowChange,
@@ -45,7 +49,8 @@ export class SgcAssignPersonDialog {
     this.assignees = this.availableAssignees
       .filter(
         (assignee) =>
-          getRoleIndex(assignee.role) >= getRoleIndex(Role.Reviewer) &&
+          getRoleIndex(assignee.role) >=
+            getRoleIndex(getRoleForStatus(this.workflow.status)) &&
           assignee.id !== this.workflow.assignee.id,
       )
       .map((assignee) => ({

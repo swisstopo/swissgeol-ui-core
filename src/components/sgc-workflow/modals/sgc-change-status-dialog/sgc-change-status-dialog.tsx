@@ -12,7 +12,11 @@ import {
   WorkflowChange,
   WorkflowStatus,
 } from '../../../../models/workflow.model';
-import { SimpleUser } from '../../../../models/user.model';
+import {
+  getRoleForStatus,
+  getRoleIndex,
+  SimpleUser,
+} from '../../../../models/user.model';
 import { Id } from '../../../../models/base/id';
 import { LocalDate } from '../../../../models/base/local-date';
 import {
@@ -49,10 +53,12 @@ export class SgcChangeStatusDialog {
 
   @Watch('availableAssignees')
   handleAvailableAssigneesChange() {
-    this.assignees = this.availableAssignees.map((assignee) => ({
-      id: assignee.id,
-      fullName: `${assignee.firstName} ${assignee.lastName} (${assignee.role})`,
-    }));
+    this.updateAssigneesByNewStatus();
+  }
+
+  @Watch('newStatus')
+  handleNewStatusChange() {
+    this.updateAssigneesByNewStatus();
   }
 
   connectedCallback() {
@@ -75,6 +81,19 @@ export class SgcChangeStatusDialog {
         this.newStatus === WorkflowStatus.InReview) &&
         !this.newAssignee)
     );
+  }
+
+  updateAssigneesByNewStatus() {
+    this.assignees = this.availableAssignees
+      .filter(
+        (assignee) =>
+          getRoleIndex(assignee.role) >=
+          getRoleIndex(getRoleForStatus(this.newStatus)),
+      )
+      .map((assignee) => ({
+        id: assignee.id,
+        fullName: `${assignee.firstName} ${assignee.lastName} (${assignee.role})`,
+      }));
   }
 
   private readonly handleWorkflowStatusChange = () => {
@@ -129,6 +148,7 @@ export class SgcChangeStatusDialog {
               slot="icon"
             ></sgc-icon>
             <sgc-select
+              disabled={!this.newStatus}
               values={this.assignees}
               bindKey="id"
               bindLabel="fullName"
