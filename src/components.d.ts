@@ -209,6 +209,7 @@ export namespace Components {
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowPublication {
+        "isDisabled": boolean;
         "isReadOnly": boolean;
         "workflow": GenericWorkflow;
     }
@@ -933,6 +934,7 @@ declare namespace LocalJSX {
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowPublication {
+        "isDisabled": boolean;
         "isReadOnly": boolean;
         "onSgcOpenPublicationDialog"?: (event: SgcWorkflowPublicationCustomEvent<void>) => void;
         "workflow": GenericWorkflow;

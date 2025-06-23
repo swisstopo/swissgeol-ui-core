@@ -138,6 +138,10 @@ export class SgcWorkflow {
     );
   }
 
+  private get isPublishDisabled(): boolean {
+    return Object.values(this.approval).every((value) => !value);
+  }
+
   readonly render = () => (
     <Host>
       {this.renderStatus()}
@@ -166,6 +170,7 @@ export class SgcWorkflow {
       ) : (
         <sgc-workflow-publication
           class="panel"
+          isDisabled={this.isPublishDisabled}
           workflow={this.workflow}
           isReadOnly={this.isReadOnly}
           onSgcOpenPublicationDialog={this.openPublishDialog}
