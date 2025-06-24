@@ -44,7 +44,7 @@ export class SgcRequestChangesDialog {
   @Watch('availableAssignees')
   handleAvailableAssigneesChange() {
     this.assignees = this.availableAssignees
-      .filter((assignee) => assignee.id !== this.workflow.assignee.id)
+      .filter((assignee) => assignee.id !== this.workflow.assignee?.id)
       .map((assignee) => ({
         id: assignee.id,
         fullName: `${assignee.firstName} ${assignee.lastName} (${assignee.role})`,

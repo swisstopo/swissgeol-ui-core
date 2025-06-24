@@ -51,7 +51,7 @@ export class SgcAssignPersonDialog {
         (assignee) =>
           getRoleIndex(assignee.role) >=
             getRoleIndex(getRoleForStatus(this.workflow.status)) &&
-          assignee.id !== this.workflow.assignee.id,
+          assignee.id !== this.workflow.assignee?.id,
       )
       .map((assignee) => ({
         id: assignee.id,
