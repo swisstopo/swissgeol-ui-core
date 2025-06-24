@@ -39,6 +39,9 @@ export class SgcWorkflow {
   isReadOnly!: boolean;
 
   @Prop()
+  canChangeStatus!: boolean;
+
+  @Prop()
   item: SwissgeolItem = 'Asset';
 
   private modalRef?: HTMLSgcModalElement;
@@ -135,6 +138,10 @@ export class SgcWorkflow {
     );
   }
 
+  private get isPublishDisabled(): boolean {
+    return Object.values(this.approval).every((value) => !value);
+  }
+
   readonly render = () => (
     <Host>
       {this.renderStatus()}
@@ -148,7 +155,7 @@ export class SgcWorkflow {
       <sgc-workflow-steps
         class="panel"
         workflow={this.workflow}
-        isReadOnly={this.isReadOnly}
+        canChangeStatus={this.canChangeStatus}
         onSgcOpenChangeStatusDialog={this.openChangeStatusDialog}
         onSgcOpenRequestChangesDialog={this.openRequestChangesDialog}
         onSgcOpenRequestReviewDialog={this.openRequestReviewDialog}
@@ -163,6 +170,7 @@ export class SgcWorkflow {
       ) : (
         <sgc-workflow-publication
           class="panel"
+          isDisabled={this.isPublishDisabled}
           workflow={this.workflow}
           isReadOnly={this.isReadOnly}
           onSgcOpenPublicationDialog={this.openPublishDialog}

@@ -185,6 +185,7 @@ export namespace Components {
     interface SgcWorkflow {
         "approval": GenericWorkflowSelection;
         "availableAssignees": SimpleUser1[];
+        "canChangeStatus": boolean;
         "isReadOnly": boolean;
         "item": SwissgeolItem;
         "review": GenericWorkflowSelection;
@@ -208,6 +209,7 @@ export namespace Components {
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowPublication {
+        "isDisabled": boolean;
         "isReadOnly": boolean;
         "workflow": GenericWorkflow;
     }
@@ -223,7 +225,7 @@ export namespace Components {
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowSteps {
-        "isReadOnly": boolean;
+        "canChangeStatus": boolean;
         "workflow": GenericWorkflow;
     }
 }
@@ -903,6 +905,7 @@ declare namespace LocalJSX {
     interface SgcWorkflow {
         "approval": GenericWorkflowSelection;
         "availableAssignees"?: SimpleUser1[];
+        "canChangeStatus": boolean;
         "isReadOnly": boolean;
         "item"?: SwissgeolItem;
         "onSgcWorkflowApprovalChange"?: (event: SgcWorkflowCustomEvent<SgcWorkflowSelectionChangeEventDetails>) => void;
@@ -931,6 +934,7 @@ declare namespace LocalJSX {
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowPublication {
+        "isDisabled": boolean;
         "isReadOnly": boolean;
         "onSgcOpenPublicationDialog"?: (event: SgcWorkflowPublicationCustomEvent<void>) => void;
         "workflow": GenericWorkflow;
@@ -948,7 +952,7 @@ declare namespace LocalJSX {
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowSteps {
-        "isReadOnly": boolean;
+        "canChangeStatus": boolean;
         "onSgcOpenChangeStatusDialog"?: (event: SgcWorkflowStepsCustomEvent<void>) => void;
         "onSgcOpenFinishReviewDialog"?: (event: SgcWorkflowStepsCustomEvent<void>) => void;
         "onSgcOpenRequestChangesDialog"?: (event: SgcWorkflowStepsCustomEvent<void>) => void;

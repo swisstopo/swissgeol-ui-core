@@ -16,6 +16,9 @@ export class SgcWorkflowPublication {
   @Prop()
   isReadOnly!: boolean;
 
+  @Prop()
+  isDisabled!: boolean;
+
   @Event({ eventName: 'sgcOpenPublicationDialog', composed: true })
   openPublicationDialogEvent: EventEmitter<void>;
 
@@ -34,6 +37,7 @@ export class SgcWorkflowPublication {
         !this.isReadOnly && (
           <sgc-button
             color="primary"
+            isDisabled={this.isDisabled}
             onButtonClick={() => this.openPublicationDialogEvent.emit()}
           >
             <sgc-translate ns="workflow">actions.publish</sgc-translate>
