@@ -84,7 +84,7 @@ export class SgcWorkflowSelection {
   };
 
   readonly render = () => (
-    <sgc-checklist>
+    <sgc-checklist isDisabled={this.isFullyDisabled}>
       <sgc-translate ns="workflow" slot="name">
         selection.tabHeading
       </sgc-translate>
@@ -100,21 +100,28 @@ export class SgcWorkflowSelection {
   );
 
   private readonly renderGroup = (group: SgcWorkflowSelectionGroup<string>) => (
-    <sgc-checklist name={group.name()}>
+    <sgc-checklist name={group.name()} isDisabled={this.isFullyDisabled}>
       {group.fields.map(this.renderField)}
     </sgc-checklist>
   );
 
-  private readonly renderField = (field: SgcWorkflowSelectionField<string>) => (
-    <sgc-checklist
-      name={field.name(field.field)}
-      value={this.fields[field.field]}
-      isDisabled={
-        this.isFullyDisabled || (this.base !== null && !this.base[field.field])
-      }
-      onChecklistChange={(event) => this.updateField(field.field, event.detail)}
-    ></sgc-checklist>
-  );
+  private readonly renderField = (field: SgcWorkflowSelectionField<string>) => {
+    if (!this.base) {
+    }
+    return (
+      <sgc-checklist
+        name={field.name(field.field)}
+        value={this.fields[field.field]}
+        isDisabled={
+          this.isFullyDisabled ||
+          (this.base !== null && !this.base[field.field])
+        }
+        onChecklistChange={(event) =>
+          this.updateField(field.field, event.detail)
+        }
+      ></sgc-checklist>
+    );
+  };
 }
 
 export type SgcWorkflowSelectionChangeEvent =
