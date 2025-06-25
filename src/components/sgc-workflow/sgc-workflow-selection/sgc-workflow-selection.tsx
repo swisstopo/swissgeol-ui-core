@@ -106,8 +106,6 @@ export class SgcWorkflowSelection {
   );
 
   private readonly renderField = (field: SgcWorkflowSelectionField<string>) => {
-    if (!this.base) {
-    }
     return (
       <sgc-checklist
         name={field.name(field.field)}
