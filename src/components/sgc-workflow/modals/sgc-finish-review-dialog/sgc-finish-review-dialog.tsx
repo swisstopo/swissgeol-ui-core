@@ -31,7 +31,7 @@ export class SgcFinishReviewDialog {
       fromStatus: this.workflow.status,
       toStatus: WorkflowStatus.Reviewed,
       fromAssignee: this.workflow.assignee,
-      toAssignee: this.workflow.assignee,
+      toAssignee: null,
       creator: this.workflow.creator,
       hasRequestedChanges: false,
     };
