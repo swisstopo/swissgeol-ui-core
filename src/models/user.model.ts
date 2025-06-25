@@ -1,4 +1,5 @@
 import { Id } from './base/id';
+import { WorkflowStatus } from './workflow.model';
 
 export enum Role {
   Reader = 'Reader',
@@ -17,6 +18,18 @@ export function getRoleIndex(role: Role): number {
       return 2;
     case Role.Publisher:
       return 3;
+  }
+}
+
+export function getRoleForStatus(status: WorkflowStatus): Role {
+  switch (status) {
+    case WorkflowStatus.Draft:
+      return Role.Editor;
+    case WorkflowStatus.InReview:
+      return Role.Reviewer;
+    case WorkflowStatus.Reviewed:
+    case WorkflowStatus.Published:
+      return Role.Publisher;
   }
 }
 

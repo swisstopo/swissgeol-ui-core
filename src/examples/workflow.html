@@ -80,7 +80,7 @@
           toAssignee: userA,
         },
       ],
-      status: "Reviewed",
+      status: "Draft",
       assignee: {
         id: 1,
         firstName: "Peter",
@@ -91,6 +91,7 @@
       createdAt: { year: 2025, month: 2, day: 21 },
       workgroupId: 1,
     };
+    workflow.canChangeStatus = true;
     workflow.availableAssignees = [userA, userB, userC];
 
     const field = (name) => ({
