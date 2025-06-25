@@ -56,6 +56,7 @@ export class SgcSelect {
     } else {
       this.selectedValues = [...(this.initialKeys as unknown as SelectValue[])];
     }
+    this.labelToRender = this.renderSelectedLabel();
   }
 
   getKey(value: SelectValue): SelectKey {
@@ -96,9 +97,9 @@ export class SgcSelect {
       this.isDropdownOpen = false;
     }
 
-    this.labelToRender = this.renderSelectedLabel();
     const keys = this.selectedValues.map((v) => this.getKey(v));
     this.selectionChangedEvent.emit(keys);
+    this.labelToRender = this.renderSelectedLabel();
   };
 
   render() {
