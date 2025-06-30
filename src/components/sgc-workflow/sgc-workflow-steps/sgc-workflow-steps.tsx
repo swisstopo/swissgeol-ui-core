@@ -14,7 +14,7 @@ export class SgcWorkflowSteps {
   workflow!: GenericWorkflow;
 
   @Prop()
-  isReadOnly!: boolean;
+  canChangeStatus!: boolean;
 
   @Event({ eventName: 'sgcOpenChangeStatusDialog', composed: true })
   openChangeStatusDialogEvent: EventEmitter<void>;
@@ -56,15 +56,14 @@ export class SgcWorkflowSteps {
             ></sgc-workflow-step>
           </li>
         </ul>
-
-        {this.isReadOnly || this.renderActions()}
+        {this.renderActions()}
       </Host>
     );
   }
 
   private readonly renderActions = () => (
     <div class="actions">
-      {this.workflow.status === WorkflowStatus.Draft || [
+      {this.canChangeStatus && (
         <sgc-button
           color="secondary"
           onButtonClick={() => this.openChangeStatusDialogEvent.emit()}
@@ -73,17 +72,20 @@ export class SgcWorkflowSteps {
             actions.changeStatus
           </sgc-translate>
           <sgc-icon name="edit"></sgc-icon>
-        </sgc-button>,
-        <sgc-button
-          color="secondary"
-          onButtonClick={() => this.openRequestChangesDialogEvent.emit()}
-        >
-          <sgc-translate key="requestChanges" ns="workflow">
-            actions.requestChanges
-          </sgc-translate>
-          <sgc-icon name="cross"></sgc-icon>
-        </sgc-button>,
-      ]}
+        </sgc-button>
+      )}
+      {this.workflow.status !== WorkflowStatus.Draft &&
+        this.canChangeStatus && (
+          <sgc-button
+            color="secondary"
+            onButtonClick={() => this.openRequestChangesDialogEvent.emit()}
+          >
+            <sgc-translate key="requestChanges" ns="workflow">
+              actions.requestChanges
+            </sgc-translate>
+            <sgc-icon name="cross"></sgc-icon>
+          </sgc-button>
+        )}
       {this.workflow.status === WorkflowStatus.Draft && (
         <sgc-button
           color="primary"
@@ -95,17 +97,18 @@ export class SgcWorkflowSteps {
           <sgc-icon name="chevronRight"></sgc-icon>
         </sgc-button>
       )}
-      {this.workflow.status === WorkflowStatus.InReview && (
-        <sgc-button
-          color="primary"
-          onButtonClick={() => this.openFinishReviewDialogEvent.emit()}
-        >
-          <sgc-translate key="finishReview" ns="workflow">
-            actions.finishReview
-          </sgc-translate>
-          <sgc-icon name="chevronRight"></sgc-icon>
-        </sgc-button>
-      )}
+      {this.workflow.status === WorkflowStatus.InReview &&
+        this.canChangeStatus && (
+          <sgc-button
+            color="primary"
+            onButtonClick={() => this.openFinishReviewDialogEvent.emit()}
+          >
+            <sgc-translate key="finishReview" ns="workflow">
+              actions.finishReview
+            </sgc-translate>
+            <sgc-icon name="chevronRight"></sgc-icon>
+          </sgc-button>
+        )}
     </div>
   );
 }

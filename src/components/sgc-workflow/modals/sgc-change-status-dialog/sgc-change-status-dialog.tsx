@@ -12,7 +12,11 @@ import {
   WorkflowChange,
   WorkflowStatus,
 } from '../../../../models/workflow.model';
-import { SimpleUser } from '../../../../models/user.model';
+import {
+  getRoleForStatus,
+  getRoleIndex,
+  SimpleUser,
+} from '../../../../models/user.model';
 import { Id } from '../../../../models/base/id';
 import { LocalDate } from '../../../../models/base/local-date';
 import {
@@ -49,10 +53,12 @@ export class SgcChangeStatusDialog {
 
   @Watch('availableAssignees')
   handleAvailableAssigneesChange() {
-    this.assignees = this.availableAssignees.map((assignee) => ({
-      id: assignee.id,
-      fullName: `${assignee.firstName} ${assignee.lastName} (${assignee.role})`,
-    }));
+    this.updateAssigneesByNewStatus();
+  }
+
+  @Watch('newStatus')
+  handleNewStatusChange() {
+    this.updateAssigneesByNewStatus();
   }
 
   connectedCallback() {
@@ -60,12 +66,17 @@ export class SgcChangeStatusDialog {
   }
 
   componentWillLoad() {
-    this.statusLabels = Object.values(WorkflowStatus).map((status) => {
-      return {
+    this.statusLabels = Object.values(WorkflowStatus)
+      .map((status) => ({
         key: status,
         translation: i18n.t('workflow', `status.${status}`),
-      };
-    });
+      }))
+      .filter(
+        (status) =>
+          getRoleIndex(getRoleForStatus(status.key)) <=
+            getRoleIndex(getRoleForStatus(this.workflow.status)) &&
+          status.key !== WorkflowStatus.Published,
+      );
   }
 
   get isButtonDisabled(): boolean {
@@ -75,6 +86,19 @@ export class SgcChangeStatusDialog {
         this.newStatus === WorkflowStatus.InReview) &&
         !this.newAssignee)
     );
+  }
+
+  updateAssigneesByNewStatus() {
+    this.assignees = this.availableAssignees
+      .filter(
+        (assignee) =>
+          getRoleIndex(assignee.role) >=
+          getRoleIndex(getRoleForStatus(this.newStatus)),
+      )
+      .map((assignee) => ({
+        id: assignee.id,
+        fullName: `${assignee.firstName} ${assignee.lastName} (${assignee.role})`,
+      }));
   }
 
   private readonly handleWorkflowStatusChange = () => {
@@ -93,6 +117,22 @@ export class SgcChangeStatusDialog {
     this.statusChangeEvent.emit(workflowChange);
   };
 
+  private handleStatusSelectionChange(
+    event: SgcSelectWorkflowStatusChangeEvent,
+  ) {
+    this.newStatus = event.detail[0];
+    const newAssignee = this.availableAssignees.find(
+      (assignee) => assignee.id === this.newAssignee,
+    );
+    if (
+      newAssignee &&
+      getRoleIndex(getRoleForStatus(this.newStatus)) <
+        getRoleIndex(newAssignee.role)
+    ) {
+      this.newAssignee = undefined;
+    }
+  }
+
   render() {
     return (
       <sgc-modal-wrapper>
@@ -109,11 +149,11 @@ export class SgcChangeStatusDialog {
               values={this.statusLabels}
               bindKey="key"
               bindLabel="translation"
-              onSelectionChanged={(event) => {
-                this.newStatus = (
-                  event as unknown as SgcSelectWorkflowStatusChangeEvent
-                ).detail[0];
-              }}
+              onSelectionChanged={(event) =>
+                this.handleStatusSelectionChange(
+                  event as unknown as SgcSelectWorkflowStatusChangeEvent,
+                )
+              }
             ></sgc-select>
           </sgc-form-item>
           <sgc-form-item>
@@ -129,7 +169,9 @@ export class SgcChangeStatusDialog {
               slot="icon"
             ></sgc-icon>
             <sgc-select
+              disabled={!this.newStatus}
               values={this.assignees}
+              initialKeys={this.newAssignee ? [this.newAssignee] : []}
               bindKey="id"
               bindLabel="fullName"
               onSelectionChanged={(event) =>

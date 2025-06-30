@@ -91,6 +91,7 @@
       createdAt: { year: 2025, month: 2, day: 21 },
       workgroupId: 1,
     };
+    workflow.canChangeStatus = true;
     workflow.availableAssignees = [userA, userB, userC];
 
     const field = (name) => ({
@@ -126,7 +127,7 @@
       general: false,
       normalFiles: false,
       legalFiles: false,
-      authors: true,
+      authors: false,
       initiators: false,
       suppliers: false,
       references: false,
@@ -135,16 +136,17 @@
     };
 
     workflow.addEventListener("sgcWorkflowReviewChange", (event) => {
-      workflow.workflow = {
-        ...workflow.workflow,
-        review: { ...workflow.workflow.review, ...event.detail.changes },
+      workflow.review = {
+        ...workflow.review,
+        ...event.detail.changes,
       };
     });
     workflow.addEventListener("sgcWorkflowApprovalChange", (event) => {
-      workflow.workflow = {
-        ...workflow.workflow,
-        approval: { ...workflow.workflow.approval, ...event.detail.changes },
+      workflow.approval = {
+        ...workflow.approval,
+        ...event.detail.changes,
       };
+      console.log(workflow.approval);
     });
     workflow.addEventListener("sgcWorkflowChange", (event) => {
       console.log("here", event);
