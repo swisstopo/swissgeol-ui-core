@@ -9,19 +9,7 @@ but also generates wrappers for [Angular](https://angular.dev/) and [React](http
 
 ## Getting Started
 
-The library's npm packages are hosted in swisstopo's [GitHub registry](https://github.com/orgs/swisstopo/packages?ecosystem=npm).
-These packages are publicly available, but GitHub still enforces the need for an authentication token to be present when downloading them.
-To configure this token, first head to your [person access tokens](https://github.com/settings/tokens) and generate a _classic_ token with `read:packages` permissions.
-Afterward, at the following to the `.npmrc` file in your home or project directory:
-
-```
-@swisstopo:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken={your-github-token}
-```
-
-> You may also set `{your-github-token}` with an environment variable like `${GITHUB_TOKEN}`.
-
-You can now proceed to any of the following sections depending on how you want to use the library:
+Select the guide that reflects your application's setup:
 
 - [Getting Started: Web Components](#getting-started-web-components) if you want to use plain web components.
 - [Getting Started: Angular](#getting-started-angular) if you want to use the Angular wrappers.
@@ -34,20 +22,20 @@ Afterward, make sure to have a look at [Styling](#styling) and [Internationaliza
 To use swissgeol UI Core with plain web components, simply install the core library:
 
 ```bash
-npm install @swisstopo/swissgeol-ui-core
+npm install @swissgeol/ui-core
 ```
 
-Then, make sure to include the CSS at `@swisstopo/swissgeol-ui-core/styles.css` into your build process.
+Then, make sure to include the CSS at `@swissgeol/ui-core/styles.css` into your build process.
 
 Also, the library expects the Inter font to be served at `/assets/fonts/`.
-You can find all required font files at `@swisstopo/swissgeol-ui-core/dist/swissgeol-ui-core/assets/fonts/`.
+You can find all required font files at `@swissgeol/ui-core/dist/swissgeol-ui-core/assets/fonts/`.
 You can simply copy these assets into your build folder, for example with [Vite](https://vite.dev/):
 
 ```js
 viteStaticCopy({
   targets: [
     {
-      src: "node_modules/@swisstopo/swissgeol-ui-core/dist/swissgeol-ui-core/assets/*",
+      src: "node_modules/@swissgeol/ui-core/dist/swissgeol-ui-core/assets/*",
       dest: "assets",
     },
   ],
@@ -57,7 +45,7 @@ viteStaticCopy({
 At startup, you will have to import the library:
 
 ```js
-import "@swisstopo/swissgeol-ui-core/import";
+import "@swissgeol/ui-core/import";
 ```
 
 You can now use the web components in HTML.
@@ -67,8 +55,8 @@ You can now use the web components in HTML.
 To use swissgeol UI Core with Angular, install the core library and Angular extension:
 
 ```bash
-npm install @swisstopo/swissgeol-ui-core
-npm install @swisstopo/swissgeol-ui-core-angular
+npm install @swissgeol/ui-core
+npm install @swissgeol/ui-core-angular
 ```
 
 First, add the library's CSS and fonts to your build:
@@ -81,12 +69,12 @@ First, add the library's CSS and fonts to your build:
         "assets": [
           {
             "glob": "**/*",
-            "input": "node_modules/@swisstopo/swissgeol-ui-core/dist/swissgeol-ui-core/assets/fonts",
+            "input": "node_modules/@swissgeol/ui-core/dist/swissgeol-ui-core/assets/fonts",
             "output": "/assets/fonts"
           }
         ],
         "styles": [
-          "node_modules/@swisstopo/swissgeol-ui-core/dist/swissgeol-ui-core/swissgeol-ui-core.css"
+          "node_modules/@swissgeol/ui-core/dist/swissgeol-ui-core/swissgeol-ui-core.css"
         ]
       }
     }
@@ -118,33 +106,33 @@ export class AppModule {}
 To use swissgeol UI Core with React, install the core library and React extension:
 
 ```bash
-npm install @swisstopo/swissgeol-ui-core
-npm install @swisstopo/swissgeol-ui-core-react
+npm install @swissgeol/ui-core
+npm install @swissgeol/ui-core-react
 ```
 
-Then, make sure to include the CSS at `@swisstopo/swissgeol-ui-core/styles.css` into your build process.
+Then, make sure to include the CSS at `@swissgeol/ui-core/styles.css` into your build process.
 You may simply import them in your code if your bundlers supports that:
 
 ```js
-import "@swisstopo/swissgeol-ui-core/styles.css";
+import "@swissgeol/ui-core/styles.css";
 ```
 
 Also, the library expects the Inter font to be served at `/assets/fonts/`.
-You can find all required font files at `@swisstopo/swissgeol-ui-core/dist/swissgeol-ui-core/assets/fonts/`.
+You can find all required font files at `@swissgeol/ui-core/dist/swissgeol-ui-core/assets/fonts/`.
 You can simply copy these assets into your build folder, for example with [Vite](https://vite.dev/):
 
 ```js
 viteStaticCopy({
   targets: [
     {
-      src: "node_modules/@swisstopo/swissgeol-ui-core/dist/swissgeol-ui-core/assets/*",
+      src: "node_modules/@swissgeol/ui-core/dist/swissgeol-ui-core/assets/*",
       dest: "assets",
     },
   ],
 });
 ```
 
-You can now use the JSX components by importing from `@swisstopo/swissgeol-ui-core-react`.
+You can now use the JSX components by importing from `@swissgeol/ui-core-react`.
 
 > The type checking for the wrapper components is as-of-yet very rudimentary,
 > so you have to manually ensure that you conform to the library's interface.
@@ -191,7 +179,7 @@ However, you will probably want to synchronize the library's translation languag
 To do so, you can use the `SwissgeolCoreI18n` object:
 
 ```js
-import { SwissgeolCoreI18n, Language } from "@swisstopo/swissgeol-ui-core";
+import { SwissgeolCoreI18n, Language } from "@swissgeol/ui-core";
 
 SwissgeolCoreI18n.setLanguage(Language.German);
 ```

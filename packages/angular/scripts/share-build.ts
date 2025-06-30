@@ -15,7 +15,7 @@ linkCore(clientDir);
 
 const targetDir = path.join(
   clientDir,
-  'node_modules/@swisstopo/swissgeol-ui-core-angular',
+  'node_modules/@swissgeol/ui-core-angular',
 );
 fs.rmSync(targetDir, { recursive: true, force: true });
 

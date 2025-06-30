@@ -12,8 +12,8 @@ replaceInFile(
   ),
   [
     [
-      'from "@swisstopo/swissgeol-ui-core/dist/components/',
-      'from "@swisstopo/swissgeol-ui-core/components/',
+      'from "@swissgeol/ui-core/dist/components/',
+      'from "@swissgeol/ui-core/components/',
     ],
   ],
 );

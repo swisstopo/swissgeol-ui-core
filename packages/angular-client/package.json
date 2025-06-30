@@ -18,8 +18,8 @@
     "@angular/platform-browser-dynamic": "^19.2.8",
     "@angular/router": "^19.2.0",
     "rxjs": "~7.8.0",
-    "@swisstopo/swissgeol-ui-core": "*",
-    "@swisstopo/swissgeol-ui-core-angular": "*",
+    "@swissgeol/ui-core": "*",
+    "@swissgeol/ui-core-angular": "*",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },
