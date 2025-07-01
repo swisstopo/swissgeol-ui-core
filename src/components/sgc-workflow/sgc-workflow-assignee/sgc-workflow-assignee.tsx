@@ -11,6 +11,9 @@ export class SgcWorkflowAssignee {
   @Prop()
   workflow!: GenericWorkflow;
 
+  @Prop()
+  isEditable!: boolean;
+
   @Event({ eventName: 'sgcOpenAssignPersonDialog', composed: true })
   openAssignPersonDialogEvent!: EventEmitter<void>;
 
@@ -24,13 +27,15 @@ export class SgcWorkflowAssignee {
           {this.workflow.assignee.firstName} {this.workflow.assignee.lastName}
         </div>
       )}
-      <sgc-button
-        color="secondary"
-        onButtonClick={() => this.openAssignPersonDialogEvent.emit()}
-      >
-        <sgc-translate ns="workflow">actions.assign</sgc-translate>
-        <sgc-icon name="assign"></sgc-icon>
-      </sgc-button>
+      {this.isEditable && (
+        <sgc-button
+          color="secondary"
+          onButtonClick={() => this.openAssignPersonDialogEvent.emit()}
+        >
+          <sgc-translate ns="workflow">actions.assign</sgc-translate>
+          <sgc-icon name="assign"></sgc-icon>
+        </sgc-button>
+      )}
     </Host>
   );
 }

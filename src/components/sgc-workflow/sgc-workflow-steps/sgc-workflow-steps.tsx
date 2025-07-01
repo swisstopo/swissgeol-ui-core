@@ -16,6 +16,9 @@ export class SgcWorkflowSteps {
   @Prop()
   canChangeStatus!: boolean;
 
+  @Prop()
+  isEditable!: boolean;
+
   @Event({ eventName: 'sgcOpenChangeStatusDialog', composed: true })
   openChangeStatusDialogEvent: EventEmitter<void>;
 
@@ -56,7 +59,7 @@ export class SgcWorkflowSteps {
             ></sgc-workflow-step>
           </li>
         </ul>
-        {this.renderActions()}
+        {this.isEditable && this.renderActions()}
       </Host>
     );
   }
