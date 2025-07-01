@@ -20,7 +20,7 @@
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "@swisstopo/swissgeol-ui-core": "*",
-    "@swisstopo/swissgeol-ui-core-react": "*"
+    "@swissgeol/ui-core": "*",
+    "@swissgeol/ui-core-react": "*"
   }
 }

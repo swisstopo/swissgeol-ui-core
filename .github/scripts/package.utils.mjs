@@ -1,11 +1,5 @@
-import { getOctokit } from './octokit.mjs';
-import {
-  compareBaseVersions,
-  isSameVersion,
-  parseVersion,
-  stringifyVersion,
-} from './version.utils.mjs';
-import { packages, packageType } from './package.config.mjs';
+import { parseVersion } from './version.utils.mjs';
+import { packages } from './package.config.mjs';
 
 const defaultPackage = Object.values(packages)[0];
 
@@ -71,24 +65,6 @@ export const findLatestReleasableVersion = () =>
 export const findLatestReleaseVersion = () =>
   findLatestVersionByPredicate((version) => version.preRelease?.tag == null);
 
-export const findOutdatedVersions = async (latestVersion) => {
-  const outdatedVersions = [];
-  await loadVersions({
-    receive: (version, tags) => {
-      if (version.preRelease === null) {
-        return;
-      }
-      const hasReleaseTag =
-        tags.has('edge') || tags.has('release-candidate') || tags.has('latest');
-      if (!hasReleaseTag && compareBaseVersions(latestVersion, version) >= 0) {
-        outdatedVersions.push(version);
-      }
-    },
-    abort: () => false,
-  });
-  return outdatedVersions;
-};
-
 export const findLatestVersionByPredicate = async (test) => {
   let result = null;
   await loadVersions({
@@ -103,125 +79,73 @@ export const findLatestVersionByPredicate = async (test) => {
 };
 
 const CACHED_VERSIONS = [];
-let FIRST_UNCACHED_VERSION_PAGE = 1;
 
 const loadVersions = async ({ receive, abort, package: packageName }) => {
   const isCacheable =
     packageName === undefined || packageName === defaultPackage;
 
-  if (isCacheable) {
+  if (isCacheable && CACHED_VERSIONS.length !== 0) {
     for (const [version, tags, packageId] of CACHED_VERSIONS) {
       receive(version, tags, packageId);
       if (abort()) {
         return;
       }
     }
-    if (FIRST_UNCACHED_VERSION_PAGE === -1) {
-      return;
-    }
+    return;
   }
 
   const { owner, name } = getPackageInfo(packageName ?? defaultPackage);
-
-  let page = isCacheable ? FIRST_UNCACHED_VERSION_PAGE : 1;
-  while (true) {
-    await sleep(1000);
-    const data = await fetchPackagePage(owner, name, page);
-    if (data.length === 0) {
-      if (isCacheable) {
-        FIRST_UNCACHED_VERSION_PAGE = -1;
-      }
-      return;
-    }
-    let hasAborted = false;
-    for (const entry of data) {
-      const tags =
-        packageType === 'npm' ? [entry.name] : entry.metadata.container.tags;
-      const versions = [];
-      const otherTags = new Set();
-      for (const tag of tags) {
-        const version = parseVersion(tag);
-        if (version === null) {
-          otherTags.add(tag);
-        } else {
-          versions.push(version);
-        }
-      }
-      for (const version of versions) {
-        if (isCacheable) {
-          CACHED_VERSIONS.push([version, otherTags, entry.id]);
-        }
-        if (!hasAborted) {
-          receive(version, otherTags, entry.id);
-          hasAborted = abort();
-        }
-      }
-    }
-    page += 1;
+  const versions = await fetchPackageVersions(owner, name);
+  if (versions.length === 0) {
+    return;
+  }
+  let hasAborted = false;
+  for (const version of versions) {
     if (isCacheable) {
-      FIRST_UNCACHED_VERSION_PAGE = page;
+      CACHED_VERSIONS.push(version);
     }
-    if (hasAborted) {
-      return;
+    if (!hasAborted) {
+      receive(...version);
+      hasAborted = abort();
     }
   }
 };
 
 const getPackageInfo = (url) => {
-  const [host, owner, name] = url.split('/');
-  return { host, owner, name };
+  const [owner, name] = url.split('/');
+  return { owner, name };
 };
 
-const fetchPackagePage = async (owner, name, page) => {
-  const octokit = getOctokit();
-  try {
-    const response =
-      await octokit.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
-        package_type: packageType,
-        package_name: name,
-        org: owner,
-        page,
-        per_page: 100,
-      });
-    return response.data;
-  } catch (e) {
-    if (e.status === 404) {
+export const fetchPackageVersions = async (owner, name) => {
+  const response = await fetch(`https://registry.npmjs.org/${owner}/${name}`);
+  if (!response.ok) {
+    if (response.status === 404) {
       return [];
     }
-    throw e;
+    throw new Error(`Request failed with status ${response.status}`);
   }
-};
+  const data = await response.json();
 
-export const removePackageVersions = async (versions) => {
-  const octokit = getOctokit();
-
-  for (const packageName of Object.values(packages)) {
-    const { owner, name } = getPackageInfo(packageName);
-    for (const version of versions) {
-      let packageId = null;
-      await loadVersions({
-        package: packageName,
-        receive: (currentVersion, _tags, currentPackageId) => {
-          if (isSameVersion(version, currentVersion)) {
-            packageId = currentPackageId;
-          }
-        },
-        abort: () => packageId !== null,
-      });
-      if (packageId === null) {
-        console.warn(
-          `Package ${packageName}:${stringifyVersion(version)} not found, skipping deletion.`,
-        );
-        continue;
-      }
-      await octokit.rest.packages.deletePackageVersionForOrg({
-        package_type: packageType,
-        package_name: name,
-        org: owner,
-        package_version_id: packageId,
-      });
+  // Find the tags (e.g. `latest`) of the package.
+  const tagsByVersion = new Map();
+  for (const [tag, versionString] of Object.entries(data['dist-tags'])) {
+    const entry = tagsByVersion.get(versionString);
+    if (entry === undefined) {
+      tagsByVersion.set(versionString, new Set([tag]));
+    } else {
+      entry.add(tag);
     }
   }
-};
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));
+  // Build a list of versions and their tags.
+  // The list is reversed, so it is ordered from newest to oldest.
+  const versionList = Object.keys(data.versions);
+  const versions = [];
+  for (let i = versionList.length - 1; i >= 0; i--) {
+    const versionString = versionList[i];
+    const version = parseVersion(versionString);
+    const tags = tagsByVersion[versionString] ?? new Set();
+    versions.push([version, tags]);
+  }
+  return versions;
+};

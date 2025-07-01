@@ -11,10 +11,7 @@ const clientDir = resolveInProject('packages/react-client');
 // Copy core package into `react-client`.
 linkCore(clientDir);
 
-const targetDir = path.join(
-  clientDir,
-  'node_modules/@swisstopo/swissgeol-ui-core-react',
-);
+const targetDir = path.join(clientDir, 'node_modules/@swissgeol/ui-core-react');
 fs.rmSync(targetDir, { recursive: true, force: true });
 
 copyRecursive(

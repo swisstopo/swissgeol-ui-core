@@ -1,7 +1,5 @@
 export const packages = {
-  core: 'ghcr.io/swisstopo/swissgeol-ui-core',
-  angular: 'ghcr.io/swisstopo/swissgeol-ui-core-angular',
-  react: 'ghcr.io/swisstopo/swissgeol-ui-core-react',
+  core: '@swissgeol/ui-core',
+  angular: '@swissgeol/ui-core-angular',
+  react: '@swissgeol/ui-core-react',
 };
-
-export const packageType = 'npm';

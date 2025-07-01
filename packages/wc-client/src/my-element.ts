@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import '@swisstopo/swissgeol-ui-core/import';
+import '@swissgeol/ui-core/import';
 import { customElement } from 'lit/decorators.js';
 
 @customElement('my-element')
