@@ -1,9 +1,6 @@
 {
-  "name": "@swisstopo/swissgeol-ui-core",
+  "name": "@swissgeol/ui-core",
   "version": "0.0.0",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "description": "swissgeol UI Core Library",
   "workspaces": [
     ".",
@@ -30,12 +27,15 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "prepare": "husky"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/swissgeol-ui-core/swissgeol-ui-core.esm.js",
+  "unpkg": "dist/ui-core/ui-core.esm.js",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",

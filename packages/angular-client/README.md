@@ -8,7 +8,7 @@
   ```json
   {
     "glob": "**/*",
-    "input": "node_modules/swissgeol-core/assets/fonts",
+    "input": "node_modules/@swissgeol/ui-core/assets/fonts",
     "output": "/assets/fonts"
   }
   ```
