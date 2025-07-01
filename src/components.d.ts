@@ -187,7 +187,7 @@ export namespace Components {
         "availableAssignees": SimpleUser1[];
         "canChangeStatus": boolean;
         /**
-          * If false, no actions on the workflow can be performed. All Buttons are hidden.
+          * If false, no actions on the workflow can be performed. All buttons are hidden.
          */
         "isEditable": boolean;
         "isReadOnly": boolean;
@@ -913,7 +913,7 @@ declare namespace LocalJSX {
         "availableAssignees"?: SimpleUser1[];
         "canChangeStatus": boolean;
         /**
-          * If false, no actions on the workflow can be performed. All Buttons are hidden.
+          * If false, no actions on the workflow can be performed. All buttons are hidden.
          */
         "isEditable": boolean;
         "isReadOnly": boolean;

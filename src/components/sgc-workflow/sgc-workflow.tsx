@@ -42,7 +42,7 @@ export class SgcWorkflow {
   canChangeStatus!: boolean;
 
   /**
-   * If false, no actions on the workflow can be performed. All Buttons are hidden.
+   * If false, no actions on the workflow can be performed. All buttons are hidden.
    */
   @Prop()
   isEditable!: boolean;
