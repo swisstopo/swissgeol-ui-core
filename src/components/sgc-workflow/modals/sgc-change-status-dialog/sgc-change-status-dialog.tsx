@@ -73,7 +73,7 @@ export class SgcChangeStatusDialog {
       }))
       .filter(
         (status) =>
-          getRoleIndex(getRoleForStatus(status.key)) <=
+          getRoleIndex(getRoleForStatus(status.key)) <
             getRoleIndex(getRoleForStatus(this.workflow.status)) &&
           status.key !== WorkflowStatus.Published,
       );
