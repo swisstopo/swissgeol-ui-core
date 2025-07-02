@@ -48,6 +48,7 @@
 
     const workflow = document.createElement("sgc-workflow");
     workflow.isReadOnly = false;
+    workflow.isRestricted = true;
     workflow.workflow = {
       id: 1234,
       hasRequestedChanges: true,
@@ -80,7 +81,7 @@
           toAssignee: userA,
         },
       ],
-      status: "InReview",
+      status: "Reviewed",
       assignee: {
         id: 1,
         firstName: "Peter",

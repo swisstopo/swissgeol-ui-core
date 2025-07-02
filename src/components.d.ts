@@ -187,6 +187,7 @@ export namespace Components {
         "availableAssignees": SimpleUser1[];
         "canChangeStatus": boolean;
         "isReadOnly": boolean;
+        "isRestricted": boolean;
         "item": SwissgeolItem;
         "review": GenericWorkflowSelection;
         "selection": Array<SgcWorkflowSelectionEntry<string>>;
@@ -907,6 +908,7 @@ declare namespace LocalJSX {
         "availableAssignees"?: SimpleUser1[];
         "canChangeStatus": boolean;
         "isReadOnly": boolean;
+        "isRestricted"?: boolean;
         "item"?: SwissgeolItem;
         "onSgcWorkflowApprovalChange"?: (event: SgcWorkflowCustomEvent<SgcWorkflowSelectionChangeEventDetails>) => void;
         "onSgcWorkflowChange"?: (event: SgcWorkflowCustomEvent<SgcWorkflowChangeEventDetail>) => void;
