@@ -48,6 +48,7 @@
 
     const workflow = document.createElement("sgc-workflow");
     workflow.isReadOnly = false;
+    workflow.isRestricted = true;
     workflow.workflow = {
       id: 1234,
       hasRequestedChanges: true,
@@ -80,7 +81,7 @@
           toAssignee: userA,
         },
       ],
-      status: "Draft",
+      status: "Reviewed",
       assignee: {
         id: 1,
         firstName: "Peter",
@@ -117,7 +118,7 @@
       normalFiles: true,
       legalFiles: true,
       authors: false,
-      initiators: true,
+      initiators: false,
       suppliers: false,
       references: false,
       geometries: false,
@@ -146,10 +147,14 @@
         ...workflow.approval,
         ...event.detail.changes,
       };
-      console.log(workflow.approval);
     });
     workflow.addEventListener("sgcWorkflowChange", (event) => {
-      console.log("here", event);
+      workflow.workflow = {
+        ...workflow.workflow,
+        changes: [...workflow.workflow.changes, event.detail.changes],
+        status: event.detail.changes.toStatus,
+        assignee: event.detail.changes.toAssignee,
+      };
     });
     workflow.addEventListener("sgcWorkflowPublish", (event) => {
       workflow.workflow = {
@@ -170,5 +175,7 @@
       };
     });
     document.body.appendChild(workflow);
+
+    setTimeout(() => {});
   </script>
 </html>
