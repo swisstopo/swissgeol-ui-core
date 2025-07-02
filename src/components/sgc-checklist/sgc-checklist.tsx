@@ -7,6 +7,7 @@ import {
   Host,
   Prop,
   State,
+  Watch,
 } from '@stencil/core';
 
 @Component({
@@ -24,7 +25,7 @@ export class SgcChecklist {
   @Prop()
   label: string | null = null;
 
-  @Prop({ mutable: true })
+  @Prop()
   isDisabled = false;
 
   @Event({ eventName: 'checklistChange' })
@@ -99,9 +100,22 @@ export class SgcChecklist {
     });
   }
 
+  @Watch('isDisabled')
+  handleDisabledChange(): void {
+    this.parent?.handleChildDisabledChange(this);
+  }
+
+  private get isActuallyDisabled(): boolean {
+    return (
+      this.isDisabled ||
+      (this.children.length !== 0 &&
+        this.disabledChildCount === this.children.length)
+    );
+  }
+
   private setParent(parent: SgcChecklist): void {
     this.parent = parent;
-    if (this.isDisabled) {
+    if (this.isActuallyDisabled) {
       this.parent?.handleChildDisabledChange(this);
     }
   }
@@ -119,7 +133,8 @@ export class SgcChecklist {
           this.children.length !== 0 &&
           this.children.every(
             (child) =>
-              child.isDisabled || child.state !== CheckboxState.Unchecked,
+              child.isActuallyDisabled ||
+              child.state !== CheckboxState.Unchecked,
           );
         this.setState(
           hasOnlyActiveChildren
@@ -158,7 +173,7 @@ export class SgcChecklist {
     this.activeChildCount = 0;
     if (this.children !== undefined) {
       for (const child of this.children) {
-        if (!child.isDisabled) {
+        if (!child.isActuallyDisabled) {
           child.setState(childState, { preventUp: true });
         }
         if (child.state !== CheckboxState.Unchecked) {
@@ -198,10 +213,9 @@ export class SgcChecklist {
   }
 
   handleChildDisabledChange(child: SgcChecklist): void {
-    this.disabledChildCount += child.isDisabled ? 1 : -1;
-    const wasDisabled = this.isDisabled;
-    this.isDisabled = this.disabledChildCount === this.children.length;
-    if (this.isDisabled !== wasDisabled) {
+    const wasDisabled = this.isActuallyDisabled;
+    this.disabledChildCount += child.isActuallyDisabled ? 1 : -1;
+    if (this.isActuallyDisabled !== wasDisabled) {
       this.parent?.handleChildDisabledChange(this);
     }
   }
@@ -215,7 +229,7 @@ export class SgcChecklist {
       <Host
         class={{
           'is-checked': this.state !== CheckboxState.Unchecked,
-          'is-disabled': this.isDisabled,
+          'is-disabled': this.isActuallyDisabled,
         }}
         data-level={this.level}
       >
@@ -226,7 +240,7 @@ export class SgcChecklist {
           <sgc-checkbox
             value={this.state !== CheckboxState.Unchecked}
             isIndeterminate={this.state === CheckboxState.Indeterminate}
-            isDisabled={this.isDisabled}
+            isDisabled={this.isActuallyDisabled}
             onCheckboxChange={this.toggle}
           ></sgc-checkbox>
 

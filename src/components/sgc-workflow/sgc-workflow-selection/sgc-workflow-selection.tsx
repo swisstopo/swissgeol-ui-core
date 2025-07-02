@@ -25,7 +25,7 @@ export class SgcWorkflowSelection {
   @Prop()
   entries!: Array<SgcWorkflowSelectionEntry<string>>;
 
-  @Prop()
+  @Prop({ mutable: true })
   selection!: GenericWorkflowSelection;
 
   @Prop()
