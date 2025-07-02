@@ -28,6 +28,12 @@ export class SgcWorkflowSteps {
   @Event({ eventName: 'sgcOpenFinishReviewDialog', composed: true })
   openFinishReviewDialogEvent: EventEmitter<void>;
 
+  private get shouldShowChangeStatusButton(): boolean {
+    return (
+      this.canChangeStatus && this.workflow.status !== WorkflowStatus.Draft
+    );
+  }
+
   render() {
     return (
       <Host>
@@ -63,7 +69,7 @@ export class SgcWorkflowSteps {
 
   private readonly renderActions = () => (
     <div class="actions">
-      {this.canChangeStatus && (
+      {this.shouldShowChangeStatusButton && (
         <sgc-button
           color="secondary"
           onButtonClick={() => this.openChangeStatusDialogEvent.emit()}
