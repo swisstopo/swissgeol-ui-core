@@ -44,6 +44,9 @@ export class SgcWorkflow {
   @Prop()
   item: SwissgeolItem = 'Asset';
 
+  @Prop()
+  isRestricted: boolean = false;
+
   private modalRef?: HTMLSgcModalElement;
 
   @Event({ eventName: 'sgcWorkflowReviewChange', composed: true })
@@ -139,7 +142,9 @@ export class SgcWorkflow {
   }
 
   private get isPublishDisabled(): boolean {
-    return Object.values(this.approval).every((value) => !value);
+    return (
+      this.isRestricted || Object.values(this.approval).every((value) => !value)
+    );
   }
 
   readonly render = () => (
