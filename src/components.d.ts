@@ -186,6 +186,10 @@ export namespace Components {
         "approval": GenericWorkflowSelection;
         "availableAssignees": SimpleUser1[];
         "canChangeStatus": boolean;
+        /**
+          * If false, no actions on the workflow can be performed. All buttons are hidden.
+         */
+        "isEditable": boolean;
         "isReadOnly": boolean;
         "isRestricted": boolean;
         "item": SwissgeolItem;
@@ -194,6 +198,7 @@ export namespace Components {
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowAssignee {
+        "isEditable": boolean;
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowChange {
@@ -227,6 +232,7 @@ export namespace Components {
     }
     interface SgcWorkflowSteps {
         "canChangeStatus": boolean;
+        "isEditable": boolean;
         "workflow": GenericWorkflow;
     }
 }
@@ -907,6 +913,10 @@ declare namespace LocalJSX {
         "approval": GenericWorkflowSelection;
         "availableAssignees"?: SimpleUser1[];
         "canChangeStatus": boolean;
+        /**
+          * If false, no actions on the workflow can be performed. All buttons are hidden.
+         */
+        "isEditable": boolean;
         "isReadOnly": boolean;
         "isRestricted"?: boolean;
         "item"?: SwissgeolItem;
@@ -919,6 +929,7 @@ declare namespace LocalJSX {
         "workflow": GenericWorkflow;
     }
     interface SgcWorkflowAssignee {
+        "isEditable": boolean;
         "onSgcOpenAssignPersonDialog"?: (event: SgcWorkflowAssigneeCustomEvent<void>) => void;
         "workflow": GenericWorkflow;
     }
@@ -955,6 +966,7 @@ declare namespace LocalJSX {
     }
     interface SgcWorkflowSteps {
         "canChangeStatus": boolean;
+        "isEditable": boolean;
         "onSgcOpenChangeStatusDialog"?: (event: SgcWorkflowStepsCustomEvent<void>) => void;
         "onSgcOpenFinishReviewDialog"?: (event: SgcWorkflowStepsCustomEvent<void>) => void;
         "onSgcOpenRequestChangesDialog"?: (event: SgcWorkflowStepsCustomEvent<void>) => void;

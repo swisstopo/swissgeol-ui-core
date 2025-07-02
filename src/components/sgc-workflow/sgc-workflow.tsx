@@ -41,6 +41,12 @@ export class SgcWorkflow {
   @Prop()
   canChangeStatus!: boolean;
 
+  /**
+   * If false, no actions on the workflow can be performed. All buttons are hidden.
+   */
+  @Prop()
+  isEditable!: boolean;
+
   @Prop()
   item: SwissgeolItem = 'Asset';
 
@@ -160,6 +166,7 @@ export class SgcWorkflow {
       <sgc-workflow-steps
         class="panel"
         workflow={this.workflow}
+        isEditable={this.isEditable}
         canChangeStatus={this.canChangeStatus}
         onSgcOpenChangeStatusDialog={this.openChangeStatusDialog}
         onSgcOpenRequestChangesDialog={this.openRequestChangesDialog}
@@ -170,6 +177,7 @@ export class SgcWorkflow {
         <sgc-workflow-assignee
           class="panel"
           workflow={this.workflow}
+          isEditable={this.isEditable}
           onSgcOpenAssignPersonDialog={this.openAssignPersonDialog}
         ></sgc-workflow-assignee>
       ) : (
@@ -177,7 +185,7 @@ export class SgcWorkflow {
           class="panel"
           isDisabled={this.isPublishDisabled}
           workflow={this.workflow}
-          isReadOnly={this.isReadOnly}
+          isReadOnly={this.isReadOnly || !this.isEditable}
           onSgcOpenPublicationDialog={this.openPublishDialog}
         ></sgc-workflow-publication>
       )}
@@ -207,7 +215,7 @@ export class SgcWorkflow {
           workflow={this.workflow}
           entries={this.selection}
           selection={this.review}
-          isReadOnly={this.isReadOnly}
+          isReadOnly={this.isReadOnly || !this.isEditable}
           onWorkflowSelectionChange={(event) =>
             this.workflowReviewChangeEvent.emit(event.detail)
           }
@@ -219,7 +227,7 @@ export class SgcWorkflow {
           entries={this.selection}
           selection={this.approval}
           base={this.review}
-          isReadOnly={this.isReadOnly}
+          isReadOnly={this.isReadOnly || !this.isEditable}
           onWorkflowSelectionChange={(event) =>
             this.workflowApprovalChangeEvent.emit(event.detail)
           }
