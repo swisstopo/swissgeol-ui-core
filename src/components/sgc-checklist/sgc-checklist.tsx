@@ -68,16 +68,19 @@ export class SgcChecklist {
     this.state = this.value ? CheckboxState.Checked : CheckboxState.Unchecked;
   }
 
+  @Watch('value')
+  handleValueChange(newValue: boolean): void {
+    const newState = newValue ? CheckboxState.Checked : CheckboxState.Unchecked;
+    if (this.state !== newState) {
+      setTimeout(() => this.setState(newState));
+    }
+  }
+
   componentDidLoad(): void {
     this.initializeChildren();
 
     if (this.value !== undefined) {
-      const newState = this.value
-        ? CheckboxState.Checked
-        : CheckboxState.Unchecked;
-      if (this.state !== newState) {
-        setTimeout(() => this.setState(newState));
-      }
+      this.handleValueChange(this.value);
     }
   }
 
