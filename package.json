@@ -197,9 +197,9 @@
     "loader/"
   ],
   "devDependencies": {
-    "@eslint/css": "^0.6.0",
+    "@eslint/css": "^0.10.0",
     "@eslint/js": "^9.24.0",
-    "@eslint/markdown": "^6.3.0",
+    "@eslint/markdown": "^7.1.0",
     "@stencil/angular-output-target": "0.0.1-dev.11742481103.1f47dcf9",
     "@stencil/core": "^4.29.2",
     "@stencil/eslint-plugin": "^1.0.0",
