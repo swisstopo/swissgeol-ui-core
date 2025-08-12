@@ -13,7 +13,6 @@
     .card-header {
       background-color: var(--sgc-color-light-blue);
       padding: 16px;
-      border-bottom: 1px solid var(--sgc-color-secondary--200);
       min-height: 54px;
       box-sizing: border-box;
       display: flex;
