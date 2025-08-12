@@ -70,6 +70,10 @@
       "types": "./dist/components/sgc-button.d.ts",
       "import": "./dist/components/sgc-button.js"
     },
+    "./components/sgc-card.js": {
+      "types": "./dist/components/sgc-card.d.ts",
+      "import": "./dist/components/sgc-card.js"
+    },
     "./components/sgc-change-status-dialog.js": {
       "types": "./dist/components/sgc-change-status-dialog.d.ts",
       "import": "./dist/components/sgc-change-status-dialog.js"

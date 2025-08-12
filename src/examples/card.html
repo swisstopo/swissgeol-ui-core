@@ -1,0 +1,64 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+      name="viewport"
+    />
+    <title>Stencil Component Starter</title>
+
+    <script src="/build/swissgeol-ui-core.esm.js" type="module"></script>
+    <script nomodule src="/build/swissgeol-ui-core.js"></script>
+
+    <link href="/build/swissgeol-ui-core.css" rel="stylesheet" />
+  </head>
+  <body
+    style="
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2rem;
+    "
+  >
+    <h1>Card</h1>
+    <sgc-card header="Test lorem ipsum">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+      est laborum.
+    </sgc-card>
+    <sgc-card header="Test with buttons">
+      <div slot="card-actions">
+        <div style="display: flex; gap: 8px">
+          <sgc-button>Something</sgc-button>
+          <sgc-button>Something</sgc-button>
+        </div>
+      </div>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+      est laborum.
+    </sgc-card>
+    <sgc-card header="Test lorem ipsum">
+      <sgc-button [size]="'small'">Test</sgc-button>
+      &nbsp;
+      <sgc-button [size]="'small'">Test 2</sgc-button>
+    </sgc-card>
+  </body>
+  <style>
+    h1 {
+      margin-bottom: 0;
+    }
+
+    body {
+      background-color: #f7f7f7;
+    }
+  </style>
+</html>
