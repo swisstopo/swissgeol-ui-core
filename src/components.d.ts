@@ -68,6 +68,9 @@ export namespace Components {
         "target": string | null;
         "variant": SgcButtonVariant;
     }
+    interface SgcCard {
+        "header": string;
+    }
     interface SgcChangeStatusDialog {
         "availableAssignees": SimpleUser[];
         "workflow": GenericWorkflow;
@@ -337,6 +340,12 @@ declare global {
     var HTMLSgcButtonElement: {
         prototype: HTMLSgcButtonElement;
         new (): HTMLSgcButtonElement;
+    };
+    interface HTMLSgcCardElement extends Components.SgcCard, HTMLStencilElement {
+    }
+    var HTMLSgcCardElement: {
+        prototype: HTMLSgcCardElement;
+        new (): HTMLSgcCardElement;
     };
     interface HTMLSgcChangeStatusDialogElementEventMap {
         "sgcCloseDialog": void;
@@ -702,6 +711,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "sgc-assign-person-dialog": HTMLSgcAssignPersonDialogElement;
         "sgc-button": HTMLSgcButtonElement;
+        "sgc-card": HTMLSgcCardElement;
         "sgc-change-status-dialog": HTMLSgcChangeStatusDialogElement;
         "sgc-checkbox": HTMLSgcCheckboxElement;
         "sgc-checklist": HTMLSgcChecklistElement;
@@ -772,6 +782,9 @@ declare namespace LocalJSX {
          */
         "target"?: string | null;
         "variant"?: SgcButtonVariant;
+    }
+    interface SgcCard {
+        "header"?: string;
     }
     interface SgcChangeStatusDialog {
         "availableAssignees"?: SimpleUser[];
@@ -964,6 +977,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "sgc-assign-person-dialog": SgcAssignPersonDialog;
         "sgc-button": SgcButton;
+        "sgc-card": SgcCard;
         "sgc-change-status-dialog": SgcChangeStatusDialog;
         "sgc-checkbox": SgcCheckbox;
         "sgc-checklist": SgcChecklist;
@@ -1001,6 +1015,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "sgc-assign-person-dialog": LocalJSX.SgcAssignPersonDialog & JSXBase.HTMLAttributes<HTMLSgcAssignPersonDialogElement>;
             "sgc-button": LocalJSX.SgcButton & JSXBase.HTMLAttributes<HTMLSgcButtonElement>;
+            "sgc-card": LocalJSX.SgcCard & JSXBase.HTMLAttributes<HTMLSgcCardElement>;
             "sgc-change-status-dialog": LocalJSX.SgcChangeStatusDialog & JSXBase.HTMLAttributes<HTMLSgcChangeStatusDialogElement>;
             "sgc-checkbox": LocalJSX.SgcCheckbox & JSXBase.HTMLAttributes<HTMLSgcCheckboxElement>;
             "sgc-checklist": LocalJSX.SgcChecklist & JSXBase.HTMLAttributes<HTMLSgcChecklistElement>;

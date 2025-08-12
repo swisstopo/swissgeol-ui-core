@@ -1,0 +1,45 @@
+@import "../../global/base.css";
+
+:host {
+  display: block;
+  width: 100%;
+
+  .card {
+    border: 1px solid var(--sgc-color-secondary--200);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: white;
+
+    .card-header {
+      background-color: var(--sgc-color-light-blue);
+      padding: 16px;
+      min-height: 54px;
+      box-sizing: border-box;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+
+      .card-title {
+        display: flex;
+        font-family: var(--sgc-typo-body-2-bold--family);
+        font-weight: var(--sgc-typo-body-2-bold--weight);
+        font-size: var(--sgc-typo-body-2-bold--size);
+        line-height: var(--sgc-typo-body-2-bold--line-height);
+        letter-spacing: var(--sgc-typo-body-2-bold--letter-spacing);
+        color: var(--sgc-color-text--emphasis-high);
+        flex: 1 1 auto;
+        justify-content: flex-start;
+      }
+
+      .card-actions {
+        display: flex;
+        flex: 1 1 auto;
+        justify-content: flex-end;
+      }
+    }
+
+    .card-body {
+      padding: 16px;
+    }
+  }
+}
