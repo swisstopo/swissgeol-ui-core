@@ -10,6 +10,18 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
+  "sideEffects": false,
+  "module": "fesm2022/swissgeol-core-angular.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./fesm2022/swissgeol-core-angular.mjs"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -24,31 +36,25 @@
     "fesm2022",
     "lib"
   ],
-  "exports": {
-    ".": {
-      "types": "./public-api.d.ts",
-      "import": "./fesm2022/swissgeol-core-angular.mjs"
-    }
-  },
   "dependencies": {
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "19.2.2",
-    "@angular/compiler-cli": "19.2.2",
-    "@angular/cli": "19.2.2",
-    "@angular/common": "19.2.2",
-    "@angular/core": "19.2.2",
-    "@angular/forms": "19.2.2",
-    "ng-packagr": "19.2.1"
+    "@angular-devkit/build-angular": "^20.1.3",
+    "@angular/compiler-cli": "^20.0.0",
+    "@angular/cli": "^20.1.3",
+    "@angular/common": "^20.1.3",
+    "@angular/core": "^20.1.3",
+    "@angular/forms": "^20.1.3",
+    "ng-packagr": "^20.1.0"
   },
   "peerDependencies": {
-    "@angular/common": "19.2.2",
-    "@angular/core": "19.2.2",
-    "@angular/forms": "19.2.2",
-    "@angular/router": "19.2.2",
-    "rxjs": "~7.8.0",
+    "@angular/common": "^20.1.3",
+    "@angular/core": "^20.1.3",
+    "@angular/forms": "^20.1.3",
+    "@angular/router": "^20.1.3",
+    "rxjs": "~7.8.2",
     "@swissgeol/ui-core": "*",
-    "zone.js": "~0.15.0"
+    "zone.js": "~0.15.1"
   }
 }
