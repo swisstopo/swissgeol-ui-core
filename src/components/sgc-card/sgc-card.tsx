@@ -7,18 +7,35 @@ import { Component, h, Host, Prop } from '@stencil/core';
 })
 export class SgcCard {
   @Prop() header: string;
+  /**
+   * Renders a collapsed title without background, less padding to the content,
+   * and hides actions (even if supplied).
+   */
+  @Prop() collapsed: boolean = false;
 
   render() {
     return (
       <Host>
         <div class="card">
-          <div class="card-header">
+          <div
+            class={{
+              'card-header': true,
+              'card-header--collapsed': this.collapsed,
+            }}
+          >
             <span class="card-title">{this.header}</span>
-            <div class="card-actions">
-              <slot name="card-actions"></slot>
-            </div>
+            {!this.collapsed && (
+              <div class="card-actions">
+                <slot name="card-actions"></slot>
+              </div>
+            )}
           </div>
-          <div class="card-body">
+          <div
+            class={{
+              'card-body': true,
+              'card-body--collapsed': this.collapsed,
+            }}
+          >
             <slot></slot>
           </div>
         </div>

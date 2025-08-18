@@ -69,6 +69,10 @@ export namespace Components {
         "variant": SgcButtonVariant;
     }
     interface SgcCard {
+        /**
+          * Renders a collapsed title without background, less padding to the content, and hides actions (even if supplied).
+         */
+        "collapsed": boolean;
         "header": string;
     }
     interface SgcChangeStatusDialog {
@@ -784,6 +788,10 @@ declare namespace LocalJSX {
         "variant"?: SgcButtonVariant;
     }
     interface SgcCard {
+        /**
+          * Renders a collapsed title without background, less padding to the content, and hides actions (even if supplied).
+         */
+        "collapsed"?: boolean;
         "header"?: string;
     }
     interface SgcChangeStatusDialog {
