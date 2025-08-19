@@ -10,6 +10,7 @@ import { chevronRightSvg } from './icons/chevron-right.svg';
 import { optionalSvg } from './icons/optional.svg';
 import { requiredSvg } from './icons/required.svg';
 import { chevronDownSvg } from './icons/chevron-down.svg';
+import { referenceSvg } from './icons/reference.svg';
 
 @Component({
   tag: 'sgc-icon',
@@ -43,6 +44,7 @@ const icons = {
   optional: optionalSvg,
   plus: plusSvg,
   required: requiredSvg,
+  reference: referenceSvg,
 };
 
 export type SgcIconKey = keyof typeof icons;
