@@ -1,0 +1,132 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+      name="viewport"
+    />
+    <title>Stencil Component Starter</title>
+
+    <script src="/build/swissgeol-ui-core.esm.js" type="module"></script>
+    <script nomodule src="/build/swissgeol-ui-core.js"></script>
+
+    <link href="/build/swissgeol-ui-core.css" rel="stylesheet" />
+  </head>
+  <body
+    style="
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2rem;
+    "
+  >
+    <h1>Icons</h1>
+    <div style="display: flex; gap: 2rem; align-items: end">
+      <label>
+        Size
+        <select id="size-toggle">
+          <option value="normal" selected>normal</option>
+          <option value="large">large</option>
+        </select>
+      </label>
+      <label>
+        Animation
+        <select id="animation-toggle">
+          <option value="none" selected>none</option>
+          <option value="spin">spin</option>
+        </select>
+      </label>
+    </div>
+    <ul id="icons"></ul>
+  </body>
+  <script type="module">
+    import { sgc_icon as SgcIcon } from "/build/sgc-icon.entry.js";
+
+    const container = document.querySelector("#icons");
+    for (const key of SgcIcon.icons) {
+      container.insertAdjacentHTML(
+        "beforeend",
+        `
+      <li title="copy icon name">
+        <sgc-icon name="${key}"></sgc-icon>
+        <span>${key}</span>
+      </li>
+    `,
+      );
+      container.children
+        .item(container.children.length - 1)
+        .addEventListener("click", () => {
+          navigator.clipboard.writeText(key);
+        });
+    }
+
+    const sizeToggle = document.getElementById("size-toggle");
+    let currentSize = "normal";
+    const updateSize = () => {
+      document.querySelectorAll("sgc-icon").forEach((icon) => {
+        if (icon.size === currentSize) {
+          icon.size = sizeToggle.value;
+        }
+      });
+      currentSize = sizeToggle.value;
+    };
+    window.addEventListener("load", () => updateSize());
+    sizeToggle.addEventListener("change", () => updateSize());
+
+    const animationToggle = document.getElementById("animation-toggle");
+    let currentAnimation = null;
+    const updateAnimation = () => {
+      const value =
+        animationToggle.value === "none" ? null : animationToggle.value;
+      document.querySelectorAll("sgc-icon").forEach((icon) => {
+        if (icon.animation === currentAnimation) {
+          icon.animation = value;
+        }
+      });
+      currentAnimation = value;
+    };
+    window.addEventListener("load", () => updateAnimation());
+    animationToggle.addEventListener("change", () => updateAnimation());
+  </script>
+  <style>
+    h1 {
+      margin-bottom: 0;
+    }
+
+    body {
+      background-color: #f7f7f7;
+    }
+
+    #icons {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    #icons > li {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+      padding: 8px;
+      gap: 16px;
+
+      cursor: pointer;
+    }
+
+    #icons > li:hover {
+      background-color: var(--sgc-color-secondary--100);
+    }
+
+    #icons > li:active {
+      background-color: var(--sgc-color-secondary--200);
+    }
+
+    #icons > li:not(:last-child) {
+      border-bottom: 1px solid var(--sgc-color-border--default);
+    }
+  </style>
+</html>

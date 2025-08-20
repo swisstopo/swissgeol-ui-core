@@ -10,7 +10,7 @@ import { SimpleUser, SwissgeolItem } from "./models/user.model";
 import { SgcButtonColor, SgcButtonJustify, SgcButtonSize, SgcButtonVariant } from "./components/sgc-button/sgc-button";
 import { LocalDate } from "./models/base/local-date";
 import { SgcPopupAlignment, SgcPopupPosition } from "./utils/popup.utils";
-import { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
+import { SgcIconAnimation, SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
 import { SelectKey, SelectValue } from "./components/sgc-select/sgc-select";
 import { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
 import { NamespaceKey } from "./locales/i18n";
@@ -23,7 +23,7 @@ export { SimpleUser, SwissgeolItem } from "./models/user.model";
 export { SgcButtonColor, SgcButtonJustify, SgcButtonSize, SgcButtonVariant } from "./components/sgc-button/sgc-button";
 export { LocalDate } from "./models/base/local-date";
 export { SgcPopupAlignment, SgcPopupPosition } from "./utils/popup.utils";
-export { SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
+export { SgcIconAnimation, SgcIconKey, SgcIconSize } from "./components/sgc-icon/sgc-icon";
 export { SelectKey, SelectValue } from "./components/sgc-select/sgc-select";
 export { SgcTabPersistence } from "./components/sgc-tabs/sgc-tabs";
 export { NamespaceKey } from "./locales/i18n";
@@ -136,6 +136,7 @@ export namespace Components {
     interface SgcFormItem {
     }
     interface SgcIcon {
+        "animation": SgcIconAnimation | null;
         "name": SgcIconKey;
         "size": SgcIconSize;
     }
@@ -862,6 +863,7 @@ declare namespace LocalJSX {
     interface SgcFormItem {
     }
     interface SgcIcon {
+        "animation"?: SgcIconAnimation | null;
         "name"?: SgcIconKey;
         "size"?: SgcIconSize;
     }

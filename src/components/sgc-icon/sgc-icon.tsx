@@ -10,6 +10,7 @@ import { chevronRightSvg } from './icons/chevron-right.svg';
 import { optionalSvg } from './icons/optional.svg';
 import { requiredSvg } from './icons/required.svg';
 import { chevronDownSvg } from './icons/chevron-down.svg';
+import { spinnerSvg } from './icons/spinner.svg';
 import { referenceSvg } from './icons/reference.svg';
 
 @Component({
@@ -18,11 +19,18 @@ import { referenceSvg } from './icons/reference.svg';
   styles,
 })
 export class SgcIcon {
+  static get icons(): readonly SgcIconKey[] {
+    return Object.keys(icons) as SgcIconKey[];
+  }
+
   @Prop()
   name: SgcIconKey;
 
   @Prop({ reflect: true })
   size: SgcIconSize = 'normal';
+
+  @Prop({ reflect: true })
+  animation: SgcIconAnimation | null = null;
 
   render() {
     return (
@@ -44,9 +52,12 @@ const icons = {
   optional: optionalSvg,
   plus: plusSvg,
   required: requiredSvg,
+  spinner: spinnerSvg,
   reference: referenceSvg,
 };
 
 export type SgcIconKey = keyof typeof icons;
 
 export type SgcIconSize = 'normal' | 'large';
+
+export type SgcIconAnimation = 'spin';
