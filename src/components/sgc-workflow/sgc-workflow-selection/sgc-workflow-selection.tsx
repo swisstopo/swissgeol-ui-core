@@ -100,7 +100,10 @@ export class SgcWorkflowSelection {
   );
 
   private readonly renderGroup = (group: SgcWorkflowSelectionGroup<string>) => (
-    <sgc-checklist name={group.name()} isDisabled={this.isFullyDisabled}>
+    <sgc-checklist
+      name={group.name()}
+      isDisabled={this.isFullyDisabled || group.isDisabled}
+    >
       {group.fields.map(this.renderField)}
     </sgc-checklist>
   );
@@ -135,6 +138,7 @@ export type SgcWorkflowSelectionEntry<TField extends string> =
 
 export interface SgcWorkflowSelectionGroup<TField extends string> {
   name: () => string;
+  isDisabled?: boolean;
   fields: Array<SgcWorkflowSelectionField<TField>>;
 }
 
