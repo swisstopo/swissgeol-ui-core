@@ -58,7 +58,7 @@ type NamespaceMapping = typeof namespaces;
 export type NamespaceKey = keyof NamespaceMapping;
 
 class I18n {
-  private language = Language.German;
+  private _language = Language.German;
 
   private callbacks = new Set<() => void>();
 
@@ -67,7 +67,7 @@ class I18n {
     key: string,
     params: Record<string, string> = {},
   ): string {
-    let value = namespaces[ns][this.language][key];
+    let value = namespaces[ns]?.[this.language]?.[key];
     if (value === undefined) {
       throw new Error(`unknown translation key: ${ns}:${key}`);
     }
@@ -77,8 +77,12 @@ class I18n {
     return value;
   }
 
+  get language(): Language {
+    return this._language;
+  }
+
   setLanguage(language: Language): void {
-    this.language = language;
+    this._language = language;
     for (const callback of this.callbacks) {
       callback();
     }

@@ -3,10 +3,12 @@
 
 import { SgcButton, SgcIcon, SgcMenuItem } from '@swissgeol/ui-core-react';
 import styles from './app.module.scss';
+import { Translate } from './translate';
 
 export function App() {
   return (
     <div className={styles.wrapper}>
+      <Translate />
       <div className={styles.buttons}>
         <SgcButton color="primary"> Primary</SgcButton>
         <SgcButton color="primary" isDisabled>
