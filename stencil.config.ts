@@ -35,7 +35,7 @@ export const config: Config = {
     },
     angularOutputTarget({
       componentCorePackage: '@swissgeol/ui-core',
-      outputType: 'component',
+      outputType: 'standalone',
       directivesProxyFile:
         'packages/angular/projects/swissgeol-core-angular/src/lib/stencil-generated/components.ts',
       directivesArrayFile:

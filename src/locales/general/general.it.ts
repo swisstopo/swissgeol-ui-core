@@ -1,5 +1,5 @@
 import { GeneralTranslations } from './index';
 
 export default {
-  cancel: 'Abbrechen',
+  cancel: 'Annulla',
 } satisfies GeneralTranslations;
