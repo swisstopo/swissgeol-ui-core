@@ -39,24 +39,18 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/swissgeol-ui-core/index.esm.js",
+      "import": "./dist/components/index.js",
       "require": "./dist/cjs/index.cjs.js"
     },
     "./styles.css": {
       "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.css"
     },
-    "./loader": {
-      "types": "./loader/index.d.ts",
-      "import": "./loader/index.js",
-      "require": "./loader/index.cjs.js"
+    "./components": {
+      "types": "./dist/types/components.d.ts"
     },
     "./import": {
       "types": "./dist/components/import.d.ts",
       "import": "./dist/components/import.js"
-    },
-    "./components": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/swissgeol-ui-core/swissgeol-ui-core.esm.js"
     },
     "./components/index.js": {
       "types": "./dist/components/index.d.ts",

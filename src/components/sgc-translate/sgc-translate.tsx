@@ -31,9 +31,7 @@ export class SgcTranslate {
       subtree: true,
       characterData: true,
     });
-
     this.unsubscribeFromLanguageChange = i18n.onLanguageChange(this.translate);
-
     this.updateKey();
   }
 
