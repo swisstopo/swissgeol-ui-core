@@ -76,6 +76,11 @@ export class SgcChecklist {
     }
   }
 
+  @Watch('isDisabled')
+  handleDisabledChange(): void {
+    this.parent?.handleChildDisabledChange(this);
+  }
+
   componentDidLoad(): void {
     this.initializeChildren();
 
@@ -103,14 +108,10 @@ export class SgcChecklist {
     });
   }
 
-  @Watch('isDisabled')
-  handleDisabledChange(): void {
-    this.parent?.handleChildDisabledChange(this);
-  }
-
   private get isActuallyDisabled(): boolean {
     return (
       this.isDisabled ||
+      this.parent?.isActuallyDisabled ||
       (this.children.length !== 0 &&
         this.disabledChildCount === this.children.length)
     );
