@@ -35,7 +35,7 @@ export default {
   selection: {
     tabHeading: 'IT Tab',
     reviewedLabel: 'IT Reviewed',
-    publishedLabel: 'IT Published',
+    publishedLabel: 'IT Approved',
   },
   other: {
     publication: 'IT Publikation',

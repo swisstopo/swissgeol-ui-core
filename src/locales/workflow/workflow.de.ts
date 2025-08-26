@@ -33,7 +33,7 @@ export default {
   selection: {
     tabHeading: 'Tab',
     reviewedLabel: 'Reviewed',
-    publishedLabel: 'Published',
+    publishedLabel: 'Freigegeben',
   },
   other: {
     publication: 'Publikation',
