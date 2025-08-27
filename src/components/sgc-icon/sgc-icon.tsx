@@ -9,6 +9,7 @@ import { editSvg } from './icons/edit.svg';
 import { chevronRightSvg } from './icons/chevron-right.svg';
 import { optionalSvg } from './icons/optional.svg';
 import { requiredSvg } from './icons/required.svg';
+import { profileSvg } from './icons/profile.svg';
 import { chevronDownSvg } from './icons/chevron-down.svg';
 import { referenceSvg } from './icons/reference.svg';
 
@@ -43,6 +44,7 @@ const icons = {
   edit: editSvg,
   optional: optionalSvg,
   plus: plusSvg,
+  profile: profileSvg,
   required: requiredSvg,
   reference: referenceSvg,
 };
