@@ -119,6 +119,7 @@ export namespace Components {
          */
         "href": string | null;
         "isDisabled": boolean;
+        "isNoninteractive": boolean;
         /**
           * Anchor `rel` attribute. Only has an effect when {@link href} is set.
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
@@ -172,6 +173,12 @@ export namespace Components {
         "placeholder": string;
         "trigger": string;
         "values": SelectValue[];
+    }
+    interface SgcSession {
+        "user": SimpleUser | null;
+    }
+    interface SgcSessionInfo {
+        "user": SimpleUser;
     }
     interface SgcTab {
         "isActive": boolean;
@@ -284,6 +291,14 @@ export interface SgcRequestReviewDialogCustomEvent<T> extends CustomEvent<T> {
 export interface SgcSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSgcSelectElement;
+}
+export interface SgcSessionCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcSessionElement;
+}
+export interface SgcSessionInfoCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSgcSessionInfoElement;
 }
 export interface SgcTextAreaCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -562,6 +577,41 @@ declare global {
         prototype: HTMLSgcSelectElement;
         new (): HTMLSgcSelectElement;
     };
+    interface HTMLSgcSessionElementEventMap {
+        "sgcSignIn": void;
+        "sgcSignOut": SimpleUser;
+    }
+    interface HTMLSgcSessionElement extends Components.SgcSession, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcSessionElementEventMap>(type: K, listener: (this: HTMLSgcSessionElement, ev: SgcSessionCustomEvent<HTMLSgcSessionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcSessionElementEventMap>(type: K, listener: (this: HTMLSgcSessionElement, ev: SgcSessionCustomEvent<HTMLSgcSessionElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcSessionElement: {
+        prototype: HTMLSgcSessionElement;
+        new (): HTMLSgcSessionElement;
+    };
+    interface HTMLSgcSessionInfoElementEventMap {
+        "sgcSignOut": SimpleUser;
+    }
+    interface HTMLSgcSessionInfoElement extends Components.SgcSessionInfo, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSgcSessionInfoElementEventMap>(type: K, listener: (this: HTMLSgcSessionInfoElement, ev: SgcSessionInfoCustomEvent<HTMLSgcSessionInfoElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSgcSessionInfoElementEventMap>(type: K, listener: (this: HTMLSgcSessionInfoElement, ev: SgcSessionInfoCustomEvent<HTMLSgcSessionInfoElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSgcSessionInfoElement: {
+        prototype: HTMLSgcSessionInfoElement;
+        new (): HTMLSgcSessionInfoElement;
+    };
     interface HTMLSgcTabElement extends Components.SgcTab, HTMLStencilElement {
     }
     var HTMLSgcTabElement: {
@@ -732,6 +782,8 @@ declare global {
         "sgc-request-changes-dialog": HTMLSgcRequestChangesDialogElement;
         "sgc-request-review-dialog": HTMLSgcRequestReviewDialogElement;
         "sgc-select": HTMLSgcSelectElement;
+        "sgc-session": HTMLSgcSessionElement;
+        "sgc-session-info": HTMLSgcSessionInfoElement;
         "sgc-tab": HTMLSgcTabElement;
         "sgc-tabs": HTMLSgcTabsElement;
         "sgc-text-area": HTMLSgcTextAreaElement;
@@ -843,6 +895,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | null;
         "isDisabled"?: boolean;
+        "isNoninteractive"?: boolean;
         /**
           * Anchor `rel` attribute. Only has an effect when {@link href} is set.
           * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#rel}
@@ -906,6 +959,15 @@ declare namespace LocalJSX {
         "placeholder"?: string;
         "trigger"?: string;
         "values"?: SelectValue[];
+    }
+    interface SgcSession {
+        "onSgcSignIn"?: (event: SgcSessionCustomEvent<void>) => void;
+        "onSgcSignOut"?: (event: SgcSessionCustomEvent<SimpleUser>) => void;
+        "user"?: SimpleUser | null;
+    }
+    interface SgcSessionInfo {
+        "onSgcSignOut"?: (event: SgcSessionInfoCustomEvent<SimpleUser>) => void;
+        "user": SimpleUser;
     }
     interface SgcTab {
         "isActive"?: boolean;
@@ -1002,6 +1064,8 @@ declare namespace LocalJSX {
         "sgc-request-changes-dialog": SgcRequestChangesDialog;
         "sgc-request-review-dialog": SgcRequestReviewDialog;
         "sgc-select": SgcSelect;
+        "sgc-session": SgcSession;
+        "sgc-session-info": SgcSessionInfo;
         "sgc-tab": SgcTab;
         "sgc-tabs": SgcTabs;
         "sgc-text-area": SgcTextArea;
@@ -1040,6 +1104,8 @@ declare module "@stencil/core" {
             "sgc-request-changes-dialog": LocalJSX.SgcRequestChangesDialog & JSXBase.HTMLAttributes<HTMLSgcRequestChangesDialogElement>;
             "sgc-request-review-dialog": LocalJSX.SgcRequestReviewDialog & JSXBase.HTMLAttributes<HTMLSgcRequestReviewDialogElement>;
             "sgc-select": LocalJSX.SgcSelect & JSXBase.HTMLAttributes<HTMLSgcSelectElement>;
+            "sgc-session": LocalJSX.SgcSession & JSXBase.HTMLAttributes<HTMLSgcSessionElement>;
+            "sgc-session-info": LocalJSX.SgcSessionInfo & JSXBase.HTMLAttributes<HTMLSgcSessionInfoElement>;
             "sgc-tab": LocalJSX.SgcTab & JSXBase.HTMLAttributes<HTMLSgcTabElement>;
             "sgc-tabs": LocalJSX.SgcTabs & JSXBase.HTMLAttributes<HTMLSgcTabsElement>;
             "sgc-text-area": LocalJSX.SgcTextArea & JSXBase.HTMLAttributes<HTMLSgcTextAreaElement>;
