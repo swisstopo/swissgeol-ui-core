@@ -35,7 +35,7 @@ export default {
   selection: {
     tabHeading: 'FR Tab',
     reviewedLabel: 'FR Reviewed',
-    publishedLabel: 'FR Published',
+    publishedLabel: 'FR Approved',
   },
   other: {
     publication: 'FR Publikation',
