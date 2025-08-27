@@ -115,6 +115,7 @@ export class SgcWorkflowSelection {
         value={this.fields[field.field]}
         isDisabled={
           this.isFullyDisabled ||
+          field.isDisabled ||
           (this.base !== null && !this.base[field.field])
         }
         onChecklistChange={(event) =>
@@ -144,5 +145,6 @@ export interface SgcWorkflowSelectionGroup<TField extends string> {
 
 export interface SgcWorkflowSelectionField<TField extends string> {
   name: (field: TField) => string;
+  isDisabled?: boolean;
   field: TField;
 }
