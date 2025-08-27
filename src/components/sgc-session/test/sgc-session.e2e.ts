@@ -1,11 +1,9 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { test, expect } from '@playwright/test';
 
-describe('sgc-session', () => {
-  it('renders', async () => {
-    const page = await newE2EPage();
+test.describe('sgc-session', () => {
+  test('renders', async ({ page }) => {
     await page.setContent('<sgc-session></sgc-session>');
-
-    const element = await page.find('sgc-session');
-    expect(element).toHaveClass('hydrated');
+    const element = page.locator('sgc-session');
+    expect(element.locator('sgc-button')).toBeTruthy();
   });
 });

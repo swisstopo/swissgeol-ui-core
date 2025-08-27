@@ -35,7 +35,9 @@ export class SgcSessionInfo implements ComponentInterface {
         <span class="name">
           {this.user.firstName} {this.user.lastName}
         </span>
-        <sgc-button color="secondary">Logout</sgc-button>
+        <sgc-button color="secondary">
+          <sgc-translate ns="general">logout</sgc-translate>
+        </sgc-button>
       </Host>
     );
   }
