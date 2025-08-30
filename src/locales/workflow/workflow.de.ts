@@ -5,10 +5,10 @@ export default {
   },
   status: {
     Draft: 'Draft',
-    InReview: 'Review',
+    InReview: 'Im Review',
     Reviewed: 'Reviewed',
-    Published: 'Published',
-    notPublished: 'Not published',
+    Published: 'Publiziert',
+    notPublished: 'Nicht publiziert',
   },
   actions: {
     changeStatus: 'Status manuell ändern',
@@ -17,7 +17,7 @@ export default {
     requestedChanges: 'Änderungen angefordert',
     finishReview: 'Review abschliessen',
     assign: 'Neue Person zuweisen',
-    publish: 'Publish',
+    publish: 'Publizieren­',
     forward: 'Weiterleiten',
   },
   tabs: {
