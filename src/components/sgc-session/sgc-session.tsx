@@ -48,7 +48,7 @@ export class SgcSession {
   private readonly renderButton = () => (
     <sgc-button
       variant="icon-round"
-      onClick={this.user === null ? this.handleSignIn : this.handleSignOut}
+      onClick={this.user === null && this.handleSignIn}
     >
       <sgc-icon name="profile" />
     </sgc-button>
