@@ -1,0 +1,52 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Session | Swissgeol UI-Core</title>
+
+    <script type="module" src="/build/swissgeol-ui-core.esm.js"></script>
+    <script nomodule src="/build/swissgeol-ui-core.js"></script>
+
+    <link rel="stylesheet" href="/build/swissgeol-ui-core.css" />
+  </head>
+  <body
+    style="
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2rem;
+    "
+  >
+    <h1>Session</h1>
+
+    <sgc-session id="signIn"></sgc-session>
+    <script>
+      const session = document.getElementById("signIn");
+      session.addEventListener("sgcSignIn", () => {
+        const ok = confirm("Sign in?");
+        if (ok) {
+          session.user = {
+            id: "my-simple-user",
+            firstName: "Peter",
+            lastName: "Muster",
+            role: "Reader",
+          };
+        }
+      });
+    </script>
+  </body>
+
+  <style>
+    h1 {
+      margin-bottom: 0;
+    }
+
+    body {
+      background-color: #f7f7f7;
+    }
+  </style>
+</html>

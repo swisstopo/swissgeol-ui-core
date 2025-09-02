@@ -10,7 +10,7 @@
   transition-property: background-color;
 }
 
-:host(:hover) {
+:host(:not([noninteractive]):hover) {
   background-color: #f0f4f7;
 }
 
@@ -24,7 +24,8 @@
   letter-spacing: var(--sgc-typo-body-2--letter-spacing);
 }
 
-:host > .button {
+:host > .button,
+:host([noninteractive]) {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -34,6 +35,9 @@
   width: 100%;
   background-color: transparent;
   border: none;
+}
+
+:host > .button {
   cursor: pointer;
 }
 

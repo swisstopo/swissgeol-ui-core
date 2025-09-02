@@ -11,9 +11,8 @@
   border-radius: 4px;
   border: 1px solid var(--sgc-color-border--default);
 
-  --sgc-dropdown-height: calc(48px * var(--sgc-dropdown-item-count, 0) + 2px);
-  height: var(--sgc-dropdown-height);
-  min-height: var(--sgc-dropdown-height);
+  height: calc(var(--sgc-dropdown-height, 0) + 2px);
+  min-height: calc(var(--sgc-dropdown-height, 0) + 2px);
 
   background-color: var(--sgc-color-bg--white);
   color: var(--sgc-color-text--emphasis-high);

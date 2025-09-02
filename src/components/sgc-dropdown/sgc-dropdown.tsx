@@ -53,13 +53,15 @@ export class SgcDropdown implements ComponentInterface {
   @State()
   isActuallyOpen = false;
 
-  private originalParent!: HTMLElement;
+  private originalParent!: HTMLElement | ShadowRoot;
 
   private timeoutForClassToggle: NodeJS.Timeout = null;
 
   private trigger!: HTMLElement;
 
   private shouldClose = false;
+
+  private knownItems = new Set<HTMLElement>();
 
   connectedCallback(): void {
     if (this.originalParent === undefined) {
@@ -95,7 +97,7 @@ export class SgcDropdown implements ComponentInterface {
   }
 
   private initializeContent(): void {
-    this.originalParent = this.element.parentElement;
+    this.originalParent = this.element.parentNode as HTMLElement | ShadowRoot;
 
     const trigger = this.element.children[0] as HTMLElement;
     if (trigger.tagName === 'SGC-DROPDOWN-ITEM') {
@@ -126,12 +128,39 @@ export class SgcDropdown implements ComponentInterface {
     });
   };
 
+  private readonly handleItemClick = () => {
+    this.shouldClose = false;
+  };
+
   private handleSlotChange = () => {
-    const itemCount = this.element.shadowRoot
+    const items = this.element.shadowRoot
       .querySelector('slot')
       .assignedNodes()
-      .filter((it) => it instanceof HTMLElement).length;
-    this.element.style.setProperty('--sgc-dropdown-item-count', `${itemCount}`);
+      .filter((it) => it instanceof HTMLElement);
+
+    // Make the dropdown temporarily visible so that we can detect the size of our content.
+    this.element.style.display = 'block';
+
+    let height = 0;
+    for (const item of items) {
+      height += item.getBoundingClientRect().height;
+      const isInteractive = !item.hasAttribute('noninteractive');
+      if (this.knownItems.delete(item) && isInteractive) {
+        item.removeEventListener('click', this.handleItemClick);
+        continue;
+      }
+      item.addEventListener('click', this.handleItemClick);
+    }
+    for (const oldItem of this.knownItems) {
+      oldItem.removeEventListener('click', this.handleItemClick);
+    }
+
+    this.element.style.display = '';
+
+    this.element.style.setProperty('--sgc-dropdown-height', `${height}px`);
+
+    this.knownItems = new Set(items);
+
     this.updatePosition();
   };
 

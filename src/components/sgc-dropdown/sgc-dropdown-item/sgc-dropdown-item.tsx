@@ -53,6 +53,9 @@ export class SgcDropdownItem implements ComponentInterface {
   @Prop({ reflect: true, attribute: 'disabled' })
   isDisabled = false;
 
+  @Prop({ reflect: true, attribute: 'noninteractive' })
+  isNoninteractive = false;
+
   @Element()
   element!: HTMLElement;
 
@@ -62,24 +65,25 @@ export class SgcDropdownItem implements ComponentInterface {
 
   render() {
     return (
-      <Host>
-        {this.href === null ? (
-          <button class="button" part="button" disabled={this.isDisabled}>
-            <slot></slot>
-          </button>
-        ) : (
-          <a
-            class="button"
-            part="button"
-            aria-disabled={this.isDisabled}
-            href={this.isDisabled ? undefined : this.href}
-            rel={this.rel}
-            target={this.target}
-          >
-            <slot></slot>
-          </a>
-        )}
-      </Host>
+      <Host>{this.isNoninteractive ? <slot></slot> : this.renderButton()}</Host>
     );
   }
+
+  private readonly renderButton = () =>
+    this.href === null ? (
+      <button class="button" part="button" disabled={this.isDisabled}>
+        <slot></slot>
+      </button>
+    ) : (
+      <a
+        class="button"
+        part="button"
+        aria-disabled={this.isDisabled}
+        href={this.isDisabled ? undefined : this.href}
+        rel={this.rel}
+        target={this.target}
+      >
+        <slot></slot>
+      </a>
+    );
 }

@@ -79,35 +79,65 @@ export const updatePopupPosition = (
 const adjustPositionToViewport = (
   options: PopupPositionUpdateOptions,
 ): void => {
-  const update = (position: SgcPopupPosition): void =>
-    updatePopupPosition({
-      ...options,
-      position,
-      shouldCheckOutOfBounds: false,
-    });
+  let positionOverwrite: SgcPopupPosition | null = null;
+  let alignOverwrite: SgcPopupAlignment | null = null;
 
   const popup = options.popup.getBoundingClientRect();
+
+  const isLeftOverflowing = popup.x < 0;
+  const isRightOverflowing = popup.x + popup.width > window.innerWidth;
+  const isTopOverflowing = popup.y < 0;
+  const isBottomOverflowing = popup.y + popup.height > window.innerHeight;
+
   switch (options.position) {
     case 'top':
-      if (popup.y < 0) {
-        update('bottom');
+      if (isTopOverflowing) {
+        positionOverwrite = 'bottom';
       }
       break;
     case 'bottom':
-      if (popup.y + popup.height > window.innerHeight) {
-        update('top');
+      if (isBottomOverflowing) {
+        positionOverwrite = 'top';
       }
       break;
     case 'left':
-      if (popup.x < 0) {
-        update('right');
+      if (isLeftOverflowing) {
+        positionOverwrite = 'right';
       }
       break;
     case 'right':
-      if (popup.x + popup.width > window.innerWidth) {
-        update('left');
+      if (isRightOverflowing) {
+        positionOverwrite = 'left';
       }
       break;
+  }
+  switch (options.align) {
+    case 'start':
+      if (isRightOverflowing) {
+        alignOverwrite = 'end';
+      }
+      break;
+    case 'end':
+      if (isLeftOverflowing) {
+        alignOverwrite = 'start';
+      }
+      break;
+    case 'center':
+      if (isRightOverflowing) {
+        alignOverwrite = 'end';
+      } else if (isLeftOverflowing) {
+        alignOverwrite = 'start';
+      }
+      break;
+  }
+
+  if (positionOverwrite !== null || alignOverwrite !== null) {
+    updatePopupPosition({
+      ...options,
+      position: positionOverwrite ?? options.position,
+      align: alignOverwrite ?? options.align,
+      shouldCheckOutOfBounds: false,
+    });
   }
 };
 export type SgcPopupPosition = 'top' | 'bottom' | 'left' | 'right';
