@@ -13,6 +13,9 @@ import { profileSvg } from './icons/profile.svg';
 import { chevronDownSvg } from './icons/chevron-down.svg';
 import { spinnerSvg } from './icons/spinner.svg';
 import { referenceSvg } from './icons/reference.svg';
+import { fileSvg } from './icons/file.svg';
+import { downloadSvg } from './icons/download.svg';
+import { openLinkSvg } from './icons/open-link.svg';
 
 @Component({
   tag: 'sgc-icon',
@@ -20,18 +23,16 @@ import { referenceSvg } from './icons/reference.svg';
   styles,
 })
 export class SgcIcon {
+  @Prop()
+  name: SgcIconKey;
+  @Prop({ reflect: true })
+  size: SgcIconSize = 'normal';
+  @Prop({ reflect: true })
+  animation: SgcIconAnimation | null = null;
+
   static get icons(): readonly SgcIconKey[] {
     return Object.keys(icons) as SgcIconKey[];
   }
-
-  @Prop()
-  name: SgcIconKey;
-
-  @Prop({ reflect: true })
-  size: SgcIconSize = 'normal';
-
-  @Prop({ reflect: true })
-  animation: SgcIconAnimation | null = null;
 
   render() {
     return (
@@ -49,13 +50,16 @@ const icons = {
   chevronDown: chevronDownSvg,
   checkmarkBrackets: checkmarkBracketsSvg,
   chevronRight: chevronRightSvg,
+  download: downloadSvg,
   edit: editSvg,
+  file: fileSvg,
+  openLink: openLinkSvg,
   optional: optionalSvg,
   plus: plusSvg,
   profile: profileSvg,
+  reference: referenceSvg,
   required: requiredSvg,
   spinner: spinnerSvg,
-  reference: referenceSvg,
 };
 
 export type SgcIconKey = keyof typeof icons;
