@@ -22,14 +22,12 @@ export class SgcSession {
   };
 
   private readonly handleSignOut = () => {
-    console.log('okay');
     if (this.user !== null) {
       this.signOutEvent.emit(this.user);
     }
   };
 
   render() {
-    console.log(this.user);
     return (
       <Host>
         {this.user === null ? (
@@ -50,7 +48,6 @@ export class SgcSession {
   private readonly renderButton = () => (
     <sgc-button
       variant="icon-round"
-      class={this.user === null ? 'signIn' : 'signOut'}
       onClick={this.user === null && this.handleSignIn}
     >
       <sgc-icon name="profile" />

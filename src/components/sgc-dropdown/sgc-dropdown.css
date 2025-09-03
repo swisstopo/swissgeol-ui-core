@@ -1,6 +1,10 @@
 @import "../../global/base.css";
 
-:host {
+:host(sgc-dropdown) {
+  display: none;
+}
+
+:host(.sgc-dropdown-container) {
   position: fixed;
   z-index: 10;
 
@@ -22,11 +26,11 @@
   transition-property: opacity, height, min-height;
 }
 
-:host(.is-hidden) {
+:host(.sgc-dropdown-container.is-hidden) {
   display: none;
 }
 
-:host(:not(.is-visible)) {
+:host(.sgc-dropdown-container:not(.is-visible)) {
   opacity: 0;
   height: 0;
   min-height: 0;

@@ -132,6 +132,14 @@
       "types": "./dist/components/sgc-select.d.ts",
       "import": "./dist/components/sgc-select.js"
     },
+    "./components/sgc-session-info.js": {
+      "types": "./dist/components/sgc-session-info.d.ts",
+      "import": "./dist/components/sgc-session-info.js"
+    },
+    "./components/sgc-session.js": {
+      "types": "./dist/components/sgc-session.d.ts",
+      "import": "./dist/components/sgc-session.js"
+    },
     "./components/sgc-tab.js": {
       "types": "./dist/components/sgc-tab.d.ts",
       "import": "./dist/components/sgc-tab.js"
