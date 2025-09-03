@@ -76,10 +76,16 @@ export class SgcDropdown implements ComponentInterface {
   }
 
   disconnectedCallback(): void {
-    if (this.trigger !== undefined) {
-      this.element.prepend(this.trigger);
-      this.trigger = undefined;
+    if (this.trigger === undefined) {
+      return;
     }
+
+    // const container = this.trigger.parentElement;
+    // this.element.prepend(this.trigger);
+    // container.remove();
+
+    // this.element.prepend(this.trigger);
+    this.trigger = undefined;
     this.shouldClose = false;
     document.removeEventListener('click', this.handleDocumentClick, {
       capture: true,
@@ -105,7 +111,12 @@ export class SgcDropdown implements ComponentInterface {
         'The first child of a dropdown should be its trigger, not an item.',
       );
     }
-    this.originalParent.insertBefore(trigger, this.element);
+
+    const container = document.createElement('div');
+    container.classList.add('sgc-dropdown-trigger');
+    container.append(trigger);
+
+    this.originalParent.insertBefore(container, this.element);
     document.body.appendChild(this.element);
     this.trigger = trigger;
     trigger.addEventListener('click', () => {

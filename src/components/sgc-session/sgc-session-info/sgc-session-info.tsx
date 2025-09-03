@@ -29,13 +29,19 @@ export class SgcSessionInfo implements ComponentInterface {
     this.element.setAttribute('noninteractive', 'true');
   }
 
+  private readonly handleSignOut = () => {
+    if (this.user !== null) {
+      this.signOutEvent.emit(this.user);
+    }
+  };
+
   render() {
     return (
       <Host>
         <span class="name">
           {this.user.firstName} {this.user.lastName}
         </span>
-        <sgc-button color="secondary">
+        <sgc-button color="secondary" onClick={this.handleSignOut}>
           <sgc-translate ns="general">logout</sgc-translate>
         </sgc-button>
       </Host>
