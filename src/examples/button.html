@@ -254,8 +254,7 @@
     const sizeToggle = document.getElementById("size-toggle");
     let currentSize = "normal";
     const updateSize = () => {
-      document.querySelectorAll("sgc-button").forEach((button) => {
-        console.log(currentSize, button.variant);
+      document.querySelectorAll("sgc-button").forEach((button) =>
         if (button.size === currentSize) {
           button.size = sizeToggle.value;
         }

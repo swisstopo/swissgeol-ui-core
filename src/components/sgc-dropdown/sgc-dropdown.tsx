@@ -53,33 +53,31 @@ export class SgcDropdown implements ComponentInterface {
   @State()
   isActuallyOpen = false;
 
-  private originalParent!: HTMLElement | ShadowRoot;
-
   private timeoutForClassToggle: NodeJS.Timeout = null;
 
   private trigger!: HTMLElement;
+  private container!: HTMLElement;
+  private slot!: HTMLSlotElement;
 
   private shouldClose = false;
 
   private knownItems = new Set<HTMLElement>();
 
   connectedCallback(): void {
-    if (this.originalParent === undefined) {
-      this.element.classList.add('is-hidden');
-    } else {
-      this.handleOpenChange();
-    }
-
     document.addEventListener('click', this.handleDocumentClick, {
       capture: true,
     });
   }
 
   disconnectedCallback(): void {
-    if (this.trigger !== undefined) {
-      this.element.prepend(this.trigger);
-      this.trigger = undefined;
+    if (this.trigger === undefined) {
+      return;
     }
+
+    this.container.remove();
+    this.element.prepend(this.trigger);
+
+    this.trigger = undefined;
     this.shouldClose = false;
     document.removeEventListener('click', this.handleDocumentClick, {
       capture: true,
@@ -97,16 +95,30 @@ export class SgcDropdown implements ComponentInterface {
   }
 
   private initializeContent(): void {
-    this.originalParent = this.element.parentNode as HTMLElement | ShadowRoot;
-
     const trigger = this.element.children[0] as HTMLElement;
     if (trigger.tagName === 'SGC-DROPDOWN-ITEM') {
       throw new Error(
         'The first child of a dropdown should be its trigger, not an item.',
       );
     }
-    this.originalParent.insertBefore(trigger, this.element);
-    document.body.appendChild(this.element);
+
+    this.slot = this.element.shadowRoot.querySelector('slot');
+    this.container = document.createElement('div');
+    this.container.classList.add('sgc-dropdown-container', 'is-hidden');
+    const shadow = this.container.attachShadow({
+      mode: 'open',
+    });
+    shadow.innerHTML = '<slot></slot>';
+    shadow
+      .querySelector('slot')
+      .addEventListener('slotchange', this.handleSlotChange);
+
+    const styleSheet = new CSSStyleSheet();
+    styleSheet.replaceSync(styles);
+    shadow.adoptedStyleSheets = [styleSheet];
+
+    document.body.append(this.container);
+    this.element.insertAdjacentElement('afterend', trigger);
     this.trigger = trigger;
     trigger.addEventListener('click', () => {
       this.shouldClose = false;
@@ -114,9 +126,14 @@ export class SgcDropdown implements ComponentInterface {
         this.isActuallyOpen = !this.isActuallyOpen;
       }
     });
+
+    this.handleSlotChange();
   }
 
   private handleDocumentClick = () => {
+    if (!this.isActuallyOpen) {
+      return;
+    }
     this.shouldClose = true;
     setTimeout(() => {
       if (this.shouldClose) {
@@ -133,33 +150,37 @@ export class SgcDropdown implements ComponentInterface {
   };
 
   private handleSlotChange = () => {
-    const items = this.element.shadowRoot
-      .querySelector('slot')
+    if (this.slot === undefined) {
+      return;
+    }
+
+    const items = this.slot
       .assignedNodes()
       .filter((it) => it instanceof HTMLElement);
 
+    for (const item of items) {
+      this.container.append(item);
+    }
+
     // Make the dropdown temporarily visible so that we can detect the size of our content.
-    this.element.style.display = 'block';
+    this.container.style.display = 'block';
 
     let height = 0;
-    for (const item of items) {
+    for (const item of Array.from(this.container.children) as HTMLElement[]) {
       height += item.getBoundingClientRect().height;
       const isInteractive = !item.hasAttribute('noninteractive');
-      if (this.knownItems.delete(item) && isInteractive) {
+      if (isInteractive) {
+        continue;
+      }
+      if (this.knownItems.delete(item)) {
         item.removeEventListener('click', this.handleItemClick);
         continue;
       }
       item.addEventListener('click', this.handleItemClick);
     }
-    for (const oldItem of this.knownItems) {
-      oldItem.removeEventListener('click', this.handleItemClick);
-    }
 
-    this.element.style.display = '';
-
-    this.element.style.setProperty('--sgc-dropdown-height', `${height}px`);
-
-    this.knownItems = new Set(items);
+    this.container.style.display = '';
+    this.container.style.setProperty('--sgc-dropdown-height', `${height}px`);
 
     this.updatePosition();
   };
@@ -184,18 +205,18 @@ export class SgcDropdown implements ComponentInterface {
     this.clearClassToggleTimeout();
     this.updatePosition();
     this.trigger.setAttribute('active', '');
-    this.element.classList.remove('is-hidden');
+    this.container.classList.remove('is-hidden');
     this.timeoutForClassToggle = setTimeout(() => {
-      this.element.classList.add('is-visible');
+      this.container.classList.add('is-visible');
     });
   }
 
   private hide(): void {
     this.clearClassToggleTimeout();
     this.trigger.removeAttribute('active');
-    this.element.classList.remove('is-visible');
+    this.container.classList.remove('is-visible');
     this.timeoutForClassToggle = setTimeout(() => {
-      this.element.classList.add('is-hidden');
+      this.container.classList.add('is-hidden');
     }, DROPDOWN_ANIMATION_DURATION_MS);
   }
 
@@ -204,7 +225,7 @@ export class SgcDropdown implements ComponentInterface {
       return;
     }
     updatePopupPosition({
-      popup: this.element,
+      popup: this.container,
       target: this.trigger,
       position: this.position ?? 'bottom',
       align: this.align ?? 'center',

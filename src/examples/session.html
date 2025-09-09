@@ -37,6 +37,9 @@
           };
         }
       });
+      session.addEventListener("sgcSignOut", () => {
+        session.user = null;
+      });
     </script>
   </body>
 
