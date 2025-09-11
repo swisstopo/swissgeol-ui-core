@@ -16,6 +16,8 @@ import { referenceSvg } from './icons/reference.svg';
 import { fileSvg } from './icons/file.svg';
 import { downloadSvg } from './icons/download.svg';
 import { openLinkSvg } from './icons/open-link.svg';
+import { trashSvg } from './icons/trash.svg';
+import { tableOfContentsSvg } from './icons/table-of-contents.svg';
 
 @Component({
   tag: 'sgc-icon',
@@ -60,6 +62,8 @@ const icons = {
   reference: referenceSvg,
   required: requiredSvg,
   spinner: spinnerSvg,
+  tableOfContents: tableOfContentsSvg,
+  trash: trashSvg,
 };
 
 export type SgcIconKey = keyof typeof icons;
