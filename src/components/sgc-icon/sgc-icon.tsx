@@ -18,6 +18,7 @@ import { downloadSvg } from './icons/download.svg';
 import { openLinkSvg } from './icons/open-link.svg';
 import { trashSvg } from './icons/trash.svg';
 import { tableOfContentsSvg } from './icons/table-of-contents.svg';
+import { aiSvg } from './icons/ai.svg';
 
 @Component({
   tag: 'sgc-icon',
@@ -46,6 +47,7 @@ export class SgcIcon {
 }
 
 const icons = {
+  ai: aiSvg,
   assign: assignSvg,
   cross: crossSvg,
   checkmark: checkmarkSvg,
