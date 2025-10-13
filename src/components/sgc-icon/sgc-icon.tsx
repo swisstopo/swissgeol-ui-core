@@ -19,6 +19,7 @@ import { openLinkSvg } from './icons/open-link.svg';
 import { trashSvg } from './icons/trash.svg';
 import { tableOfContentsSvg } from './icons/table-of-contents.svg';
 import { aiSvg } from './icons/ai.svg';
+import { repeatSvg } from './icons/repeat.svg';
 
 @Component({
   tag: 'sgc-icon',
@@ -62,6 +63,7 @@ const icons = {
   plus: plusSvg,
   profile: profileSvg,
   reference: referenceSvg,
+  repeat: repeatSvg,
   required: requiredSvg,
   spinner: spinnerSvg,
   tableOfContents: tableOfContentsSvg,
