@@ -22,7 +22,6 @@
     "
   >
     <h1>Buttons</h1>
-
     <div style="display: flex; gap: 2rem; align-items: end">
       <label>
         <sgc-checkbox id="transparency-toggle"></sgc-checkbox>
@@ -254,7 +253,7 @@
     const sizeToggle = document.getElementById("size-toggle");
     let currentSize = "normal";
     const updateSize = () => {
-      document.querySelectorAll("sgc-button").forEach((button) =>
+      document.querySelectorAll("sgc-button").forEach((button) => {
         if (button.size === currentSize) {
           button.size = sizeToggle.value;
         }
