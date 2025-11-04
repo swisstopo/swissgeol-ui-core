@@ -23,6 +23,9 @@ import { repeatSvg } from './icons/repeat.svg';
 import { firstSvg } from './icons/first.svg';
 import { lastSvg } from './icons/last.svg';
 import { chevronLeftSvg } from './icons/chevron-left.svg';
+import { minusSvg } from './icons/minus.svg';
+import { rotateClockwiseSvg } from './icons/rotate-clockwise.svg';
+import { circleSvg } from './icons/circle.svg';
 
 @Component({
   tag: 'sgc-icon',
@@ -59,11 +62,13 @@ const icons = {
   checkmarkBrackets: checkmarkBracketsSvg,
   chevronLeft: chevronLeftSvg,
   chevronRight: chevronRightSvg,
+  circle: circleSvg,
   download: downloadSvg,
   edit: editSvg,
   file: fileSvg,
   first: firstSvg,
   last: lastSvg,
+  minus: minusSvg,
   openLink: openLinkSvg,
   optional: optionalSvg,
   plus: plusSvg,
@@ -71,6 +76,7 @@ const icons = {
   reference: referenceSvg,
   repeat: repeatSvg,
   required: requiredSvg,
+  rotateClockwise: rotateClockwiseSvg,
   spinner: spinnerSvg,
   tableOfContents: tableOfContentsSvg,
   trash: trashSvg,
