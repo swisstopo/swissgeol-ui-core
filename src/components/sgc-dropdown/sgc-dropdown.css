@@ -1,6 +1,10 @@
 @import "../../global/base.css";
 
-:host {
+:host(sgc-dropdown) {
+  display: none;
+}
+
+:host(.sgc-dropdown-container) {
   position: fixed;
   z-index: 10;
 
@@ -11,9 +15,8 @@
   border-radius: 4px;
   border: 1px solid var(--sgc-color-border--default);
 
-  --sgc-dropdown-height: calc(48px * var(--sgc-dropdown-item-count, 0) + 2px);
-  height: var(--sgc-dropdown-height);
-  min-height: var(--sgc-dropdown-height);
+  height: calc(var(--sgc-dropdown-height, 0) + 2px);
+  min-height: calc(var(--sgc-dropdown-height, 0) + 2px);
 
   background-color: var(--sgc-color-bg--white);
   color: var(--sgc-color-text--emphasis-high);
@@ -23,11 +26,11 @@
   transition-property: opacity, height, min-height;
 }
 
-:host(.is-hidden) {
+:host(.sgc-dropdown-container.is-hidden) {
   display: none;
 }
 
-:host(:not(.is-visible)) {
+:host(.sgc-dropdown-container:not(.is-visible)) {
   opacity: 0;
   height: 0;
   min-height: 0;
