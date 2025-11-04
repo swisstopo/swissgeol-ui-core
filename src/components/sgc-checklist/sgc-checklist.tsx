@@ -111,7 +111,7 @@ export class SgcChecklist {
   private get isActuallyDisabled(): boolean {
     return (
       this.isDisabled ||
-      this.parent?.isActuallyDisabled ||
+      this.parent?.isDisabled ||
       (this.children.length !== 0 &&
         this.disabledChildCount === this.children.length)
     );
