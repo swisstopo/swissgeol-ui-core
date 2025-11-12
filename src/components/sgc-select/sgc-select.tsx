@@ -141,7 +141,7 @@ export class SgcSelect {
                       isDisabled={false}
                     ></sgc-checkbox>
                   ) : null}
-                  <span>{label}</span>
+                  <span class="select-label">{label}</span>
                 </div>
               );
             })}
