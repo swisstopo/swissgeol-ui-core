@@ -27,6 +27,8 @@ import { minusSvg } from './icons/minus.svg';
 import { rotateClockwiseSvg } from './icons/rotate-clockwise.svg';
 import { circleSvg } from './icons/circle.svg';
 import { viewSvg } from './icons/view.svg';
+import { drawerLeftSvg } from './icons/drawer-left';
+import { drawerRightSvg } from './icons/drawer-right';
 
 @Component({
   tag: 'sgc-icon',
@@ -65,6 +67,8 @@ const icons = {
   chevronRight: chevronRightSvg,
   circle: circleSvg,
   download: downloadSvg,
+  drawerLeft: drawerLeftSvg,
+  drawerRight: drawerRightSvg,
   edit: editSvg,
   file: fileSvg,
   first: firstSvg,
