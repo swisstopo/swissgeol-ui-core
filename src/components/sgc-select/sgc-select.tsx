@@ -120,7 +120,7 @@ export class SgcSelect {
         </div>
 
         {this.isDropdownOpen && (
-          <div class="select-dropdown">
+          <div class="select-dropdown" part="select-dropdown">
             {this.values.map((value) => {
               const label = this.bindLabel ? value[this.bindLabel] : value;
               const isSelected = this.isSelected(value);
@@ -141,7 +141,7 @@ export class SgcSelect {
                       isDisabled={false}
                     ></sgc-checkbox>
                   ) : null}
-                  <span>{label}</span>
+                  <span class="select-label">{label}</span>
                 </div>
               );
             })}

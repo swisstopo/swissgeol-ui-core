@@ -26,6 +26,10 @@ import { chevronLeftSvg } from './icons/chevron-left.svg';
 import { minusSvg } from './icons/minus.svg';
 import { rotateClockwiseSvg } from './icons/rotate-clockwise.svg';
 import { circleSvg } from './icons/circle.svg';
+import { viewSvg } from './icons/view.svg';
+import { drawerLeftSvg } from './icons/drawer-left';
+import { drawerRightSvg } from './icons/drawer-right';
+import { copySvg } from './icons/copy.svg';
 
 @Component({
   tag: 'sgc-icon',
@@ -63,7 +67,10 @@ const icons = {
   chevronLeft: chevronLeftSvg,
   chevronRight: chevronRightSvg,
   circle: circleSvg,
+  copy: copySvg,
   download: downloadSvg,
+  drawerLeft: drawerLeftSvg,
+  drawerRight: drawerRightSvg,
   edit: editSvg,
   file: fileSvg,
   first: firstSvg,
@@ -80,6 +87,7 @@ const icons = {
   spinner: spinnerSvg,
   tableOfContents: tableOfContentsSvg,
   trash: trashSvg,
+  view: viewSvg,
 };
 
 export type SgcIconKey = keyof typeof icons;

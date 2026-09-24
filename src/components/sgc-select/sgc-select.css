@@ -73,3 +73,9 @@ sgc-icon {
   letter-spacing: var(--sgc-typo-body-2--letter-spacing);
   font-family: var(--sgc-font-family), var(--sgc-font-family--fallback);
 }
+
+.select-label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

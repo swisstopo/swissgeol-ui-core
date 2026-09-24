@@ -31,13 +31,32 @@
 
         <sgc-select id="names"></sgc-select>
       </sgc-form-item>
+
+      <sgc-form-item>
+        <span slot="label">Abbreviated labels</span>
+        <sgc-icon name="required" slot="icon"></sgc-icon>
+
+        <sgc-select id="abbrLabels"></sgc-select>
+      </sgc-form-item>
     </div>
 
     <script>
       const assignees = [
-        { id: "1", fullName: "Alice Johnson" },
-        { id: "2", fullName: "Bob Smith" },
-        { id: "3", fullName: "Charlie Davis" },
+        {
+          id: 1,
+          fullName: "Alice Johnson",
+          longText: "Alice Johnson - Project Manager",
+        },
+        {
+          id: 2,
+          fullName: "Bob Smith",
+          longText: "Bob Smith - Senior Developer",
+        },
+        {
+          id: 3,
+          fullName: "Charlie Davis",
+          longText: "Charlie Davis - UX Designer",
+        },
       ];
 
       const names = assignees.map((assignee) => assignee.fullName);
@@ -54,13 +73,18 @@
       multiSelect.bindLabel = "fullName";
       multiSelect.bindKey = "id";
       multiSelect.multiple = true;
-      multiSelect.initialKeys = ["1", "2"];
+      multiSelect.initialKeys = [1, 2];
 
       const namesSelect = document.getElementById("names");
       namesSelect.values = names;
       namesSelect.multiple = true;
       namesSelect.trigger = "ausgewählte Namen";
       namesSelect.initialKeys = ["Alice Johnson", "Bob Smith"];
+
+      const abbrLabelsSelect = document.getElementById("abbrLabels");
+      abbrLabelsSelect.values = assignees;
+      abbrLabelsSelect.bindLabel = "longText";
+      abbrLabelsSelect.initialKeys = [1];
 
       singleSelect.addEventListener("selectionChanged", (event) => {
         const selectedAssignee = event.detail[0];
