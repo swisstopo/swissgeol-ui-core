@@ -121,6 +121,10 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN  }}
         run: |
+          # Diagnose npm authentication
+          npm whoami
+          npm owner ls @swissgeol/ui-core
+
           # Publish `@swissgeol/ui-core`
           npm publish \
             --tag ${{ needs.determine-version.outputs.tag }} \
