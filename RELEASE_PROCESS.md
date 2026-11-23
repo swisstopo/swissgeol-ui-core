@@ -8,6 +8,7 @@ It details how new features are deployed, and how the development process affect
 [1.2. Patches](#patches)  
 [1.3. Breaking Changes](#breaking-changes)  
 [1.4. Release](#release)  
+[2. npm Publishing](#npm-publishing)\
 [3. Versioning](#versioning)  
 [4. Naming Conventions for Branches](#naming-conventions-for-branches)
 
@@ -48,6 +49,40 @@ Note that as soon as `next` → `develop` is merged, any further minor changes w
 
 When a set of changes is ready to be released, a new library version can be published.
 This is done by merging `develop` into `main` via pull request.
+
+## npm Publishing
+
+The [Publish workflow](.github/workflows/publish.yml) publishes three public packages
+from GitHub-hosted runners using npm Trusted Publishing with OpenID Connect (OIDC):
+
+- `@swissgeol/ui-core`
+- `@swissgeol/ui-core-angular`
+- `@swissgeol/ui-core-react`
+
+Pushes to `main`, `develop`, and `next` publish with the `latest`, `edge`, and `next`
+dist-tags respectively. Version calculation and Git tagging remain automatic.
+The publishing job uses `id-token: write` to write to the npm repository. No npm publishing secret is required.
+The `--provenance` flag is retained for all three packages.
+
+### Configuration for npm Trusted Publishing
+
+To be able to publish, the following trusted publisher rules must be configured for **each of the three packages** under
+**Settings → Trusted publishing → Add trusted publisher**:
+
+| Setting              | Value                                                  |
+| -------------------- | ------------------------------------------------------ |
+| Publisher            | GitHub Actions                                         |
+| Organization or user | `swisstopo`                                            |
+| Repository           | `swissgeol-ui-core`                                    |
+| Workflow filename    | `publish.yml` (filename only)                          |
+| Environment name     | Leave blank; the job does not use a GitHub environment |
+| Allowed actions      | Allow direct publishing with `npm publish`             |
+
+Separate `npm dist-tag` access is unnecessary: the workflow assigns its dist-tag
+as part of `npm publish --tag`. Stage-only permission is insufficient for this workflow.
+
+See [npm Trusted Publishing documentation](https://docs.npmjs.com/trusted-publishers/)
+and [setup-node publishing guidance](https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#publishing-to-npm-with-trusted-publisher-oidc).
 
 ## Versioning
 

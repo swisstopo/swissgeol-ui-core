@@ -11,15 +11,19 @@ on:
 concurrency:
   group: "publish"
 
-permissions: write-all
+permissions:
+  contents: read
 
 env:
-  NODE_VERSION: "22.x"
+  NODE_VERSION: "24.x"
 
 jobs:
   determine-version:
     name: "determine version"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     outputs:
       version: ${{ steps.find-version.outputs.result }}
       tag: ${{ steps.find-tag.outputs.result }}
@@ -77,39 +81,25 @@ jobs:
                 return 'latest';
             }
 
-  install:
-    name: "install"
-    needs:
-      - determine-version
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          registry-url: "https://registry.npmjs.org/"
-      - name: Cache node dependencies
-        uses: ./.github/actions/node-cache
-      - name: Install node dependencies
-        run: npm ci
-
   build-and-publish:
     name: "build and publish"
     needs:
-      - install
       - determine-version
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: "https://registry.npmjs.org/"
-      - name: Restore cached node dependencies
-        uses: ./.github/actions/node-cache-restore
+          package-manager-cache: false
+      - name: Install node dependencies
+        run: npm ci
       - name: Write package version
         run: |
           npm version ${{ needs.determine-version.outputs.version }} --no-commit-hooks --no-git-tag-version
@@ -118,8 +108,6 @@ jobs:
       - name: Build
         run: npm run build
       - name: Publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN  }}
         run: |
           # Publish `@swissgeol/ui-core`
           npm publish \
@@ -144,6 +132,8 @@ jobs:
       - build-and-publish
       - determine-version
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
